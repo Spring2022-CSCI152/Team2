@@ -4,6 +4,7 @@
   "description": "Backend",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon ./server.js",
     "test": "start"
   },
   "repository": {
@@ -20,9 +21,13 @@
   },
   "homepage": "https://github.com/Spring2022-CSCI152/Team2#readme",
   "dependencies": {
+    "axios": "^0.25.0",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-async-handler": "^1.2.0",
-    "mongoose": "^6.1.10"
+    "mongoose": "^6.2.0"
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
