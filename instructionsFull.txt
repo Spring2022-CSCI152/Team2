@@ -1,1 +1,3 @@
 Go into both folders and view instructions. Run both commands to test full I believe.
+
+Need to setup concurrently next.
