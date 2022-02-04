@@ -1,0 +1,5 @@
+npm i
+
+npm run start
+
+https://wookenstein.medium.com/mern-full-stack-tutorial-2020-part-2-frontend-client-side-84f54667d57b
