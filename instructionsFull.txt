@@ -1,3 +1,6 @@
 Go into both folders and view instructions. Run both commands to test full I believe.
 
 Need to setup concurrently next.
+
+
+all passwords or keys use dotenv and make a .env file for the backend folder. Do not commit it to the branch for security. Hopefully .gitignore ignores the keys
