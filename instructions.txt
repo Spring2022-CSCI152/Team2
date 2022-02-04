@@ -1,7 +1,0 @@
-// install dependencies
-
-npm i
-
-//run server
-
-npm start
