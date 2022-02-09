@@ -23,6 +23,12 @@
     width: 50%;
 }
 
+.homeButton {
+    display: flex;
+    flex-direction: row;
+    height: 3.5rem;
+}
+
 .logoContainer {
     display: flex;
     height: 3.5rem;
@@ -35,14 +41,15 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    border-radius: 1rem;
+    width: 50%;
+    /* border-radius: 1rem; */
     padding: 0.3rem;
     background-color: #f2f2f2;
     margin-left: 1rem;
 }
 
 .searchBar:focus-within {
+    outline: 1px solid #61dafb;
     background-color: #d6d6d6;
 }
 
@@ -69,22 +76,28 @@
     font-size: 1.5rem;
 }
 
-.aboutButton,.loginButton {
+.aboutButton, .loginButton {
+    border-radius: 1rem;
+    margin-right: 1rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    background-color: #efefef;
+    color: black;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* .aboutButton,.loginButton {
     margin-right: 1rem;
     padding: 0.5rem 2rem 0.5rem 2rem;
     border-radius: 1rem;
     border: none;
     font-size: 1rem;
-}
+} */
 
-.aboutButton:hover {
+.aboutButton:hover,.loginButton:hover {
     outline: none;
     background-color: #c6c6c6;
-}
-
-.loginButton:hover {
-    outline: none;
-    background-color: #c6c6c6;
+    cursor: pointer;
 }
 
 .profilePictureContainer {
