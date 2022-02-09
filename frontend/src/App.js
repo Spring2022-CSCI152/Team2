@@ -17,6 +17,7 @@ function App() {
               <p> Yo {0} </p>
             </div>
           } />
+          
           <Route path="*" element={ // This is the catch-all route
             <div className="App-body">
               <a href="/" style={{textDecoration: "none", color: "#61dafb"}}>Go back to home</a>
