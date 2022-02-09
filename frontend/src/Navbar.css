@@ -25,7 +25,7 @@
 
 .logoContainer {
     display: flex;
-    height: 4rem;
+    height: 3.5rem;
     margin-left: 1rem;
     animation: App-logo-spin infinite 20s linear;
 }
