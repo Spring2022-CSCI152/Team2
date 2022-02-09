@@ -14,11 +14,13 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="searchBar">
-                    <input type="text" placeholder="Search" className="searchInput"/>
-                    <button className="searchButton">
-                        <FontAwesomeIcon icon={faSearch} />
-                        {/* <img src="/search.png" alt="searchImage" height="100%"/> */}
-                    </button>
+                    <form action='/search' method='GET' className="searchForm">
+                        <input type="text" placeholder="Search" className="searchInput" name='searchField'/>
+                        <button className="searchButton" >
+                            <FontAwesomeIcon icon={faSearch} />
+                            {/* <img src="/search.png" alt="searchImage" height="100%"/> */}
+                        </button>
+                    </form>
                 </div>
             </div>
             <div className="rightSide">

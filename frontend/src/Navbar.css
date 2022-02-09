@@ -43,12 +43,21 @@
     align-items: center;
     width: 50%;
     /* border-radius: 1rem; */
+    outline: 1px solid #a6a6a6;
     padding: 0.3rem;
     background-color: #f2f2f2;
     margin-left: 1rem;
 }
 
-.searchBar:focus-within {
+.searchForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.searchBar:focus-within, .searchBar:hover {
     outline: 1px solid #61dafb;
     background-color: #d6d6d6;
 }
@@ -74,6 +83,15 @@
     border: none;
     background-color: inherit;
     font-size: 1.5rem;
+}
+
+.searchButton:focus, .searchButton:hover {
+    color: #489eb6;
+    cursor: pointer;
+}
+
+.searchButton:active {
+    color: #a6a6a6;
 }
 
 .aboutButton, .loginButton {
