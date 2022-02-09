@@ -1,10 +1,12 @@
 import React from 'react';
 import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+import { useMediaQuery } from 'react-responsive';
 
 const Navbar = () => {
+    const isMobile = useMediaQuery({ maxWidth: 550 });
     return ( 
         <div className="navContainer">
             <div className="leftSide">
@@ -14,18 +16,28 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="searchBar">
-                    <input type="text" placeholder="Search" className="searchInput"/>
-                    <button className="searchButton">
-                        <FontAwesomeIcon icon={faSearch} />
-                        {/* <img src="/search.png" alt="searchImage" height="100%"/> */}
-                    </button>
+                    <form action='/search' method='GET' className="searchForm">
+                        <input type="text" placeholder="Search" className="searchInput" name='searchField'/>
+                        <button className="searchButton" >
+                            <FontAwesomeIcon icon={faSearch} />
+                            {/* <img src="/search.png" alt="searchImage" height="100%"/> */}
+                        </button>
+                    </form>
                 </div>
             </div>
+
             <div className="rightSide">
-                <Link to="/about" className="aboutButton"> About </Link>
-                <Link to="/login" className="loginButton"> Login </Link>
-                {/* <button className="aboutButton"> About </button> */}
-                {/* <button className="loginButton"> Login </button> */}
+                {!isMobile && 
+                    <React.Fragment>
+                        <Link to="/about" className="aboutButton"> About </Link>
+                        <Link to="/login" className="loginButton"> Login </Link>
+                    </React.Fragment>
+                }
+                {isMobile && 
+                    <React.Fragment>
+                        <FontAwesomeIcon icon={faBars} className="hamburger" />
+                    </React.Fragment>
+                }
                 <div className="profilePictureContainer">
                     <FontAwesomeIcon icon={faUser} />
                     {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}

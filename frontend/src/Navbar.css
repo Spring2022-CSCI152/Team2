@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: space-between;
     /* border-bottom: 1px solid black; */
-    height: 4em;
+    height: 4rem;
     background-color: #000000;
 }
 
@@ -23,17 +23,14 @@
     width: 50%;
 }
 
-.homeButton {
-    display: flex;
-    flex-direction: row;
-    height: 3.5rem;
-}
-
 .logoContainer {
     display: flex;
-    height: 3.5rem;
     margin-left: 1rem;
-    animation: App-logo-spin infinite 20s linear;
+}
+
+.logo {
+    height: 3.5rem;
+    width: 3.5rem;
 }
 
 .searchBar {
@@ -43,12 +40,21 @@
     align-items: center;
     width: 50%;
     /* border-radius: 1rem; */
+    outline: 1px solid #a6a6a6;
     padding: 0.3rem;
     background-color: #f2f2f2;
     margin-left: 1rem;
 }
 
-.searchBar:focus-within {
+.searchForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.searchBar:focus-within, .searchBar:hover {
     outline: 1px solid #61dafb;
     background-color: #d6d6d6;
 }
@@ -76,6 +82,15 @@
     font-size: 1.5rem;
 }
 
+.searchButton:focus, .searchButton:hover {
+    color: #489eb6;
+    cursor: pointer;
+}
+
+.searchButton:active {
+    color: #a6a6a6;
+}
+
 .aboutButton, .loginButton {
     border-radius: 1rem;
     margin-right: 1rem;
@@ -86,18 +101,17 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* .aboutButton,.loginButton {
-    margin-right: 1rem;
-    padding: 0.5rem 2rem 0.5rem 2rem;
-    border-radius: 1rem;
-    border: none;
-    font-size: 1rem;
-} */
-
 .aboutButton:hover,.loginButton:hover {
     outline: none;
     background-color: #c6c6c6;
     cursor: pointer;
+}
+
+.hamburger {
+    height: 3rem;
+    width: 3rem;
+    margin-right: 1rem;
+    color: white;
 }
 
 .profilePictureContainer {
