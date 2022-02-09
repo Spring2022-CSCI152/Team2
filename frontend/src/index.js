@@ -6,17 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route // This is the catch-all route
-      path="*"
-      element={
-        <a href="/">Go back to home</a>
-      }
-      />
-    </Routes>
-  </BrowserRouter>,
+  <App />,
   document.getElementById('root')
 );
 
