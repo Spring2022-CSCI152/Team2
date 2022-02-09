@@ -1,0 +1,110 @@
+.navContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* border-bottom: 1px solid black; */
+    height: 4em;
+    background-color: #000000;
+}
+
+.leftSide {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+}
+
+.rightSide {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50%;
+}
+
+.homeButton {
+    display: flex;
+    flex-direction: row;
+    height: 3.5rem;
+}
+
+.logoContainer {
+    display: flex;
+    height: 3.5rem;
+    margin-left: 1rem;
+    animation: App-logo-spin infinite 20s linear;
+}
+
+.searchBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    /* border-radius: 1rem; */
+    padding: 0.3rem;
+    background-color: #f2f2f2;
+    margin-left: 1rem;
+}
+
+.searchBar:focus-within {
+    outline: 1px solid #61dafb;
+    background-color: #d6d6d6;
+}
+
+.searchInput {
+    padding: 0.5rem;
+    width: 100%;
+    margin: 0;
+    border: none;
+    font-size: 1rem;
+    background-color: inherit;
+    outline: 0;
+}
+
+.searchInput:focus + .searchButton {
+    color: #489eb6;
+}
+
+.searchButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: inherit;
+    font-size: 1.5rem;
+}
+
+.aboutButton, .loginButton {
+    border-radius: 1rem;
+    margin-right: 1rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    background-color: #efefef;
+    color: black;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* .aboutButton,.loginButton {
+    margin-right: 1rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    border-radius: 1rem;
+    border: none;
+    font-size: 1rem;
+} */
+
+.aboutButton:hover,.loginButton:hover {
+    outline: none;
+    background-color: #c6c6c6;
+    cursor: pointer;
+}
+
+.profilePictureContainer {
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    font-size: 2rem;
+    color: white;
+    margin-right: 1rem;
+}
