@@ -1,0 +1,32 @@
+.contactContainer {
+    background-color: #000;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contactText {
+    font-size: 1rem;
+    margin: 0px 0px 10px 0px;
+}
+
+.contactButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contactButton {
+    color: black;
+    height: 2rem;
+    margin: 0px 5px 0px 5px;
+}
+
+.contactButton>a {
+    color: black;
+    text-decoration: none;
+}
