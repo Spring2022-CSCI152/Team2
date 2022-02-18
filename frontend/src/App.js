@@ -2,7 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import FeaturedUsers from "./components/featuredUsers.jsx";
+import UserCard from "./components/userCards.jsx";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 
@@ -15,7 +16,8 @@ function App() {
           <Route path="/" element={
             <div className="App-body">
               <img src={logo} className="App-logo" alt="logo" />
-              <p> Yo {0} </p>
+              <FeaturedUsers />
+              
             </div>
           } />
           
