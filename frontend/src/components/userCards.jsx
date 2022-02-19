@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
+;
 import '../assets/featUsers.css';
 
 class UserCards extends Component {

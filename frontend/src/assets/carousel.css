@@ -1,0 +1,23 @@
+li.thumb{
+    height:50px;
+    
+}
+li.thumb img{
+    height:35px;
+}
+.carousel .thumb{
+    border-color:black;
+}
+.carousel .slide .legend{
+    opacity: 0;
+    transition:opacity .35s ease-in-out;
+}
+p.userInfo{
+    height:50%;
+    width:50%;
+}
+ p.userInfo{
+    width:40%;
+    position:relative;
+    align-self:center;
+}

@@ -3,7 +3,7 @@ import './App.css';
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FeaturedUsers from "./components/featuredUsers.jsx";
-import UserCard from "./components/userCards.jsx";
+import Carousel from "./components/carousel.jsx";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 
@@ -15,7 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={
             <div className="App-body">
-              <img src={logo} className="App-logo" alt="logo" />
+            {/* < img src={logo} className="App-logo" alt="logo" /> */}
+             <Carousel/>
               <FeaturedUsers />
               
             </div>
