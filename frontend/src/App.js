@@ -16,6 +16,7 @@ function App() {
           <Route path="/" element={
             <div className="App-body">
             {/* < img src={logo} className="App-logo" alt="logo" /> */}
+            <br></br>
              <Carousel/>
               <FeaturedUsers />
               

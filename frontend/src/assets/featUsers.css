@@ -1,13 +1,39 @@
-.featUsers, .row{
-    display:flex;
-    flex-direction:horizontal;
-    margin-left:5%;
-    margin-right:5%;
-    width:90%;
-    height:50%;
-    justify-content: space-around;
+.featUsers{
+  margin-left:5%;
+  margin-right:5%;
+  width:90%;
+  height:50%;
+
+ 
+
+}
+.row .card {
+
+}
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+
+.row{
+ 
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  gap:5%;
+
+
+
+  
+}
+.col-md-4{
+  flex: 0 0 auto;
+  scroll-snap-align: start;
 }
 div.card{
+
     
     background: rgb(1,4,1);
     /* background: linear-gradient(90deg, rgba(1,4,1,.5) 0%, rgba(46,46,61,.5) 40%, rgba(10,21,23,.5) 90%);

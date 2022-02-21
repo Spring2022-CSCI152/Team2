@@ -4,20 +4,75 @@ li.thumb{
 }
 li.thumb img{
     height:35px;
+    padding-top:7px;
 }
 .carousel .thumb{
     border-color:black;
+    border-width:1px;
 }
-.carousel .slide .legend{
+.carousel .slide div.legend{
     opacity: 0;
-    transition:opacity .35s ease-in-out;
+    transition:opacity .40s ease-in-out;
+    height:40vmin;
+    width:55%;
+    /*Gradient for hover effect*/
+   
+    background: rgb(1,4,1);
+    background: linear-gradient(0deg, rgba(1,4,1,1) 0%, rgba(10,21,23,0.48269730255383403) 72%);
+    display:flex;
+    flex-direction: column;
+    text-align:left;
+    align-content:left;
+    justify-content:flex-end;
+    
+
+
+   
+
+    /*unsetting preset css from carousel source*/
+    bottom:unset;
+    margin-left: unset;
+    margin-right:unset;
+    left: unset;
+  
+   
+
+    
 }
-p.userInfo{
-    height:50%;
-    width:50%;
+.featUserNames{
+    display:inline;
+}
+.userThumb{
+    
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content:flex-start;
+  
+    
+}
+.userThumbResults{
+    display:flex;
+    gap: 30px;
+    align-self:flex-start;
 }
  p.userInfo{
     width:40%;
-    position:relative;
     align-self:center;
+  
+}
+.carousel{
+    -webkit-overflow-scrolling: touch;
+}
+
+.carousel .slide img{
+    width:50%;
+}
+.slide div:not(.userThumbResults, .userThumb){
+  
+    display:flex;
+    justify-content: center;
+  
+   
+    
 }

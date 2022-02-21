@@ -5,9 +5,9 @@ import '../assets/featUsers.css';
 class UserCards extends Component {
   state = {
     data: [],
-    per: 4,
+    per: 16,
     page: 1,
-    total_pages: null
+    total_pages: 4
   };
 
   uppercase = word => {
@@ -17,6 +17,7 @@ class UserCards extends Component {
   loadData = () => {
     const { per, page, data } = this.state;
     const endpoint = `https://randomuser.me/api/?nat=us&results=${per}&page=${page}`;
+    
     fetch(endpoint)
       .then(response => response.json())
       .then(json => {
@@ -31,6 +32,7 @@ class UserCards extends Component {
   loadMore = () => {
     this.setState(
       prevState => ({
+    
         page: prevState.page + 1,
         scrolling: true
       }),
@@ -73,14 +75,16 @@ class UserCards extends Component {
             </div>
           ))}
         </div>
-        <button
+        {/*<button
           className="btn btn-light btn-block w-50 mx-auto"
           onClick={e => {
-            this.loadData();
+            this.loadMore();
           }}
         >
           Load More Users
         </button>
+        */}
+        
    </>
     );
   }

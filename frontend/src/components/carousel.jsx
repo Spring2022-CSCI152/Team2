@@ -1,69 +1,92 @@
-import React from "react";
+import React, { Component } from "react";
 import logo from '../logo.svg';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import '../assets/carousel.css';
 
-function HomeCarousel(){
-    return(
-  <Carousel autoPlay>
-     
+class HomeCarousel extends Component{
 
-    <div>
-    <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 1</p>
+    constructor(){
+        super();
+        this.state = {
+            pictures:[] ,
+            usernames:[] 
+        } 
+    }
+    componentDidMount(){
+        fetch('https://randomuser.me/api/?results=7')
+          .then(results => {
+           return results.json()
+          })
+          .then(data => {
+            let pictures = data.results.map((pic) => {
+              return (
+                <div className = "userThumbResults" key = {pic.results}>
+                  <img src = {pic.picture.thumbnail} />
+                  <h3 class = "featUserNames">{pic.name.first} {pic.name.last}</h3>
+                </div>
+              )
+            })
+            this.setState({
+              pictures: pictures
+            })
+            console.log("state", this.state.pictures)
+          })
+      }
+    render(){
+    return(
+    <Carousel autoPlay>
+        
+
+        <div>
+            <img src={logo} className="App-logo" alt="logo" />
+            <div className="legend">
+                <div className = "userThumb">{this.state.pictures[0]}</div>
+            </div>
     </div>
     <div>
-    <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 2</p>
+            <img src={logo} className="App-logo" alt="logo" />
+            <div className="legend">
+                <div className = "userThumb">{this.state.pictures[1]}</div>
+            </div>
     </div>
     <div>
-    <img src={logo}  className="App-logo" alt="logo" />
-      <p className="legend">Legend 3</p>
+            <img src={logo} className="App-logo" alt="logo" />
+            <div className="legend">
+                <div className = "userThumb">{this.state.pictures[2]}</div>
+            </div>
     </div>
     <div>
+            <img src={logo} className="App-logo" alt="logo" />
+            <div className="legend">
+                <div className = "userThumb">{this.state.pictures[3]}</div>
+            </div>
+    </div>
+    <div>
+            <img src={logo} className="App-logo" alt="logo" />
+            <div className="legend">
+                <div className = "userThumb">{this.state.pictures[4]}</div>
+            </div>
+    </div>
+    <div>
+            <img src={logo} className="App-logo" alt="logo" />
+            <div className="legend">
+                <div className = "userThumb">{this.state.pictures[5]}</div>
+            </div>
+    </div>
+    <div>
+            <img src={logo} className="App-logo" alt="logo" />
+            <div className="legend">
+                <div className = "userThumb">{this.state.pictures[6]}</div>
+            </div>
+    </div>
+
     
-    <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 5</p>
-    </div>
-    <div>
-    <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 6</p>
-    </div>
-    <div>
-    <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 7</p>
-    </div>
-    <div>
-    <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 8</p>
-    </div>
-    <div>
-    <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 9</p>
-    </div>
-    <div>
-      <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 10</p>
-    </div>
-    <div>
-      <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 11</p>
-    </div>
-    <div>
-      <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 12</p>
-    </div>
-    <div>
-      <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 13</p>
-    </div>
-    <div>
-      <img src={logo} className="App-logo" alt="logo" />
-      <p className="legend">Legend 14</p>
-    </div>
-  </Carousel>
-);
+    
+    </Carousel>
+        
+    );
+    }
 }
 export default HomeCarousel;
 
