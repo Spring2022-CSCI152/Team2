@@ -29,8 +29,8 @@ const Navbar = () => {
             <div className="rightSide">
                 {!isMobile && 
                     <React.Fragment>
-                        <Link to="/about" className="aboutButton"> About </Link>
-                        <Link to="/login" className="loginButton"> Login </Link>
+                        <Link to={"/about"} className="aboutButton"> About </Link>
+                        <Link to={"/login"} className="loginButton"> Login </Link>
                     </React.Fragment>
                 }
                 {isMobile && 
