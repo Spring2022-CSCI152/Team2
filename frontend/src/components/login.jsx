@@ -13,7 +13,7 @@ const login = () =>{
 
                 </input>
                 <span></span>
-                <input type = "button" value ="Login withTwitter">
+                <input type = "button" value ="Login with Twitter">
                     
                 </input>
 
@@ -36,11 +36,11 @@ const login = () =>{
                     
                 </div>
                 <div class = "regSub">
-                    <input type = "submit" value ="login">
+                    <input type = "submit" value ="Login">
 
                     </input>
                     <span></span>
-                    <input type = "submit" value ="register">
+                    <input type = "submit" value ="Register">
                         
                     </input>
                 </div>
