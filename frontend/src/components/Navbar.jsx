@@ -1,5 +1,5 @@
 import React from 'react';
-import './Navbar.css';
+import '../assets/NavBar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
@@ -29,8 +29,8 @@ const Navbar = () => {
             <div className="rightSide">
                 {!isMobile && 
                     <React.Fragment>
-                        <Link to="/about" className="aboutButton"> About </Link>
-                        <Link to="/login" className="loginButton"> Login </Link>
+                        <Link to={"/about"} className="aboutButton"> About </Link>
+                        <Link to={"/login"} className="loginButton"> Login </Link>
                     </React.Fragment>
                 }
                 {isMobile && 
