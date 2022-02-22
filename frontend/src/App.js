@@ -15,7 +15,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path= {"/login"} element={
-            <Login />
+            <div className="App-body-login">
+              <Login />
+            </div>
           }/>
 
           <Route path="/" element={
