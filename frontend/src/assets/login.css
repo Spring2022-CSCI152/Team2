@@ -1,7 +1,7 @@
 .App-body-login{
   margin: 0;
   padding: 0;
-  background: linear-gradient(120deg, black, lightblue);
+  background: linear-gradient(120deg, black, rgb(41, 156, 194));
   height: 100vh;
   overflow: hidden;
 }
