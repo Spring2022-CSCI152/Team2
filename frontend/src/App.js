@@ -6,6 +6,7 @@ import FeaturedUsers from "./components/featuredUsers.jsx";
 import Carousel from "./components/carousel.jsx";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
+import Login from './components/login.jsx';
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
       <div className="App">
         <Navbar />
         <Routes>
+          <Route path= {"/login"} element={
+            <Login />
+          }/>
+
           <Route path="/" element={
             <div className="App-body">
             {/* < img src={logo} className="App-logo" alt="logo" /> */}
@@ -22,6 +27,8 @@ function App() {
               
             </div>
           } />
+
+          
           
           <Route path="*" element={ // This is the catch-all route
             <div className="App-body">
