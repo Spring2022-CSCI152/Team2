@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
+import Login from './components/login.jsx';
 
 function App() {
   return (
@@ -12,12 +13,18 @@ function App() {
       <div className="App">
         <Navbar />
         <Routes>
+          <Route path= {"/login"} element={
+            <Login />
+          }/>
+
           <Route path="/" element={
             <div className="App-body">
               <img src={logo} className="App-logo" alt="logo" />
               <p> Yo {0} </p>
             </div>
           } />
+
+          
           
           <Route path="*" element={ // This is the catch-all route
             <div className="App-body">
