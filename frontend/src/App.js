@@ -7,6 +7,8 @@ import Carousel from "./components/carousel.jsx";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Login from './components/login.jsx';
+import About from './components/about.jsx';
+import './assets/featUsers.css';
 
 function App() {
   return (
@@ -30,7 +32,15 @@ function App() {
             </div>
           } />
 
-          
+          <Route path= {"/about"} element={
+            <div className = "App-body">
+            <div className="App-body-about">
+            <br></br>
+              <About/>
+               <FeaturedUsers />
+            </div>
+            </div>
+          }/>
           
           <Route path="*" element={ // This is the catch-all route
             <div className="App-body">
