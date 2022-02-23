@@ -4,17 +4,16 @@
     background: linear-gradient(120deg, black, rgb(41, 156, 194));
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .header{
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 50%;
     color: white;
     font-size: larger;
     font-family:'Courier New', Courier, monospace;
-  
 }
   
 .center h1{

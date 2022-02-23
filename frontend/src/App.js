@@ -33,13 +33,12 @@ function App() {
           } />
 
           <Route path= {"/about"} element={
-            <div className = "App-body">
+            // <div className = "App-body">
             <div className="App-body-about">
-            <br></br>
               <About/>
-               <FeaturedUsers />
+              <FeaturedUsers />
             </div>
-            </div>
+            // </div>
           }/>
           
           <Route path="*" element={ // This is the catch-all route

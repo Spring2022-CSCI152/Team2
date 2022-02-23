@@ -36,9 +36,9 @@
     transform: rotate(360deg);
   }
 }
-.App-body-about{
+/* .App-body-about{
   display: flex;
   flex-direction: column;
   gap: 25%;
   
-}
+} */
