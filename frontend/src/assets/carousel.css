@@ -1,5 +1,6 @@
 li.thumb{
     height:50px;
+    width:auto;
     
 }
 li.thumb img{
@@ -39,8 +40,14 @@ li.thumb img{
 
     
 }
-.featUserNames{
-    display:inline;
+
+.featUserNames {
+    display:inline-block;
+    
+
+}
+.featUserNames , .picTitle{
+    font-size:20px;
 }
 .userThumb{
     
@@ -51,10 +58,16 @@ li.thumb img{
   
     
 }
-.userThumbResults{
+
+div.userThumbResults{
     display:flex;
     gap: 30px;
     align-self:flex-start;
+    width:auto;
+}
+.userThumb .userThumbResults .userPicThumb{
+    height:75px;
+    width:75px;
 }
  p.userInfo{
     width:40%;
