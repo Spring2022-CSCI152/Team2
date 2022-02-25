@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./server/api/server.js",
+    "start": "nodemon ./server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,10 +20,13 @@
   "homepage": "https://github.com/Spring2022-CSCI152/Team2#readme",
   "dependencies": {
     "axios": "^0.25.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
+    "joi-password-complexity": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.0"
   },
   "devDependencies": {
