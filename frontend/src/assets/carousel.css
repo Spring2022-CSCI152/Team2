@@ -40,7 +40,11 @@ li.thumb img{
 
     
 }
-
+.userThumbResults h3{
+    align-self:flex-end;
+    bottom:0;
+  
+}
 .featUserNames {
     display:inline-block;
     
@@ -48,7 +52,10 @@ li.thumb img{
 }
 .featUserNames , .picTitle{
     font-size:20px;
+
+    
 }
+
 .userThumb{
     
     display:flex;
