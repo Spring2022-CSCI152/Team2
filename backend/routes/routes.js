@@ -17,4 +17,15 @@ router.post('/signup', (request, response) => {
     })
 });
 
+router.get('/testScript', (req, res) => {
+    const spawn = require("child_process").spawn;
+    const pythonProcess = spawn('python',["./python/test.py", "hello"]);
+    pythonProcess.stdout.on('data', (data) => {
+      // Do something with the data returned from python script
+      console.log(data.toString());
+    });
+  
+    res.send({ express: 'process finished' });
+  });
+
 module.exports = router;
