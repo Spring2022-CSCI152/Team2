@@ -7,6 +7,7 @@ import Carousel from "./components/carousel.jsx";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Login from './components/login.jsx';
+import Registration from './components/registration.jsx';
 
 function App() {
   return (
@@ -17,6 +18,12 @@ function App() {
           <Route path= {"/login"} element={
             <div className="App-body-login">
               <Login />
+            </div>
+          }/>
+
+          <Route path = {"/registration"} element = {
+            <div className ="App-body-registration">
+              <Registration />
             </div>
           }/>
 

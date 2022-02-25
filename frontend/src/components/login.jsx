@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../assets/login.css';
+import { Link } from "react-router-dom";
 
 
 
@@ -40,9 +41,12 @@ const login = () =>{
 
                     </input>
                     <span></span>
-                    <input type = "submit" value ="Register">
-                        
+                    
+                    <input type = "submit" value = "register">
+                        <a href = "registration.jsx">Registraion</a>
                     </input>
+                    
+                    
                 </div>
                 
             </form>
