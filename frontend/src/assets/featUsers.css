@@ -1,0 +1,115 @@
+.featUsers{
+  margin-left:5%;
+  margin-right:5%;
+  width:90%;
+  height:50%;
+
+ 
+
+}
+.row .card {
+
+}
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+
+.row{
+ 
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  gap:5%;
+
+
+
+  
+}
+.col-md-4{
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+div.card{
+
+    
+    background: rgb(1,4,1);
+    /* background: linear-gradient(90deg, rgba(1,4,1,.5) 0%, rgba(46,46,61,.5) 40%, rgba(10,21,23,.5) 90%);
+ */
+}
+.col-md-4{
+    width:20%;
+ 
+}
+.card-text{
+    font-size:20px;
+}
+.featUsersLabel {
+float:left;
+width:80%;
+}
+h2.featUsersLabel {
+    font-weight:400;
+    font-size: 30px;
+    text-align:left;
+    float:left;
+    font-family: sans-serif;
+}
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  header {
+    margin-bottom: 30px;
+  }
+  
+  .col-md-4 {
+    margin-bottom: 30px;
+  }
+  
+  .card {
+    padding: 30px;
+    border: solid 1px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+  }
+  .card:hover {
+    box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.08);
+  }
+  .card-title {
+    margin-top: 20px;
+  }
+  .card-text {
+    font-size: 14px;
+    color: white;
+  }
+  .card-text .fa {
+    font-size: 26px;
+  }
+  .avatar {
+    width: 140px;
+    margin: auto;
+  }
+  .avatar img {
+    border: solid 6px transparent;
+    border-radius: 50%;
+  }
+  .card:hover .avatar img {
+    border-color: rgb(99, 204, 131);
+    border-width:2px;
+  }
+  
+  .btn {
+    border-radius: 25px;
+  }
+  
+
+  
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1040px;
+    }
+  }
+  
