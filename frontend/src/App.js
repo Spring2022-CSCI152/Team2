@@ -29,7 +29,15 @@ function App() {
               
             </div>
           } />
-
+          <Route path="/alerts/" element={
+            <div className="App-body">
+           
+            <br></br>
+            
+            
+              
+            </div>
+          } />
           
           
           <Route path="*" element={ // This is the catch-all route
