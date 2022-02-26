@@ -31,6 +31,8 @@ const Navbar = () => {
                     <React.Fragment>
                         <Link to={"/about"} className="aboutButton"> About </Link>
                         <Link to={"/login"} className="loginButton"> Login </Link>
+                        <Link to={"/alerts/"} className="alertsButton"> Alerts </Link>
+
                     </React.Fragment>
                 }
                 {isMobile && 
