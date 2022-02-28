@@ -4,6 +4,8 @@ const app = express();
 const mongoose = require('mongoose');
 const routesUrls = require('../routes/routes');
 const routestest = require('../routes/routetest');
+const validateRegisterInput = require('../validation/register');
+const validateLoginInput = require('../validation/login');
 
 const cors = require('cors');
 
