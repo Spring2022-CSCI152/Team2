@@ -7,6 +7,7 @@ import Carousel from "./components/carousel.jsx";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Login from './components/login.jsx';
+import AlertsPage from './components/alertsPage.jsx';
 
 function App() {
   return (
