@@ -42,7 +42,7 @@ const Navbar = () => {
                 }
                 <div className="alertsContainer">
                
-                <Link to={"/alerts/"} className=""> <FontAwesomeIcon icon={faBell} />  </Link>
+                <Link to={"/alerts/"} className="alertButton"> <FontAwesomeIcon icon={faBell} />  </Link>
                     {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
                 </div>
                 <div className="profilePictureContainer">
