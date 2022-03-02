@@ -31,9 +31,10 @@ function App() {
             </div>
           } />
           <Route path="/alerts/" element={
-            <div className="App-body">
+            <div className="App-body-alerts">
            
             <br></br>
+            <AlertsPage></AlertsPage>
             
             
               
