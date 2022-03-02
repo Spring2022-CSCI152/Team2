@@ -1,5 +1,6 @@
 li.thumb{
     height:50px;
+    width:auto;
     
 }
 li.thumb img{
@@ -10,11 +11,12 @@ li.thumb img{
     border-color:black;
     border-width:1px;
 }
+
 .carousel .slide div.legend{
     opacity: 0;
     transition:opacity .40s ease-in-out;
     height:40vmin;
-    width:55%;
+    width:60%;
     /*Gradient for hover effect*/
    
     background: rgb(1,4,1);
@@ -39,9 +41,22 @@ li.thumb img{
 
     
 }
-.featUserNames{
-    display:inline;
+.userThumbResults h3{
+    align-self:flex-end;
+    bottom:0;
+  
 }
+.featUserNames {
+    display:inline-block;
+    
+
+}
+.featUserNames , .picTitle{
+    font-size:20px;
+
+    
+}
+
 .userThumb{
     
     display:flex;
@@ -51,10 +66,16 @@ li.thumb img{
   
     
 }
-.userThumbResults{
+
+div.userThumbResults{
     display:flex;
     gap: 30px;
     align-self:flex-start;
+    width:auto;
+}
+.userThumb .userThumbResults .userPicThumb{
+    height:75px;
+    width:75px;
 }
  p.userInfo{
     width:40%;
