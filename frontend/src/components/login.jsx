@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import '../assets/login.css';
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 
 const Login = () =>{
     const [username, setUsername] = useState("");
@@ -54,7 +55,7 @@ const Login = () =>{
 
                 </div>
                 <div className = "txt_field">
-                    <input type = "text" value={password} onChange={e => setPassword(e.target.value)} required>
+                    <input id = "password" type = "text" value={password} onChange={e => setPassword(e.target.value)} required>
 
                     </input>
                     <span></span>
@@ -66,9 +67,12 @@ const Login = () =>{
 
                     </input>
                     <span></span>
-                    <input type = "submit" value ="Register" onClick={e => setLoggingIn(false)}>
-                        
-                    </input>
+                    <Link to = "/registration">
+                        <button  id = "reg"  onClick={e => setLoggingIn(false)}>
+                            Register
+                            
+                        </button>
+                    </Link>
                     
                     
                 </div>
