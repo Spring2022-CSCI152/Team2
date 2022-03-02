@@ -1,14 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import '../assets/login.css';
+import axios from 'axios';
 
+const Login = () =>{
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [loggingIn, setLoggingIn] = useState(true);
 
+    const handleSubmit = (event) =>{
+        event.preventDefault();
+        const data = {
+            username: username,
+            email: "temporary-need-to-fill-in-login-form",
+            password: password
+        };
+        if (loggingIn) {
+            // axios
+            axios.post('http://localhost:5000/app/login', data)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err));
+            console.log("logging in");
+        } 
+        else {
+            // axios
+            axios.post('http://localhost:5000/app/signup', data)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err));
+            console.log("registering");
+        }
+    }
 
-const login = () =>{
     return(
-        <div class = "center">
+        <div className = "center">
             <h1>Login</h1>
-            <form method = "post">
-                <div class="uniqueLogin">
+            <form method = "post" onSubmit={handleSubmit}>
+                <div className="uniqueLogin" value = "test">
                 <input type = "button" value ="Login with Gmail">
 
                 </input>
@@ -17,30 +43,30 @@ const login = () =>{
                     
                 </input>
 
-                <div class = "sep"></div>
+                <div className = "sep"></div>
 
                 </div>
-                <div class = "txt_field">
-                    <input type = "text" required>
+                <div className = "txt_field">
+                    <input type = "text" value={username} onChange={e => setUsername(e.target.value)} required>
 
                     </input>
                     <label> username</label>
 
                 </div>
-                <div class = "txt_field">
-                    <input type = "text" required>
+                <div className = "txt_field">
+                    <input type = "text" value={password} onChange={e => setPassword(e.target.value)} required>
 
                     </input>
                     <span></span>
                     <label> password</label>
                     
                 </div>
-                <div class = "regSub">
-                    <input type = "submit" value ="Login">
+                <div className = "regSub">
+                    <input type = "submit" value ="Login" onClick={e => setLoggingIn(true)}>
 
                     </input>
                     <span></span>
-                    <input type = "submit" value ="Register">
+                    <input type = "submit" value ="Register" onClick={e => setLoggingIn(false)}>
                         
                     </input>
                 </div>
@@ -51,4 +77,4 @@ const login = () =>{
 }
  
 
-export default login;
+export default Login;
