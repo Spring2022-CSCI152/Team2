@@ -8,6 +8,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Login from './components/login.jsx';
 import AlertsPage from './components/alertsPage.jsx';
+import Registration from './components/registration.jsx';
 
 function App() {
   return (
@@ -15,9 +16,24 @@ function App() {
       <div className="App">
         <Navbar />
         <Routes>
-          <Route path= {"/login"} element={
-            <div className="App-body-login">
-              <Login />
+          
+            <Route path= {"/login"} element={
+              <div className="App-body-login">
+                <Login />
+              </div>
+            }/>
+              <Route path = {"/registration"} element={
+                <div classname ="App-body-registration">
+                  <Registration/>
+                </div>
+
+              }/>
+            
+          
+
+          <Route path = {"/registration"} element = {
+            <div className ="App-body-registration">
+              <Registration />
             </div>
           }/>
 

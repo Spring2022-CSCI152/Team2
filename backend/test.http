@@ -1,8 +1,1 @@
-POST http://localhost:5000/app/signup
-Content-Type: application/json
-
-{
-    "name": "LabRat",
-    "email": "labrat@mail.edu",
-    "password": "iamarat"
-}
+DELETE  http://localhost:5000/api/dbtest
