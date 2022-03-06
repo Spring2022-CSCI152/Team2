@@ -17,7 +17,7 @@ class AlertsPage extends React.Component{
 // execute the code 
 componentDidMount() {
     fetch(
-      "https://picsum.photos/v2/list?page=0&limit=1")
+      "https://picsum.photos/v2/list?page=0&limit=2")
         .then((res) => res.json())
         .then((json) => {
             this.setState({
@@ -40,11 +40,16 @@ componentDidMount() {
       </Alert> )
       ;
     }
+    function ZeroAlertContent(){
+      return(
+        <article className = "no-content"> <p >Congrats! No re-uploads detected!</p> </article>
+      );
+    }
     function NumAlerts(props){
      return(
-      <Alert severity="warning"> 
-      <AlertTitle>Re-uploads Detected!</AlertTitle>
-      You have {props.nAlerts} new alerts! Check it our <strong>below!</strong>
+      <Alert  severity="warning"> 
+      <AlertTitle>Re-upload(s) Detected!</AlertTitle>
+      You have {props.nAlerts} new alert(s)! Check it our <strong>below!</strong>
       </Alert>);
     }
     function AlertBox(props){
@@ -55,6 +60,29 @@ componentDidMount() {
         return <NumAlerts nAlerts = {nAlerts}/>;
       }
     }
+    function Alerts(props){
+      return(items.map((item) => ( 
+        <article className = "singleAlert" key = { item.id } >
+          {/*   User_Name: { item.author }, 
+            Full_Name: { item.width }, 
+            User_Email: { item.height }  */}
+            <div className = "alertImgContainer">IMG</div>
+            <div className = "alertCard">CARD</div>
+            <div className = "alertLinks">LINK</div>
+        </article>
+        )));
+    }
+    function AlertContent(props){
+      const nAlerts = props.numAlert;
+
+      if(nAlerts == 0){
+        return <ZeroAlertContent/>;
+      }else{
+        return <Alerts nAlerts = {nAlerts}/>;
+      }
+
+    }
+
     
     const{DataisLoaded,items} = this.state;
        
@@ -66,7 +94,7 @@ componentDidMount() {
        </section>
   
     <section className = "activeAlerts">
-      
+      <AlertContent  numAlert = {items.length}/>
     </section>
   </>               
         

@@ -1,7 +1,17 @@
-.alertBoxContainer{
-
+.no-content{
+    color:gray;
+    justify-content: center;
+    margin-top:20%;
+}
+.singleAlert{
+    
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    padding-bottom:20%;
     
 }
-.App-body{
-
+.activeAlerts{
+    width:50%;
+    margin-top:10%;
 }
