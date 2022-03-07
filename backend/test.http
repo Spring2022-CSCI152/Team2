@@ -1,1 +1,8 @@
-DELETE  http://localhost:5000/api/dbtest
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+
+    "email":"test3@jtest.com",
+    "password": "Test123"
+}
