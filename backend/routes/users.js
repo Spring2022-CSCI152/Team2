@@ -77,7 +77,7 @@ router.post('/login', (req, res) => {
                 // Sign the token
                 jwt.sign(
                     paylod, 
-                    process.env.secretKey, { expiresIn: 31556926 }, // 1 year in seconds
+                    process.env.secretKey, { expiresIn: 15780000 }, // 6 months in seconds
                     (err, token) => { 
                         res.json({
                             success: true,
