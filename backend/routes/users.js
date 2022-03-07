@@ -10,7 +10,6 @@ const validateLoginInput = require('../validation/login');
 
 // Load User model
 const User = require('../models/user');
-const user = require('../models/user');
 
 // Register Route
 router.post('/register', (req, res) => {
@@ -27,7 +26,7 @@ router.post('/register', (req, res) => {
         if (user){
             return res.status(400).json({ email: "Email already exists" });
         } else {
-            const newUser = new user({
+            const newUser = new User({
                 name: req.body.name,
                 email: req.body.email,
                 password: req.body.password
@@ -76,7 +75,7 @@ router.post('/login', (req, res) => {
 
                 // Sign the token
                 jwt.sign(
-                    paylod, 
+                    payload, 
                     process.env.secretKey, { expiresIn: 15780000 }, // 6 months in seconds
                     (err, token) => { 
                         res.json({
