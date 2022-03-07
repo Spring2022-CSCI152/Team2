@@ -1,6 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Alert  from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 import '../assets/alertsPage.css';
 class AlertsPage extends React.Component{
    // Constructor 
@@ -17,7 +23,7 @@ class AlertsPage extends React.Component{
 // execute the code 
 componentDidMount() {
     fetch(
-      "https://picsum.photos/v2/list?page=0&limit=2")
+      "https://picsum.photos/v2/list?page=0&limit=3")
         .then((res) => res.json())
         .then((json) => {
             this.setState({
@@ -62,14 +68,42 @@ componentDidMount() {
     }
     function Alerts(props){
       return(items.map((item) => ( 
+        <>
+        
         <article className = "singleAlert" key = { item.id } >
+          
           {/*   User_Name: { item.author }, 
             Full_Name: { item.width }, 
             User_Email: { item.height }  */}
-            <div className = "alertImgContainer">IMG</div>
-            <div className = "alertCard">CARD</div>
+            <div className = "alertImgContainer"><img src = {item.download_url}></img></div>
+            <Card className = "alertCard">
+                <CardContent>
+                
+                
+           
+                  <Typography  color="text.secondary" gutterBottom>
+                    Image Detected
+                  </Typography>
+                  <Divider/>
+                  <Typography variant="body2" color="text.primary">
+                    Your image has been detected on
+                  </Typography>
+                </CardContent>
+                <div className = "cardButtons">
+                
+                 
+                    <Button size="small">Rescan</Button>
+                    <Button size="small">Resolved</Button>
+                
+                  
+                 
+                </div>
+            </Card>
             <div className = "alertLinks">LINK</div>
+        
         </article>
+        </>
+       
         )));
     }
     function AlertContent(props){
