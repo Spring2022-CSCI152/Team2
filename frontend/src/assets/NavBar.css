@@ -104,6 +104,9 @@
     padding: 0.25rem 1rem 0.25rem 1rem;
     margin-right: 0;
 }
+.alertButton:hover{
+    background-color: #c6c6c6;
+}
 
 .aboutButton:hover,.loginButton:hover{
     outline: none;
