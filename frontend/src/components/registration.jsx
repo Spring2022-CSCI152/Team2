@@ -45,12 +45,7 @@ const registration = () =>{
             console.log("registering");
         
         }
-        else{
-            axios.post('http://localhost:5000/app/login', data)
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err));
-            console.log("logging in"); 
-        }
+        
     
     }
 
@@ -73,17 +68,23 @@ const registration = () =>{
 
                 </button>
             </div>
-            <div className="col2">
-                <input type = 'text' className = 'username'>
+            <form method = "post" onSubmit={handleSubmit}>
+                <div className="col2">
+                    <input type = 'text' className = 'username' value={username} onChange={e => setUsername(e.target.value)} required>
 
-                </input>
-                <input type = 'text' className = 'password'>
+                    </input>
+                    <input type = 'text' className = 'password' value={setPassword} onChange={e => setPassword(e.target.value)} required>
 
-                </input>
-                <input type = 'text' className = 'Email'>
+                    </input>
+                    <input type = 'text' className = 'Email' value={setEmail} onChange={e => setEmail(e.target.value)} required>
 
-                </input>
-            </div>
+                    </input>
+                </div>
+
+                <button className='submit' type = 'button' onClick={e => setRegisteration(true)}>
+                    Submit
+                </button>
+            </form>
         </div>
 
     )
