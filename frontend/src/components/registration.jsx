@@ -3,22 +3,9 @@ import '../assets/registration.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 
-const header = () =>{
-
-    return(
-
-        <div className="header">
-            <p>Already have an account?</p>
-            <Link to = "/login">
-                <button className='login' type = 'button'>Login</button>
-            </Link>
-        </div>
-
-    )
-}
 
 
-const registration = () =>{
+const Registration = () =>{
 
 
     const [username, setUsername] = useState("");
@@ -56,6 +43,12 @@ const registration = () =>{
 
     
         <div className="container">
+            <div className="header">
+                <p>Already have an account?</p>
+                    <Link to = "/login">
+                        <button className='login' type = 'button'>Login</button>
+                    </Link>
+                </div>
             <div className="col1">
                 <p>
                     You can also sign in with these:
@@ -91,5 +84,4 @@ const registration = () =>{
     
 }
  
-export default header;
-export default registration;
+export default Registration;
