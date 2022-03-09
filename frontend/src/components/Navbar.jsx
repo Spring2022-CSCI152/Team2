@@ -1,7 +1,7 @@
 import React from 'react';
 import '../assets/NavBar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSearch, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSearch, faBars, faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 
@@ -31,6 +31,12 @@ const Navbar = () => {
                     <React.Fragment>
                         <Link to={"/about"} className="aboutButton"> About </Link>
                         <Link to={"/login"} className="loginButton"> Login </Link>
+                        <div className="profilePictureContainer">
+                        <Link to={"/alert"} className="alertButton"> 
+                            <FontAwesomeIcon icon={faBell} />
+                            {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
+                        </Link>
+                        </div>
                     </React.Fragment>
                 }
                 {isMobile && 
@@ -39,8 +45,11 @@ const Navbar = () => {
                     </React.Fragment>
                 }
                 <div className="profilePictureContainer">
-                    <FontAwesomeIcon icon={faUser} />
-                    {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
+                    
+                    <Link to={"/account"} className="accountButton"> 
+                        <FontAwesomeIcon icon={faUser} />
+                        {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
+                    </Link>
                 </div>
             </div>
         </div>

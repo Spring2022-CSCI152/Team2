@@ -1,0 +1,21 @@
+.header{
+    width: 50%;
+    color: white;
+    font-size: larger;
+    font-family:'Courier New', Courier, monospace;
+}
+
+
+#profilePic{
+    position: relative;
+    left:80px; 
+    top:2px;
+
+}
+
+#userImg{
+
+}
+.bio{
+
+}

@@ -40,6 +40,13 @@ function App() {
             </div>
             // </div>
           }/>
+          <Route path= {"/account"} element={
+            // <div className = "App-body">
+            <div className="App-body-about">
+              <About/>
+            </div>
+            // </div>
+          }/>
           
           <Route path="*" element={ // This is the catch-all route
             <div className="App-body">
