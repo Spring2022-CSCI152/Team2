@@ -18,24 +18,77 @@
     margin-top:10%;
     margin-right:5em;
 }
-div.css-bhp9pd-MuiPaper-root-MuiCard-root{
-    width:12em;
-    background-color:  rgba(255, 255, 255, 0.753);;
-    height:6em;
-}
+/*Image CSS*/
+
 .alertImgContainer img{
-    width:8em;
+    
+    height:10vw;
    
 }
 .alertImgContainer{
     display:flex;
     flex-direction:column;
-   
-    
+}
+/*Image Detected Card*/
+div.css-bhp9pd-MuiPaper-root-MuiCard-root:not(.cardButtons) {
+    width:35%;
+    background-color:  rgba(255, 255, 255, 0.753);;
+    height:25%;
 
 }
-.cardButtons {
-    width:inherit;
+div.cardButtons {
+    width:100%;
     justify-content:center;
+    align-self:flex-end;
     
+    
+    
+    
+}
+div.cardButtons button{
+
+  padding:5%;
+    font-size:1.2vw;
+    padding-bottom:5%;
+    
+}
+div.css-46bh2p-MuiCardContent-root {
+    padding:3%;
+}
+.MuiPaper-root:not(.alertBoxContainer div){
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+p.MuiTypography-body2{ 
+    margin-top:5%;
+    font-size:1.08vw;
+}
+p.MuiTypography-body1{
+    font-size:1vw;
+}
+
+/*CSS for Links*/
+.alertLinks{
+    width:10%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:1.1vw;
+
+    
+}
+.indivLink{
+    
+    border-radius: 1rem;
+    margin-right: 1rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    background-color: #efefef;
+    color: black;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    width:100%;
+    font-size:1.2vw;
+    
+
 }

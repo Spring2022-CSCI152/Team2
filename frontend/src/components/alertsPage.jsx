@@ -58,6 +58,16 @@ componentDidMount() {
       You have {props.nAlerts} new alert(s)! Check it our <strong>below!</strong>
       </Alert>);
     }
+    function RenderLinks(propsL){
+      let x = propsL.propsLinks;
+      let i = 0;
+      let e = [];
+      while(i < x){
+       e.push( <a class = "indivLink" href = "https://www.google.com">Test</a>);
+        i++;
+      }
+     return e;
+    }
     function AlertBox(props){
       const nAlerts = props.numAlert;
       if(nAlerts == 0){
@@ -69,7 +79,6 @@ componentDidMount() {
     function Alerts(props){
       return(items.map((item) => ( 
         <>
-        
         <article className = "singleAlert" key = { item.id } >
           
           {/*   User_Name: { item.author }, 
@@ -84,7 +93,7 @@ componentDidMount() {
                   <Typography  color="text.secondary" gutterBottom>
                     Image Detected
                   </Typography>
-                  <Divider/>
+                  <Divider></Divider>
                   <Typography variant="body2" color="text.primary">
                     Your image has been detected on
                   </Typography>
@@ -94,16 +103,15 @@ componentDidMount() {
                  
                     <Button size="small">Rescan</Button>
                     <Button size="small">Resolved</Button>
-                
-                  
-                 
                 </div>
             </Card>
-            <div className = "alertLinks">LINK</div>
+            <div className = "alertLinks">
+                <RenderLinks propsLinks = {3}/>
+                
+            </div>
         
         </article>
         </>
-       
         )));
     }
     function AlertContent(props){
