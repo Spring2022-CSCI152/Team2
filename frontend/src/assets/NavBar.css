@@ -91,7 +91,7 @@
     color: #a6a6a6;
 }
 
-.aboutButton, .loginButton {
+.aboutButton, .loginButton, .alertButton {
     border-radius: 1rem;
     margin-right: 1rem;
     padding: 0.5rem 2rem 0.5rem 2rem;
@@ -100,8 +100,15 @@
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
 }
+.alertButton{
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    margin-right: 0;
+}
+.alertButton:hover{
+    background-color: #c6c6c6;
+}
 
-.aboutButton:hover,.loginButton:hover {
+.aboutButton:hover,.loginButton:hover{
     outline: none;
     background-color: #c6c6c6;
     cursor: pointer;
@@ -114,11 +121,12 @@
     color: white;
 }
 
-.profilePictureContainer {
+.profilePictureContainer,.alertsContainer {
     display: flex;
     align-items: center;
     height: 3rem;
     font-size: 2rem;
     color: white;
-    margin-right: 1rem;
+    margin-right: 1.5rem;
 }
+

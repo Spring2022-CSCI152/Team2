@@ -7,6 +7,7 @@ import Carousel from "./components/carousel.jsx";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Login from './components/login.jsx';
+import AlertsPage from './components/alertsPage.jsx';
 import Registration from './components/registration.jsx';
 
 function App() {
@@ -45,7 +46,16 @@ function App() {
               
             </div>
           } />
-
+          <Route path="/alerts/" element={
+            <div className="App-body-alerts">
+           
+            <br></br>
+            <AlertsPage></AlertsPage>
+            
+            
+              
+            </div>
+          } />
           
           
           <Route path="*" element={ // This is the catch-all route
