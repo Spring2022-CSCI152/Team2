@@ -8,7 +8,7 @@ const Login = () =>{
     const [password, setPassword] = useState("");
     const [loggingIn, setLoggingIn] = useState(true);
 
-    const handleSubmit = (event) =>{
+    const HandleSubmit = (event) =>{
         event.preventDefault();
         const data = {
             username: username,
@@ -34,7 +34,7 @@ const Login = () =>{
     return(
         <div className = "center">
             <h1>Login</h1>
-            <form method = "post" onSubmit={handleSubmit}>
+            <form method = "post" onSubmit={HandleSubmit}>
                 <div className="uniqueLogin" value = "test">
                 <input type = "button" value ="Login with Gmail">
 
