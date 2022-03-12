@@ -8,60 +8,66 @@ function account() {
     return (
         <div className = "accounth">
 
-        <div id ="profilePic" >
-            <img src="/logo192.png" ></img>
-        </div>
+            <div className='accountInfo'>
+                <div id ="profilePic" >
+                    <img id="profileImg" src="/logo192.png" ></img>
+                </div>
 
-        <div id = "profileCont">
-            <p>
-                Username
-            </p>
-        </div>
+                <div className='usernameAndSocials'>
+                    <div id = "profileCont">
+                        <p>
+                            Username
+                        </p>
+                    </div>
 
-        <div id ="profileBio">
-            <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, explicabo corporis? Sequi repellendus expedita, veritatis nam sed neque quisquam, repellat tempore et possimus perspiciatis sapiente! Quisquam incidunt mollitia nulla aliquid.
-            </p> 
-        </div>
+                    <div className='socialMedia'>
+                        <div id = "profileInsta">
+                        <button className="socialButton" >
+                                <FontAwesomeIcon icon={faInstagram} />
+                        </button>
+                        </div>
 
-        <div id ="profileDrag">
-            <p>
-               Upload (Drag and Drop)
-            </p>
-        </div>
+                        <div id = "profileTwitter">
+                        <button className="socialButton" >
+                                <FontAwesomeIcon icon={faTwitter} />
+                        </button>
+                        </div>
+                    </div>
+                </div>
 
-        <div id = "profileInsta">
-        <button className="searchButton" >
-                <FontAwesomeIcon icon={faInstagram} />
-        </button>
-        </div>
+                <div id ="profileBio">
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, explicabo corporis? Sequi repellendus expedita, veritatis nam sed neque quisquam, repellat tempore et possimus perspiciatis sapiente! Quisquam incidunt mollitia nulla aliquid.
+                    </p> 
+                </div>
 
-        <div id = "profileTwitter">
-        <button className="searchButton" >
-                <FontAwesomeIcon icon={faTwitter} />
-        </button>
-        </div>
+                <div id ="profileDrag">
+                    <p>
+                        Upload (Drag and Drop)
+                    </p>
+                </div>
+            </div>
 
-        <div id = "tableinfo">
-        <table>
-           <tr> 
-               <td><img src="/logo192.png" ></img></td>
-               <td><img src="/logo192.png" ></img></td>
-               <td><img src="/logo192.png" ></img></td>
-           </tr>
-           <tr> 
-               <td><img src="/logo192.png" ></img></td>
-               <td><img src="/logo192.png" ></img></td>
-               <td><img src="/logo192.png" ></img></td>
-           </tr>
-           <tr> 
-               <td><img src="/logo192.png" ></img></td>
-               <td><img src="/logo192.png" ></img></td>
-               <td><img src="/logo192.png" ></img></td>
-           </tr>
+            <div id = "tableinfo">
+            <table>
+            <tr> 
+                <td><img src="/logo192.png" ></img></td>
+                <td><img src="/logo192.png" ></img></td>
+                <td><img src="/logo192.png" ></img></td>
+            </tr>
+            <tr> 
+                <td><img src="/logo192.png" ></img></td>
+                <td><img src="/logo192.png" ></img></td>
+                <td><img src="/logo192.png" ></img></td>
+            </tr>
+            <tr> 
+                <td><img src="/logo192.png" ></img></td>
+                <td><img src="/logo192.png" ></img></td>
+                <td><img src="/logo192.png" ></img></td>
+            </tr>
 
-        </table>
-        </div>
+            </table>
+            </div>
         </div>
 
     )
