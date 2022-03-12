@@ -8,7 +8,7 @@ function account() {
     return (
         <div className = "accounth">
 
-        <div id ="profilePic" style={{color: "red", fontSize: "16px"}}>
+        <div id ="profilePic" >
             <img src="/logo192.png" ></img>
         </div>
 
@@ -26,7 +26,7 @@ function account() {
 
         <div id ="profileDrag">
             <p>
-               Upload and Drag
+               Upload (Drag and Drop)
             </p>
         </div>
 
