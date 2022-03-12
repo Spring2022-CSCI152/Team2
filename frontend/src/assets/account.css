@@ -1,21 +1,68 @@
-.header{
-    width: 50%;
-    color: white;
-    font-size: larger;
-    font-family:'Courier New', Courier, monospace;
+.accounth{
 }
 
 
 #profilePic{
     position: relative;
-    left:80px; 
-    top:2px;
-
+    right:560px; 
+    top:-110px;
+    border: 3px solid white;
+    border-radius: 10px;
+    height:250px;
+    width: 250px;
+    display:flex;
 }
 
-#userImg{
+#profileCont{
+    position: relative;
+    font-size:12px;
+    right:560px; 
+    top:-100px;
+    border: 3px solid white;
+    border-radius: 10px;
+    padding:-10px;
+    width: 125px;
+}
+#profileBio{
+    position: relative;
+    font-size:12px;
+    right:560px; 
+    top:-90px;
+    border: 3px solid white;
+    border-radius: 10px;
+    padding:-10px;
+    width:250px;
+}
+#profileDrag{
+    position: relative;
+    font-size:12px;
+    right:560px; 
+    top:-80px;
+    border: 3px solid white;
+    border-radius: 10px;
+    padding:-10px;
+}
+
+#profileInsta{
+    position: relative;
+    left:-400px; 
+    top:-300px;
+    height:50px;
+  
 
 }
-.bio{
+#profileTwitter{
+    position: relative;
+    left:-370px; 
+    top:-350px;
 
+
+}
+#tableinfo{
+    position: absolute;
+    right:150px; 
+    top:140px;
+    background-color: white;
+    border: 3px solid white;
+    border-radius: 10px;
 }

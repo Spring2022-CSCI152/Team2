@@ -8,6 +8,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Login from './components/login.jsx';
 import About from './components/about.jsx';
+import Account from './components/account.jsx';
 import './assets/featUsers.css';
 
 function App() {
@@ -41,9 +42,9 @@ function App() {
             // </div>
           }/>
           <Route path= {"/account"} element={
-            // <div className = "App-body">
-            <div className="App-body-about">
-              <About/>
+            //<div className = "App-body">
+            <div className="App-body">
+              <Account/>
             </div>
             // </div>
           }/>
