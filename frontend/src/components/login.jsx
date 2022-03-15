@@ -63,10 +63,11 @@ const Login = () =>{
                     
                 </div>
                 <div className = "regSub">
+                    <div>
                     <input type = "submit" value ="Login" onClick={e => setLoggingIn(true)}>
 
                     </input>
-                    <span></span>
+                    </div>
                     <Link to = "/registration">
                         <button  id = "reg"  onClick={e => setLoggingIn(false)}>
                             Register
