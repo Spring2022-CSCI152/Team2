@@ -79,14 +79,14 @@ form .txt_field{
   width:100%;
 }
 
-.pass{
+.password{
   margin: -5px 0 20px 5px;
   color: #a6a6a6;
   cursor: pointer;
 
 }
 
-.pass:hover{
+.password:hover{
   text-decoration:underline;
 
 }

@@ -16,7 +16,7 @@
     position: absolute;
     display: flex;
     justify-content: space-around;
-    top: 60%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: lightgrey;
@@ -86,54 +86,9 @@
     margin-top: 10px;
   }
 
-  .form1 .txt_field1{
-    position: relative;
-    border-bottom: 2px solid grey;
-    margin: 10px 0;
-  }
-  
-  .txt_field1 .input1{
-    width: 100%;
-    padding: 0 5px;
-    height: 40px;
-    font-size: 16px;
-    border: none;
-    background: none;
-    outline: none;
-  }
-  
-  .txt_field1 .label1{
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    color: grey;
-    transform: translateY(-50%);
-    font-size: 16px;
-    pointer-events: none;
-    transition: .5s;
-  }
-  .txt_field1 .span1::before{
-    content: '';
-    position: absolute;
-    top: 40px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: grey;
-    
-  }
 
-  .txt_field1 .input1:focus ~ label, 
-  .txt_field1 .input1:valid ~ label{
-    top: -2.5px;
-    color: rgb(0, 8, 10);
-  
-  }
-  
-  .txt_field1 .input1:focus ~ span::before, 
-  .txt_field1 .input1:valid ~ span::before{
-    width:100%;
-  }
+
+ 
   
  
 
@@ -152,19 +107,11 @@
 
   .submit{
     position: absolute;
-    top: 250px;
+    top: 200px;
   }
 
-  .txt_field1 #pass{
-    -webkit-text-security: disc;
-    -moz-text-security: disc;
-  }
  
-  .txt_field1 #conf{
-    -webkit-text-security: disc;
-    -moz-text-security: disc;
-  }
-  
+
 
 
  

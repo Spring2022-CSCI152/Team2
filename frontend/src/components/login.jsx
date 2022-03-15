@@ -24,7 +24,7 @@ const Login = () =>{
         } 
         else {
             // axios
-            axios.post('http://localhost:5000/app/signup', data)
+            axios.post('http://localhost:5000/app/registration', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("registering");

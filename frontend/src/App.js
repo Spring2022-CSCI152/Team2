@@ -16,17 +16,17 @@ function App() {
         <Navbar />
         <Routes>
           
-            <Route path= {"/login"} element={
-              <div className="App-body-login">
-                <Login />
+          <Route path= {"/login"} element={
+            <div className="App-body-login">
+              <Login />
+            </div>
+          }/>
+            <Route path = {"/registration"} element={
+              <div className ="App-body-registration">
+                <Registration/>
               </div>
-            }/>
-              <Route path = {"/registration"} element={
-                <div classname ="App-body-registration">
-                  <Registration/>
-                </div>
 
-              }/>
+            }/>
             
           
 
