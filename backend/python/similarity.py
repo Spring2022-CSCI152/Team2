@@ -34,9 +34,11 @@ def main():
     # convert to greyscale
     img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+    # map to same dimensions
+    img1 = cv2.resize(img1, (img2.shape[1], img2.shape[0]))
 
     # call similarity function
-    return similarity(image1, image2)
+    print(similarity(img1, img2))
 
 if __name__ == '__main__':
     main()
