@@ -9,6 +9,7 @@ import Footer from './components/Footer.jsx';
 import Login from './components/login.jsx';
 import AlertsPage from './components/alertsPage.jsx';
 import Registration from './components/registration.jsx';
+import ImageSimilarity from './components/ImageSimilarity';
 
 function App() {
   return (
@@ -56,7 +57,11 @@ function App() {
               
             </div>
           } />
-          
+          <Route path="/imgSim" element={
+            <div className="App-body">
+              <ImageSimilarity/>
+            </div>
+          } />
           
           <Route path="*" element={ // This is the catch-all route
             <div className="App-body">

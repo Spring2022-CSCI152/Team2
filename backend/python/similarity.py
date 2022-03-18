@@ -38,7 +38,9 @@ def main():
     img1 = cv2.resize(img1, (img2.shape[1], img2.shape[0]))
 
     # call similarity function
-    print(similarity(img1, img2))
+    sim = similarity(img1, img2)
+    print("Similarity:", sim)
+    return sim
 
 if __name__ == '__main__':
     main()
