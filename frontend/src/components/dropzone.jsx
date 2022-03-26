@@ -1,7 +1,7 @@
 
 import React from "react";
 // Import the useDropzone hooks from react-dropzone
-import { useDropzone, useCallback  } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 
 const Dropzone = ({ onDrop, accept }) => {
   // Initializing useDropzone hooks with options
@@ -22,10 +22,11 @@ const Dropzone = ({ onDrop, accept }) => {
         {isDragActive ? (
           <p className="dropzone-content">Release to drop the files here</p>
         ) : (
-          <p className="dropzone-content">
+            <p className="dropzone-content">
             Drag 'n' drop some files here, or click to select files
           </p>
         )}
+        
       </div>
     </div>
   );

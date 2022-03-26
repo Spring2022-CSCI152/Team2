@@ -31,6 +31,7 @@ const Navbar = () => {
                     <React.Fragment>
                         <Link to={"/about"} className="aboutButton"> About </Link>
                         <Link to={"/login"} className="loginButton"> Login </Link>
+                        
                         <div className="profilePictureContainer">
                         <Link to={"/alert"} className="alertButton"> 
                             <FontAwesomeIcon icon={faBell} />

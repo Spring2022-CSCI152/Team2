@@ -1,0 +1,44 @@
+.alertMessage{
+    color: black;
+    padding: 5px;
+    background: lightgrey;
+    border-radius: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30%;
+  
+}
+
+#artImage{
+    height:250px;
+    width: 250px;
+    position:absolute; left:100px; top:220px;
+   
+}
+
+#artImg {
+    border: 3px solid white;
+    border-radius: 20px;
+    
+}
+
+.alertInfo{
+    color: black;
+    padding: 5px;
+    background: lightgrey;
+    border-radius: 10px;
+    position:absolute; 
+    margin-top: 20px;
+    
+  
+}
+
+#link1{
+    position:relative;left:400px;top:-350px;
+   
+
+}
+#link2{
+    
+    position:relative;left:400px;top:-200px;
+
+}
