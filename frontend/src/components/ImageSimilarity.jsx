@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import S3FileUpload from 'react-s3';
 import Buffer from 'buffer';
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const config = {
     bucketName: 'notforthieves',
@@ -19,10 +20,12 @@ const ImageSimilarity = () => {
     return ( 
         <div className="imageSimilarity">
             <div className="imageSimilarityContainer">
-                <form onSubmit={uploadFile}>
+                <input type="file" onChange={ uploadFile } />
+
+                {/* <form onSubmit={uploadFile}>
                     <input type="file"/>
                     <input type="submit"></input>
-                </form>
+                </form> */}
             </div>
         </div>
     );
