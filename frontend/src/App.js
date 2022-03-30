@@ -9,7 +9,7 @@ import Footer from './components/Footer.jsx';
 import Login from './components/login.jsx';
 import AlertsPage from './components/alertsPage.jsx';
 import Registration from './components/registration.jsx';
-
+import SearchPage from './components/searchPage.jsx';
 function App() {
   return (
     <BrowserRouter>
@@ -56,6 +56,17 @@ function App() {
               
             </div>
           } />
+          <Route path="/search/" element={
+            <div className="App-body-alerts">
+           
+            <br></br>
+            <SearchPage></SearchPage>
+            
+            
+              
+            </div>
+          } 
+          />
           
           
           <Route path="*" element={ // This is the catch-all route
