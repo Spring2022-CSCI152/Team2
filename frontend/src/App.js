@@ -42,11 +42,11 @@ function App() {
             </div>
             // </div>
           }/>
+          
           <Route path= {"/account"} element={
             //<div className = "App-body">
             <div className="App-body">
               <Account/>
-               <Dropzone/>
             </div>
             // </div>
           }/>
