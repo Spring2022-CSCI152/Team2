@@ -1,0 +1,117 @@
+.App-body-registration{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(120deg, black, rgb(41, 156, 194));
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .header{
+      position:relative;
+      top: 50px;
+      left: 0%;
+  }
+  
+  .container2{
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: lightgrey;
+    border-radius: 10px;
+    padding-top: 20px;
+    padding-bottom: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 50vh;
+    
+  
+  }
+
+  .col1{
+    position: relative;
+    top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid black;
+    padding-right: 10px;
+    
+
+  }
+
+  .col2{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    top:0%;
+    padding-left: 10px;
+    width: 150px;
+    margin: 5px;
+
+
+  }
+
+
+  h3{
+    color: white;
+  }
+
+  button{
+
+
+  width: 75px;
+  height: 35px;
+  border: 1px solid;
+  background: rgb(85, 172, 201);
+  border-radius: 10px;
+  font-size: 12px;
+  color: #e9f4fb;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+
+  }
+
+  button:hover{
+    border-color: rgb(45, 136, 167);
+    transition: .5s;
+  }
+
+  .submit{
+    position: relative;
+    left: 25%;
+    margin-top: 10px;
+  }
+
+
+
+ 
+  
+ 
+
+  .placement{
+    display: flex;
+    flex-direction: column;
+   
+  }
+
+  .option1{
+    width: 100%;
+
+    margin-bottom: 25px;
+    
+  }
+
+  .submit{
+    position: absolute;
+    top: 200px;
+  }
+
+ 
+
+
+
+ 

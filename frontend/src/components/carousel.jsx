@@ -22,8 +22,9 @@ class HomeCarousel extends Component{
             let pictures = data.results.map((pic) => {
               return (
                 <div className = "userThumbResults" key = {pic.results}>
-                  <img src = {pic.picture.thumbnail} />
-                  <h3 class = "featUserNames">{pic.name.first} {pic.name.last}</h3>
+                  <img className = "userPicThumb" src = {pic.picture.thumbnail} />
+                 <h3 className = "featUserNames">{pic.name.first} {pic.name.last}</h3>
+                  <h3 className = "picTitle">Title</h3>
                 </div>
               )
             })
