@@ -23,6 +23,16 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.App-body-alerts{
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
 
 .App-link {
   color: #61dafb;
@@ -36,3 +46,9 @@
     transform: rotate(360deg);
   }
 }
+/* .App-body-about{
+  display: flex;
+  flex-direction: column;
+  gap: 25%;
+  
+} */

@@ -8,7 +8,7 @@ const Login = () =>{
     const [password, setPassword] = useState("");
     const [loggingIn, setLoggingIn] = useState(true);
 
-    const handleSubmit = (event) =>{
+    const HandleSubmit = (event) =>{
         event.preventDefault();
         const data = {
             username: username,
@@ -24,7 +24,7 @@ const Login = () =>{
         } 
         else {
             // axios
-            axios.post('http://localhost:5000/app/signup', data)
+            axios.post('http://localhost:5000/app/registration', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("registering");
@@ -34,7 +34,7 @@ const Login = () =>{
     return(
         <div className = "center">
             <h1>Login</h1>
-            <form method = "post" onSubmit={handleSubmit}>
+            <form method = "post" onSubmit={HandleSubmit}>
                 <div className="uniqueLogin" value = "test">
                 <input type = "button" value ="Login with Gmail">
 
@@ -63,10 +63,11 @@ const Login = () =>{
                     
                 </div>
                 <div className = "regSub">
+                    <div>
                     <input type = "submit" value ="Login" onClick={e => setLoggingIn(true)}>
 
                     </input>
-                    <span></span>
+                    </div>
                     <Link to = "/registration">
                         <button  id = "reg"  onClick={e => setLoggingIn(false)}>
                             Register
