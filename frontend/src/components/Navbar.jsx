@@ -51,17 +51,11 @@ const Navbar = () => {
                     {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
                 </div>
                 <div className="profilePictureContainer">
-<<<<<<< HEAD
-                
-                    <FontAwesomeIcon icon={faUser} />
-                    {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
-=======
                     
                     <Link to={"/account"} className="accountButton"> 
                         <FontAwesomeIcon icon={faUser} />
                         {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
                     </Link>
->>>>>>> MaryBranch
                 </div>
             </div>
         </div>
