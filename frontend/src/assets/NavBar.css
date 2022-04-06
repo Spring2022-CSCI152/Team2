@@ -103,7 +103,7 @@
 .alertButton{
     padding: 0.25rem 1rem 0.25rem 1rem;
     margin-right: 0;
-    background-color:black;
+
 }
 .alertButton:hover{
     background-color: #c6c6c6;
@@ -132,7 +132,7 @@
     margin-right: 1rem;
 }
 .alertButton{
-    color: white; 
+    color: black; 
 }
 
 .accountButton{
