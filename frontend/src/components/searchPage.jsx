@@ -13,29 +13,62 @@ import Divider from '@mui/material/Divider';
 import DataGrid from "./dataGrid.jsx";
 import '../assets/alertsPage.css';
 import '../assets/searchPage.css';
+import '../assets/dataGrid.css';
 class SearchPage extends React.Component{
-  state = {
-    data: [],
-    keyword:"",
-    per: 16,
-    searchType: 0,
-    page: 1,
-    total_pages: 4
+  
+    // Constructor 
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        data: [],
+        keyword:"",
+        per: 16,
+        searchType: 0,
+        page: 1,
+        total_pages: 4,
+          DataisLoaded: false
+      };
+  }
+  loadData = () => {
+    const { per, page, data } = this.state;
+    const endpoint = `https://randomuser.me/api/?nat=us&results=${per}&page=${page}`;
+    
+    fetch(endpoint)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          data: [...data, ...json.results],
+          total_pages: json.info.results
+        });
+      });
   };
 
   render(){
   
     
-    const SearchFilters = (props) => {
+    const SearchFilters = () => {
    
       const [value, setValue] = React.useState(0);
   
       const handleChange = (event, newValue) => {
-        setValue(newValue);
-        this.state.searchType = newValue;
+      
+        this.setState({
+          data: [],
+          keyword:"",
+          per: 16,
+          searchType: newValue,
+          page: 1,
+          total_pages: 4,
+            DataisLoaded: false
+
+        })
       };
-          
+     
+  
+      console.log("searchPage : " + this.state.searchType);
       return(
+     
       <article>
           <Tabs value={value} onChange={handleChange} centered>
               <Tab className ="filters" label="All" />
@@ -53,6 +86,8 @@ class SearchPage extends React.Component{
     
       
         <SearchFilters></SearchFilters>
+        
+        <DataGrid searchType = {this.state.searchType} data = {this.state.data}></DataGrid>
       
       
     </>               
