@@ -127,6 +127,13 @@
     height: 3rem;
     font-size: 2rem;
     color: white;
-    margin-right: 1.5rem;
+
+    margin-right: 1rem;
+}
+.alertButton{
+    color: white; 
 }
 
+.accountButton{
+    color:white;
+}
