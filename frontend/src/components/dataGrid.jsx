@@ -9,17 +9,21 @@ class DataGrid extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = {
+     this.state = {
+         
         searchType : props.searchType,
         data : props.data
 
     };
+  
 }
 
+
+
   render(){
-   
   
-    function DisplayAll(props){
+  
+    function DisplayImages(props){
         {/*display images from data */}
        
         return (
@@ -42,29 +46,25 @@ class DataGrid extends React.Component{
         );
 
     }
-    function DisplayImages(){
-        {/*display images from data */}
-        return null;
 
-
-    }
     function DisplayCollections(){
         {/*display collections from data */}
+        return null;
     }
     function DisplayUsers(){
         {/*display users from data */}
+        return null;
     }
        
     function SearchContent(props){
        console.log("dataGrid:" + props.searchType);
+      
         switch(props.searchType){
             case 0 :
-                return <DisplayAll imgData = {props.data}></DisplayAll>
+                return <DisplayImages imgData = {props.data}></DisplayImages>
             case 1 :
                 return <DisplayUsers></DisplayUsers>
             case 2 :
-                return <DisplayImages></DisplayImages>
-            case 3 :
                 return <DisplayCollections></DisplayCollections>
           
                 
@@ -72,8 +72,9 @@ class DataGrid extends React.Component{
         return null;
 
     }
-
+  
     return (
+      
     <section className = "dataGrid">
         
     <SearchContent searchType = {this.state.searchType} data = {itemData}></SearchContent>

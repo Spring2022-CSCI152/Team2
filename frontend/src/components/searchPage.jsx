@@ -1,11 +1,5 @@
 import React, { Component, Fragment } from "react";
-import Alert  from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
@@ -29,7 +23,11 @@ class SearchPage extends React.Component{
         total_pages: 4,
           DataisLoaded: false
       };
-  }
+ 
+    
+    }
+  
+    
   loadData = () => {
     const { per, page, data } = this.state;
     const endpoint = `https://randomuser.me/api/?nat=us&results=${per}&page=${page}`;
@@ -49,21 +47,20 @@ class SearchPage extends React.Component{
     
     const SearchFilters = () => {
    
-      const [value, setValue] = React.useState(0);
+      const [value, setValue] = React.useState(this.state.searchType);
   
       const handleChange = (event, newValue) => {
-      
+       
+        setValue(newValue);
         this.setState({
-          data: [],
-          keyword:"",
-          per: 16,
+         
           searchType: newValue,
-          page: 1,
-          total_pages: 4,
-            DataisLoaded: false
+          
 
         })
+      
       };
+    
      
   
       console.log("searchPage : " + this.state.searchType);
@@ -71,9 +68,9 @@ class SearchPage extends React.Component{
      
       <article>
           <Tabs value={value} onChange={handleChange} centered>
-              <Tab className ="filters" label="All" />
+          <Tab className ="filters" label="Images" />
               <Tab className ="filters" label="Users" />
-               <Tab className ="filters" label="Images" />
+              
                <Tab className ="filters" label="Collections" />
           </Tabs>
        </article>
@@ -81,14 +78,20 @@ class SearchPage extends React.Component{
       
       );
   }
+  function CallDataGrid(props){
+    return(
+      <DataGrid searchType = {props.searchType} data = {props.data}></DataGrid>
+    );
+
+  }
+  const {searchType} = this.state; 
     return (
     <>
     
       
-        <SearchFilters></SearchFilters>
+        <SearchFilters ></SearchFilters>
         
-        <DataGrid searchType = {this.state.searchType} data = {this.state.data}></DataGrid>
-      
+        <CallDataGrid  searchType = {this.state.searchType} data = {this.state.data}></CallDataGrid>
       
     </>               
     );

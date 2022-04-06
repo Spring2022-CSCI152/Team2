@@ -5,3 +5,7 @@
     width: 100%;
 
 }
+.dataGrid img:hover{
+    opacity:.8;
+
+}
