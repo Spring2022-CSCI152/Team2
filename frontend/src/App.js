@@ -10,6 +10,7 @@ import Dropzone from './components/dropzone.jsx';
 import Login from './components/login.jsx';
 import AlertsPage from './components/alertsPage.jsx';
 import Registration from './components/registration.jsx';
+import SearchPage from './components/searchPage.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
 import './assets/featUsers.css';
@@ -60,6 +61,17 @@ function App() {
               
             </div>
           } />
+          <Route path="/search/" element={
+            <div className="App-body-alerts">
+           
+            <br></br>
+            <SearchPage></SearchPage>
+            
+            
+              
+            </div>
+          } 
+          />
 
           <Route path= {"/about"} element={
             // <div className = "App-body">
