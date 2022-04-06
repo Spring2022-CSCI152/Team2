@@ -21,26 +21,14 @@ class SearchPage extends React.Component{
         searchType: 0,
         page: 1,
         total_pages: 4,
-          DataisLoaded: false
+        DataisLoaded: false
       };
  
     
     }
   
     
-  loadData = () => {
-    const { per, page, data } = this.state;
-    const endpoint = `https://randomuser.me/api/?nat=us&results=${per}&page=${page}`;
-    
-    fetch(endpoint)
-      .then(response => response.json())
-      .then(json => {
-        this.setState({
-          data: [...data, ...json.results],
-          total_pages: json.info.results
-        });
-      });
-  };
+ 
 
   render(){
   
