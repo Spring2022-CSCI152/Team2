@@ -8,6 +8,8 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Dropzone from './components/dropzone.jsx';
 import Login from './components/login.jsx';
+import AlertsPage from './components/alertsPage.jsx';
+import Registration from './components/registration.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
 import './assets/featUsers.css';
@@ -18,9 +20,24 @@ function App() {
       <div className="App">
         <Navbar />
         <Routes>
+          
           <Route path= {"/login"} element={
             <div className="App-body-login">
               <Login />
+            </div>
+          }/>
+            <Route path = {"/registration"} element={
+              <div className ="App-body-registration">
+                <Registration/>
+              </div>
+
+            }/>
+            
+          
+
+          <Route path = {"/registration"} element = {
+            <div className ="App-body-registration">
+              <Registration />
             </div>
           }/>
 
@@ -30,6 +47,16 @@ function App() {
             <br></br>
              <Carousel/>
               <FeaturedUsers />
+              
+            </div>
+          } />
+          <Route path="/alerts/" element={
+            <div className="App-body-alerts">
+           
+            <br></br>
+            <AlertsPage></AlertsPage>
+            
+            
               
             </div>
           } />

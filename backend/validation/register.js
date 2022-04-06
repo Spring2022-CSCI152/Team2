@@ -6,7 +6,7 @@ module.exports = function validateRegisterInput(data) {
 
     // Convert empty fields to an empty string so we can use validator functions
     data.name = !isEmpty(data.name) ? data.name : "";
-    data.email = !isEmtpy(data.email) ? data.email : "";
+    data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
@@ -17,7 +17,7 @@ module.exports = function validateRegisterInput(data) {
 
     // Email check
     if (Validator.isEmpty(data.email)){
-        error.email = "Email field is required";
+        errors.email = "Email field is required";
     } else if (!Validator.isEmail(data.email)){
         errors.email = "Email is invalid";
     }
