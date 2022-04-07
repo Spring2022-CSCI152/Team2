@@ -32,7 +32,6 @@ const Navbar = () => {
                         <Link to={"/about"} className="aboutButton"> About </Link>
                         <Link to={"/login"} className="loginButton"> Login </Link>
                         
-
                     </React.Fragment>
                 }
                 {isMobile && 
@@ -46,9 +45,11 @@ const Navbar = () => {
                     {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
                 </div>
                 <div className="profilePictureContainer">
-                
-                    <FontAwesomeIcon icon={faUser} />
-                    {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
+                    
+                    <Link to={"/account"} className="accountButton"> 
+                        <FontAwesomeIcon icon={faUser} />
+                        {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
+                    </Link>
                 </div>
             </div>
         </div>

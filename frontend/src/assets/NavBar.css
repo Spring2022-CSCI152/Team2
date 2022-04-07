@@ -103,6 +103,7 @@
 .alertButton{
     padding: 0.25rem 1rem 0.25rem 1rem;
     margin-right: 0;
+
 }
 .alertButton:hover{
     background-color: #c6c6c6;
@@ -127,6 +128,13 @@
     height: 3rem;
     font-size: 2rem;
     color: white;
-    margin-right: 1.5rem;
+
+    margin-right: 1rem;
+}
+.alertButton{
+    color: black; 
 }
 
+.accountButton{
+    color:white;
+}

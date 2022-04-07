@@ -3,9 +3,9 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const routesUrls = require('../routes/routes');
-const routestest = require('../routes/routetest');
-const validateRegisterInput = require('../validation/register');
-const validateLoginInput = require('../validation/login');
+const userApi = require('../routes/users');
+const passport = require('passport');
+
 
 const cors = require('cors');
 
@@ -25,10 +25,14 @@ mongoose.connect(process.env.DB, {
 // middlewares
 app.use(express.json());
 app.use(cors());
+app.use(passport.initialize());
+
+// passport config
+require('../config/passport')(passport);
 
 // www.blahblahblah/app/signup etc etc etc
 app.use('/app', routesUrls);
-app.use('/api', routestest);
+app.use('/', userApi);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
