@@ -6,8 +6,6 @@ import {Link} from 'react-router-dom'
 
 
 const Registration = () =>{
-
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confPassword, checkPassword] = useState("");
@@ -17,42 +15,30 @@ const Registration = () =>{
     const handleSubmit = (event) =>{
         event.preventDefault();
         const data = {
-            username: username,
+            name: username,
             email: email,
-            password: password
+            password: password,
+            password2: confPassword
         };
-    
-            // axios
-
+        // axios
         if(registration){
-
-        
-            axios.post('http://localhost:5000/app/registration', data)
+            axios.post('http://localhost:5000/register', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("registering");
-        
         }
-        
-    
     }
 
-
-
-
     return(
-
-
-    
         <div className="container1">
-            <div className="header">
-                <h3>Already have an account?</h3>
-                    <Link to = "/login">
-                        <button className='login' type = 'button'>Login</button>
-                    </Link>
-                </div>
             <div className = "container2">
                 <div className="col1">
+                    <div className="">
+                        <p>Already have an account?</p>
+                        <Link to = "/login">
+                            <button className='login' type = 'button'>Login</button>
+                        </Link>
+                    </div>
                     <p className = "optionSign">
                         You can also sign in with these:
                     </p>
@@ -107,12 +93,7 @@ const Registration = () =>{
                            <span className='span1'></span>
                            <label className='label1'>Confirm password</label>
                        </div>
-
-                        
-                        
-                    
-
-                    <button className='submit' type = 'button' onClick={e => setRegisteration(true)}>
+                    <button className='submit' type = 'submit' onClick={e => setRegisteration(true)}>
                         Submit
                     </button>
 

@@ -11,20 +11,20 @@ const Login = () =>{
     const HandleSubmit = (event) =>{
         event.preventDefault();
         const data = {
-            username: username,
-            email: "temporary-need-to-fill-in-login-form",
+            name: username,
+            email: username,
             password: password
         };
         if (loggingIn) {
             // axios
-            axios.post('http://localhost:5000/app/login', data)
+            axios.post('http://localhost:5000/login', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("logging in");
         } 
         else {
             // axios
-            axios.post('http://localhost:5000/app/registration', data)
+            axios.post('http://localhost:5000/register', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("registering");
@@ -51,7 +51,7 @@ const Login = () =>{
                     <input type = "text" value={username} onChange={e => setUsername(e.target.value)} required>
 
                     </input>
-                    <label> username</label>
+                    <label> email</label>
 
                 </div>
                 <div className = "txt_field">

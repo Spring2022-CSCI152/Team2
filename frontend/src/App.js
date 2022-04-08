@@ -28,14 +28,6 @@ function App() {
               <Login />
             </div>
           }/>
-            <Route path = {"/registration"} element={
-              <div className ="App-body-registration">
-                <Registration/>
-              </div>
-
-            }/>
-            
-          
 
           <Route path = {"/registration"} element = {
             <div className ="App-body-registration">
