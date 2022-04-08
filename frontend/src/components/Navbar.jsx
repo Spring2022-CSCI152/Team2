@@ -32,6 +32,12 @@ const Navbar = () => {
                         <Link to={"/about"} className="aboutButton"> About </Link>
                         <Link to={"/login"} className="loginButton"> Login </Link>
                         
+                        <div className="profilePictureContainer">
+                        <Link to={"/alerts/"} className="alertButton"> 
+                            <FontAwesomeIcon icon={faBell} />
+                            {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
+                        </Link>
+                        </div>
                     </React.Fragment>
                 }
                 {isMobile && 
@@ -39,11 +45,6 @@ const Navbar = () => {
                         <FontAwesomeIcon icon={faBars} className="hamburger" />
                     </React.Fragment>
                 }
-                <div className="alertsContainer">
-               
-                <Link to={"/alerts/"} className="alertButton"> <FontAwesomeIcon icon={faBell} />  </Link>
-                    {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
-                </div>
                 <div className="profilePictureContainer">
                     
                     <Link to={"/account"} className="accountButton"> 

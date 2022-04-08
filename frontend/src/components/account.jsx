@@ -4,7 +4,9 @@ import Dropzone from './dropzone.jsx';
 import ImageList from './ImageList.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { Link } from "react-router-dom";
 import cuid from "cuid";
+
 
 
 function Account() {
@@ -71,7 +73,7 @@ function Account() {
                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, explicabo corporis? Sequi repellendus expedita, veritatis nam sed neque quisquam, repellat tempore et possimus perspiciatis sapiente! Quisquam incidunt mollitia nulla aliquid.
                         </p>
                     </div>
-
+                    
                     <div id="profileDrag">
                     <Dropzone onDrop={onDrop} accept={"image/*"} />
                      
@@ -79,9 +81,10 @@ function Account() {
                 </div>
 
                 <div id="tableinfo">
+                <Link to={"/gallery"} className="galleryButton"> Gallery </Link>
                     <table>
                     <ImageList images={images} />
-                       
+                    
                         
 
                     </table>
