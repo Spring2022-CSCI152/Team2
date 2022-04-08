@@ -10,8 +10,11 @@ import Dropzone from './components/dropzone.jsx';
 import Login from './components/login.jsx';
 import AlertsPage from './components/alertsPage.jsx';
 import Registration from './components/registration.jsx';
+import ImageSimilarity from './components/ImageSimilarity';
+import SearchPage from './components/searchPage.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
+import Gallery1 from './components/gallery.jsx';
 import './assets/featUsers.css';
 
 function App() {
@@ -26,14 +29,6 @@ function App() {
               <Login />
             </div>
           }/>
-            <Route path = {"/registration"} element={
-              <div className ="App-body-registration">
-                <Registration/>
-              </div>
-
-            }/>
-            
-          
 
           <Route path = {"/registration"} element = {
             <div className ="App-body-registration">
@@ -60,11 +55,29 @@ function App() {
               
             </div>
           } />
+          <Route path="/imgSim" element={
+            <div className="App-body">
+              <ImageSimilarity/>
+            </div>
+          } />
+          
+          <Route path="/search/" element={
+            <div className="App-body-alerts">
+           
+            <br></br>
+            <SearchPage></SearchPage>
+            
+            
+              
+            </div>
+          } 
+          />
 
           <Route path= {"/about"} element={
             // <div className = "App-body">
             <div className="App-body-about">
               <About/>
+              
               <FeaturedUsers />
             </div>
             // </div>
@@ -74,7 +87,17 @@ function App() {
             //<div className = "App-body">
             <div className="App-body">
               <Account/>
+               
             </div>
+            // </div>
+          }/>
+
+        <Route path= {"/gallery"} element={
+            //<div className = "App-body">
+            <div className="App-body">
+            
+            <Gallery1 />
+          </div>
             // </div>
           }/>
          

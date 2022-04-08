@@ -6,8 +6,6 @@ import {Link} from 'react-router-dom'
 
 
 const Registration = () =>{
-
-
     const [name, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confPassword, checkPassword] = useState("");
@@ -22,37 +20,25 @@ const Registration = () =>{
             password: password,
             password2: confPassword
         };
-    
-            // axios
-
+        // axios
         if(registration){
-   
             axios.post('http://localhost:5000/register', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("registering");
-        
         }
-        
-    
     }
 
-
-
-
     return(
-
-
-    
         <div className="container1">
-            <div className="header">
-                <h3>Already have an account?</h3>
-                    <Link to = "/login">
-                        <button className='login' type = 'button'>Login</button>
-                    </Link>
-                </div>
             <div className = "container2">
                 <div className="col1">
+                    <div className="">
+                        <p>Already have an account?</p>
+                        <Link to = "/login">
+                            <button className='login' type = 'button'>Login</button>
+                        </Link>
+                    </div>
                     <p className = "optionSign">
                         You can also sign in with these:
                     </p>

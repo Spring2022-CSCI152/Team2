@@ -52,6 +52,7 @@ router.post('/login', (req, res) => {
 
     // Check if valid
     if (!isValid) {
+        console.log("you are not valid");
         return res.status(400).json(errors);
     }
 
