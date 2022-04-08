@@ -33,7 +33,7 @@ const Navbar = () => {
                         <Link to={"/login"} className="loginButton"> Login </Link>
                         
                         <div className="profilePictureContainer">
-                        <Link to={"/alert"} className="alertButton"> 
+                        <Link to={"/alerts/"} className="alertButton"> 
                             <FontAwesomeIcon icon={faBell} />
                             {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
                         </Link>

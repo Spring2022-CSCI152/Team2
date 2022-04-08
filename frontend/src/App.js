@@ -12,6 +12,7 @@ import AlertsPage from './components/alertsPage.jsx';
 import Registration from './components/registration.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
+import Gallery1 from './components/gallery.jsx';
 import './assets/featUsers.css';
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
             // <div className = "App-body">
             <div className="App-body-about">
               <About/>
+              
               <FeaturedUsers />
             </div>
             // </div>
@@ -74,7 +76,17 @@ function App() {
             //<div className = "App-body">
             <div className="App-body">
               <Account/>
+               
             </div>
+            // </div>
+          }/>
+
+        <Route path= {"/gallery"} element={
+            //<div className = "App-body">
+            <div className="App-body">
+            
+            <Gallery1 />
+          </div>
             // </div>
           }/>
          
