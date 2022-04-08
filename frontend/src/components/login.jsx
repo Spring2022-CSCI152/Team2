@@ -11,13 +11,13 @@ const Login = () =>{
     const HandleSubmit = (event) =>{
         event.preventDefault();
         const data = {
-            username: username,
-            email: "temporary-need-to-fill-in-login-form",
+            //username: username,
+            email: username,
             password: password
         };
         if (loggingIn) {
             // axios
-            axios.post('http://localhost:5000/app/login', data)
+            axios.post('http://localhost:5000/login', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("logging in");
@@ -64,9 +64,9 @@ const Login = () =>{
                 </div>
                 <div className = "regSub">
                     <div>
-                    <input type = "submit" value ="Login" onClick={e => setLoggingIn(true)}>
+                        <input type = "submit" value ="Login" onClick={e => setLoggingIn(true)}>
 
-                    </input>
+                        </input>
                     </div>
                     <Link to = "/registration">
                         <button  id = "reg"  onClick={e => setLoggingIn(false)}>
