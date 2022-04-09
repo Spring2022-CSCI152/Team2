@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 //imgName, tags, description, cName, date(auto) 
 // Create Schema
-const collections = new Schema({
+const collection = new Schema({
     imgName: {
         type: String,
         required: false
@@ -27,4 +27,4 @@ const collections = new Schema({
     }
 });
 
-module.exports = User = mongoose.model("imgCollections", collections);
+module.exports = User = mongoose.model("imgCollections", collection);

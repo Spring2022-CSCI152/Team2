@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const collections = require('/collections');
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -18,7 +19,9 @@ const UserSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    images: collections.collection
+    
 });
 
 module.exports = User = mongoose.model("users", UserSchema);
