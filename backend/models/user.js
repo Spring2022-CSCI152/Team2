@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const collections = require('/collections');
+const collectionImg = require('../models/collectionsModel');
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -20,7 +20,13 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    images: collections.collection
+
+    collections: {
+        type: Schema.Types.ObjectId,
+        ref: 'collectionsModel'
+    }
+
+    
     
 });
 
