@@ -33,7 +33,7 @@ const Navbar = () => {
                         <Link to={"/login"} className="loginButton"> Login </Link>
                         
                         <div className="profilePictureContainer">
-                        <Link to={"/alert"} className="alertButton"> 
+                        <Link to={"/alerts/"} className="alertButton"> 
                             <FontAwesomeIcon icon={faBell} />
                             {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
                         </Link>
@@ -45,23 +45,12 @@ const Navbar = () => {
                         <FontAwesomeIcon icon={faBars} className="hamburger" />
                     </React.Fragment>
                 }
-                <div className="alertsContainer">
-               
-                <Link to={"/alerts/"} className="alertButton"> <FontAwesomeIcon icon={faBell} />  </Link>
-                    {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
-                </div>
                 <div className="profilePictureContainer">
-<<<<<<< HEAD
-                
-                    <FontAwesomeIcon icon={faUser} />
-                    {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
-=======
                     
                     <Link to={"/account"} className="accountButton"> 
                         <FontAwesomeIcon icon={faUser} />
                         {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
                     </Link>
->>>>>>> MaryBranch
                 </div>
             </div>
         </div>

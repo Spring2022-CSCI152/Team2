@@ -91,7 +91,7 @@
     color: #a6a6a6;
 }
 
-.aboutButton, .loginButton, .alertButton {
+.aboutButton, .loginButton {
     border-radius: 1rem;
     margin-right: 1rem;
     padding: 0.5rem 2rem 0.5rem 2rem;
@@ -103,12 +103,13 @@
 .alertButton{
     padding: 0.25rem 1rem 0.25rem 1rem;
     margin-right: 0;
+
 }
 .alertButton:hover{
     background-color: #c6c6c6;
 }
 
-.aboutButton:hover,.loginButton:hover{
+.aboutButton:hover,.loginButton:hover {
     outline: none;
     background-color: #c6c6c6;
     cursor: pointer;
@@ -121,7 +122,7 @@
     color: white;
 }
 
-.profilePictureContainer,.alertsContainer {
+.profilePictureContainer {
     display: flex;
     align-items: center;
     height: 3rem;
@@ -131,7 +132,7 @@
     margin-right: 1rem;
 }
 .alertButton{
-    color: white; 
+    color: black; 
 }
 
 .accountButton{
