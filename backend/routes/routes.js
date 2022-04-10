@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const userTemplate = require('../models/user');
 const bcrypt = require('bcrypt');
+const requireLogin = require('../middleware/requireLogin');
 
 //Note these routes could be right could be wrong. Edit and correct over time
-router.post('/index', (request, response) => {
+router.post('/index', (req, res) => {
     // Some code
 });
 
@@ -16,8 +17,8 @@ router.post('/alerts', (req, res) => {
     // Some code
 });
 
-router.post('/account', (req, res) => {
-    // Some code
+router.post('/account', requireLogin, (req, res) => {
+    res.redirect('/login');
 });
 
 router.post('/search', (req, res) => {

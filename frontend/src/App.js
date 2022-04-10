@@ -16,6 +16,8 @@ import About from './components/about.jsx';
 import Account from './components/account.jsx';
 import Gallery1 from './components/gallery.jsx';
 import './assets/featUsers.css';
+import axios from "axios";
+axios.defaults.withCredentials = true;
 
 function App() {
   return (
