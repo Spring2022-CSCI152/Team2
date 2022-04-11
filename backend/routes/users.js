@@ -16,6 +16,10 @@ const User = require('../models/user');
 const maxAge = 3 * 24 * 60 * 60;
 
 // Register Route
+router.get('/register', (req, res) => {
+    res.render('register');
+});
+
 router.post('/register', (req, res) => {
     // Form Validation
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -50,9 +54,9 @@ router.post('/register', (req, res) => {
 });
 
 // Login Route
-router.get('/login', function(req, res, next) {
+router.get('/login', (req, res) => {
     res.render('login');
-  });
+});
 
 router.post('/login', (req, res) => {
     // Form Validation
@@ -96,15 +100,41 @@ router.post('/login', (req, res) => {
     });
 });
 
-
-router.get('/account', requireLogin, async (req, res) => {
-    try {
-        // request.user is getting fetched from Middleware after token authentication
-        const user = await User.findById(req.user.id);
-        res.json(user);
-      } catch (e) {
-        res.send({ message: "Error in Fetching user" });
-      }
+// Logout endpoint
+router.get("/logout", requireLogin, (req, res) =>{
+    res.cookie('jwt', "", {
+        httpOnly: true,
+        expires: new Date(0),
+        secure: true,
+        sameSite: "none",
+    })
+    .send();
 });
+
+// Logged in route to avoid javascript injection. Might use this who knows
+router.get('/loggedIn', (req,res) =>{
+    try{
+        const token = req.cookies.jwt;
+
+        if(!token) return res.json(false);
+
+        jwt.verify(token, process.env.secretKey);
+
+        res.send(true);
+    } catch (err){
+        res.res.json(false);
+    }
+});
+
+// This may be done front end wise?
+router.post('/account', requireLogin, async (req, res) => {
+    console.log("We're in");
+});
+
+router.get('/alertsPage', requireLogin, async (req, res) => {
+    console.log("We're in");
+});
+
+// Searching and other user routers below here
 
 module.exports = router;

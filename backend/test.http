@@ -1,8 +1,8 @@
-POST http://localhost:5000/login
+GET http://localhost:5000/logout
 Content-Type: application/json
 
 {
 
-    "email":"test3@jtest.com",
-    "password": "Test123"
+  "email":"test3@jtest.com",
+  "password": "Test123"
 }

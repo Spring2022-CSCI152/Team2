@@ -5,25 +5,18 @@ const mongoose = require('mongoose');
 // middleware functionality to check logged in user
 module.exports = async (req, res, next) => {
     try{
-        const token = req.headers.authorization.split(" ")[1];
-        const isCustomAuth = token.length < 500;
-        console.log(token);
+        const token = req.cookies.jwt;
 
-        let decodedData;
+        if(!token) return res.status(401).json({errorMessage: "Unauthorized"});
 
-        if(token && isCustomAuth){
-            decodedData = jwt.verify(token, process.env.secretKey);
+        const verified = jwt.verify(token, process.env.secretKey);
 
-            req.userId = decodedData?.id;
-        } else {
-            decodedData = jwt.decode(token, process.env.secretKey);
+        req.user = verified.id; 
 
-            req.userId = decodedData?.id;
-        }
         next();
-
-    } catch (error){
-        console.log(error);
+    } catch (err){
+        console.error(err);
+        res.status(401).json({errorMessage: "Unauthorized"});
     }
 
 }
