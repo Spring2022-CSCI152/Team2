@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../assets/NavBar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSearch, faBars, faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
+// AuthContext needed to check if user logged in
+import AuthContext from '../context/authContext';
+import LogOutBtn from './logout';
+
+
 
 const Navbar = () => {
+
+    // loggedIn value to check if user is logged in
+    const { loggedIn } = useContext(AuthContext);
+
     const isMobile = useMediaQuery({ maxWidth: 550 });
     return ( 
         <div className="navContainer">
@@ -30,14 +39,44 @@ const Navbar = () => {
                 {!isMobile && 
                     <React.Fragment>
                         <Link to={"/about"} className="aboutButton"> About </Link>
-                        <Link to={"/login"} className="loginButton"> Login </Link>
-                        
-                        <div className="profilePictureContainer">
-                        <Link to={"/alerts/"} className="alertButton"> 
-                            <FontAwesomeIcon icon={faBell} />
-                            {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
-                        </Link>
-                        </div>
+
+                        {/* LoggedIn example with login route*/}
+                        {loggedIn === false && ( 
+                            <>
+                                <Link to={"/login"} className="loginButton"> Login </Link>
+
+                                {/* Account Component */}
+                                <div className="profilePictureContainer">
+                                    <Link to={"/registration"} className="accountButton"> 
+                                        <FontAwesomeIcon icon={faUser} />
+                                        {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
+                                    </Link>
+                                </div>
+                            </>
+                        )}
+
+                        {loggedIn === true && (
+                            <>
+                                <LogOutBtn></LogOutBtn>
+
+                                {/* Alerts Component */}
+                                <div className="profilePictureContainer">
+                                    <Link to={"/alerts/"} className="alertButton"> 
+                                        <FontAwesomeIcon icon={faBell} />
+                                        {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
+                                    </Link>
+                                </div>
+
+                                {/* Account Component */}
+                                <div className="profilePictureContainer">
+                    
+                                    <Link to={"/account"} className="accountButton"> 
+                                        <FontAwesomeIcon icon={faUser} />
+                                        {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
+                                    </Link>
+                                </div>
+                            </>
+                        )}
                     </React.Fragment>
                 }
                 {isMobile && 
@@ -45,13 +84,7 @@ const Navbar = () => {
                         <FontAwesomeIcon icon={faBars} className="hamburger" />
                     </React.Fragment>
                 }
-                <div className="profilePictureContainer">
-                    
-                    <Link to={"/account"} className="accountButton"> 
-                        <FontAwesomeIcon icon={faUser} />
-                        {/* <img src="/placeholderPFP.png" alt="profile" className="profilePicture"/> */}
-                    </Link>
-                </div>
+                
             </div>
         </div>
      );

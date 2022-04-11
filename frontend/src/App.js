@@ -16,16 +16,24 @@ import About from './components/about.jsx';
 import Account from './components/account.jsx';
 import Gallery1 from './components/gallery.jsx';
 import './assets/featUsers.css';
+
+import { AuthContextProvider } from './context/authContext';
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
+
+
+
+
+
+
 function App() {
   return (
+  <AuthContextProvider>
     <BrowserRouter>
       <div className="App">
         <Navbar />
         <Routes>
-          
           <Route path= {"/login"} element={
             <div className="App-body-login">
               <Login />
@@ -112,7 +120,8 @@ function App() {
         </Routes>
       </div>
       <Footer />
-  </BrowserRouter>
+    </BrowserRouter>
+  </AuthContextProvider>
   );
 }
 

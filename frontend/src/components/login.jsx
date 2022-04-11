@@ -1,13 +1,17 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useContext } from 'react';
+import AuthContext from '../context/authContext';
 import '../assets/login.css';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 
 const Login = () =>{
+    
+    const navigate = useNavigate();
     const [name, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loggingIn, setLoggingIn] = useState(true);
-
+    const { getLoggedIn } = useContext(AuthContext);
+    
     const HandleSubmit = (event) =>{
         event.preventDefault();
         const data = {
@@ -21,14 +25,10 @@ const Login = () =>{
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("logging in");
+            // Turn this into an async function
+            //getLoggedIn();
+            navigate("/");
         } 
-        else {
-            // axios
-            axios.post('http://localhost:5000/register', data)
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err));
-            console.log("registering");
-        }
     }
 
     return(
