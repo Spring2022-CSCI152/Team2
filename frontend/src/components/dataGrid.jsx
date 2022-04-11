@@ -44,7 +44,7 @@ class DataGrid extends React.Component {
 
   render() {
 
-
+    {/**/}
     function DisplayImages(props) {
       {/*display images from data */ }
       return (
@@ -66,31 +66,36 @@ class DataGrid extends React.Component {
     }
 
 
-    function DisplayCollections() {
+    function DisplayCollections(props) {
       {/*display collections from data */ }
-      return null;
+      return(
+      <>
+        <Grid container >
+          
+        </Grid>
+      
+      </>);
     }
     function DisplayUsers(props) {
       {/*display users from data */ }
       console.log(props.userData);
       return (
-       
-        <section className="userSearchContent">
+          <>
           <br></br> <br></br>
-          <Grid className="gridContainer" container spacing={2}>
+          <Grid className="gridContainer" container spacing={3}>
             <Grid>
-              {props.userData.map(userData=>  (   
-              <Grid item xs={6}>
-                <Card sx={{ maxWidth: 345, maxHeight: 500 }}>
+              {props.userData.map(item=>  (   
+          
+                <Card sx={{ maxWidth: 345, maxHeight: 500 }}  key={item.img}>
                   <CardActionArea>
                     <Avatar
                       alt="Remy Sharp"
-                      src={logo}
+                      src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                       sx={{ width: 100, height: 100 }}
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h6" component="div">
-                        Lizard
+                        {item.title}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Lizards are a widespread group of squamate reptiles, with over 6,000
@@ -99,12 +104,11 @@ class DataGrid extends React.Component {
                     </CardContent>
                   </CardActionArea>
                 </Card>
-              </Grid>
-              ))}
+                ))}
             </Grid>
           </Grid>
-
-        </section>
+          </>
+      
       );
     }
 
@@ -117,11 +121,11 @@ class DataGrid extends React.Component {
         case 1:
           return <DisplayUsers userData={props.data}></DisplayUsers>
         case 2:
-          return <DisplayCollections></DisplayCollections>
+          return <DisplayCollections collectionData={props.data}></DisplayCollections>
 
 
       }
-      return null;
+  
 
     }
 

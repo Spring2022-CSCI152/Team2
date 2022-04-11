@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
 //import SearchFilters from "./searchFilters.jsx";
 import DataGrid from "./dataGrid.jsx";
-import '../assets/alertsPage.css';
+
 import '../assets/searchPage.css';
 import '../assets/dataGrid.css';
 class SearchPage extends React.Component{
@@ -51,7 +51,7 @@ class SearchPage extends React.Component{
     
      
   
-      console.log("searchPage : " + this.state.searchType);
+      console.log("searchType : " + this.state.searchType);
       return(
      
       <article>
@@ -72,7 +72,7 @@ class SearchPage extends React.Component{
     );
 
   }
-  const {searchType} = this.state; 
+  
     return (
     <>
     
