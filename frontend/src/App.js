@@ -13,7 +13,7 @@ import Registration from './components/registration.jsx';
 import SearchPage from './components/searchPage.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
-import './assets/featUsers.css';
+
 
 function App() {
   return (

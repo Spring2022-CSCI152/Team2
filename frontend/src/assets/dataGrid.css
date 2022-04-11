@@ -10,7 +10,8 @@
 
 }
 .css-1msdtji-MuiPaper-root-MuiCard-root{
-    height:35vh;
+    height:40vh;
+    margin-bottom:5%;
     width:20vw;
     
 }
@@ -21,9 +22,27 @@ p.MuiTypography-body2{
 .css-o69gx8-MuiCardMedia-root{
     height:20vh;
 }
+
 .css-124yhl1-MuiAvatar-root{
     margin:auto;
     margin-top:.6em;
+
+}
+div.css-vj1n65-MuiGrid-root{ 
+    display:flex;
+    flex-wrap:wrap;
+    -ms-flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom:5%;
     
-   
+}
+
+div.css-hidgkg-MuiAvatar-root{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10%;
+
+}
+.css-b6lsxj-MuiButtonBase-root-MuiCardActionArea-root{
+    height:100%;
 }
