@@ -126,18 +126,25 @@ router.get('/loggedIn', (req,res) =>{
     }
 });
 
-// This may be done front end wise?
+// Accounts will probably where the image upload will be done
 router.post('/account', requireLogin, async (req, res) => {
-    console.log("We're in");
+    res.render('account');
 });
 
 router.get('/account', requireLogin, async (req, res) => {
-    console.log("We're in");
+    res.render('account');
 });
 
+// Alerts route for the python script
 router.get('/alertsPage', requireLogin, async (req, res) => {
     console.log("We're in");
 });
+
+router.post('/alertsPage', requireLogin, async (req, res) => {
+    console.log("We're in");
+});
+
+
 
 // Searching and other user routers below here
 

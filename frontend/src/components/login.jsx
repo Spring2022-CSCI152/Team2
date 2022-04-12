@@ -12,7 +12,7 @@ const Login = () =>{
     const [loggingIn, setLoggingIn] = useState(true);
     const { getLoggedIn } = useContext(AuthContext);
     
-    const HandleSubmit = (event) =>{
+    const HandleSubmit = async (event) =>{
         event.preventDefault();
         const data = {
             //username: username,
@@ -21,12 +21,12 @@ const Login = () =>{
         };
         if (loggingIn) {
             // axios
-            axios.post('http://localhost:5000/login', data)
+            await axios.post('http://localhost:5000/login', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("logging in");
             // Turn this into an async function
-            //getLoggedIn();
+            await getLoggedIn();
             navigate("/");
         } 
     }
