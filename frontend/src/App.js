@@ -17,7 +17,6 @@ import Gallery1 from './components/gallery.jsx';
 import './assets/featUsers.css';
 
 import React, { useState, useContext } from 'react';
-import AuthContext from './context/authContext';
 import {AuthContextProvider} from './context/authContext';
 import Router from './Router';
 import axios from "axios";

@@ -18,14 +18,8 @@ import './assets/featUsers.css';
 
 import React, { useState, useContext } from 'react';
 import AuthContext from './context/authContext';
-import {AuthContextProvider} from './context/authContext';
 import axios from "axios";
 axios.defaults.withCredentials = true;
-
-
-
-
-
 
 
 function Router() {
