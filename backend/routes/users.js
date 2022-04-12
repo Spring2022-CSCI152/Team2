@@ -131,6 +131,10 @@ router.post('/account', requireLogin, async (req, res) => {
     console.log("We're in");
 });
 
+router.get('/account', requireLogin, async (req, res) => {
+    console.log("We're in");
+});
+
 router.get('/alertsPage', requireLogin, async (req, res) => {
     console.log("We're in");
 });
