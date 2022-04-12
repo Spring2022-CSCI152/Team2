@@ -70,35 +70,44 @@ class DataGrid extends React.Component {
       {/*display collections from data */ }
       return (
         <>
-           <br></br> <br></br>
+          <br></br> <br></br>
           <Grid container spacing={4} >
             {itemNums.map((item) => (
 
-         
-            <ImageList 
-              cols={3}
-              variant="quilted"
-              className = "collectionItem"
-            >
-              {props.collectionData.slice(0, 5).map((item) => (
-                <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} >
-                  <a href={item.img}>
-                    <img
-                      src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                      srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      alt={item.title}
-                      loading="lazy"
-                    />
-                  </a>
-                </ImageListItem>
-              ))}
-              <ImageListItem className = "plusMore" cols={1} rows={1}>
-                <Typography> + More </Typography>
-              </ImageListItem>
-
-
-            </ImageList>
-               ))}
+              <Grid item xs={4}>
+                <ImageList
+                  cols={3}
+                  variant="quilted"
+                  className="collectionItem"
+                >
+                  {props.collectionData.slice(0, 5).map((item) => (
+                    <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} >
+                      <a href={item.img}>
+                        <img
+                          src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                          srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                          alt={item.title}
+                          loading="lazy"
+                        />
+                      </a>
+                    </ImageListItem>
+                  ))}
+                  <ImageListItem className="plusMore" cols={1} rows={1}>
+                    <Typography> + More </Typography>
+                  </ImageListItem>
+                 
+                  <div className = "collectionNameBar"> 
+                    <Typography className = "collectionName">
+                        Collection Name
+                    </Typography>
+                    <Typography>
+                        Artist Name
+                    </Typography>
+                  </div>
+                </ImageList> 
+              
+              </Grid>
+            ))}
           </Grid>
 
         </>);
@@ -168,7 +177,7 @@ class DataGrid extends React.Component {
     );
   }
 }
-const itemNums = [1,2,3,4,5,6]
+const itemNums = [1, 2, 3, 4, 5, 6]
 const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
