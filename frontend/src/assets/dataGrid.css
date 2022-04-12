@@ -70,6 +70,6 @@ ul.collectionItem{
 ::-webkit-scrollbar{
     width:0;
 }
-.collectionName{
-    
+.filters{
+    font-size:larger;
 }

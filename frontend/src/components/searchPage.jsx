@@ -56,10 +56,11 @@ class SearchPage extends React.Component{
      
       <article>
           <Tabs value={value} onChange={handleChange} centered>
-          <Tab className ="filters" label="Images" />
-              <Tab className ="filters" label="Users" />
+            
+          <Tab label={<span className="filters">Images</span>} />
+              <Tab label={<span className="filters">Users</span>}/>
               
-               <Tab className ="filters" label="Collections" />
+               <Tab label={<span className="filters">Collections</span>}/>
           </Tabs>
        </article>
       
