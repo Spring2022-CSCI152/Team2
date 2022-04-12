@@ -46,3 +46,8 @@ div.css-hidgkg-MuiAvatar-root{
 .css-b6lsxj-MuiButtonBase-root-MuiCardActionArea-root{
     height:100%;
 }
+ul.collectionItem{
+    width:20%;
+    scrollbar-width: 0;
+    padding:-20px;
+}

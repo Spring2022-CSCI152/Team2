@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
 import { CardActionArea } from '@mui/material';
-import logo from '../logo.svg';
+
 class DataGrid extends React.Component {
 
   constructor(props) {
@@ -18,8 +18,8 @@ class DataGrid extends React.Component {
 
       searchType: props.searchType,
       data: props.data,
-      per : 4,
-      page :1
+      per: 4,
+      page: 1
 
     };
 
@@ -33,7 +33,7 @@ class DataGrid extends React.Component {
       .then(json => {
         this.setState({
           data: [...data, ...json.results]
-      
+
         });
       });
   };
@@ -44,7 +44,7 @@ class DataGrid extends React.Component {
 
   render() {
 
-    {/**/}
+    {/* Displays images for search page*/ }
     function DisplayImages(props) {
       {/*display images from data */ }
       return (
@@ -65,28 +65,56 @@ class DataGrid extends React.Component {
       );
     }
 
-
+    {/* Displays collections for search page*/ }
     function DisplayCollections(props) {
       {/*display collections from data */ }
-      return(
-      <>
-        <Grid container >
-          
-        </Grid>
-      
-      </>);
+      return (
+        <>
+           <br></br> <br></br>
+          <Grid container spacing={4} >
+            {itemNums.map((item) => (
+
+         
+            <ImageList 
+              cols={3}
+              variant="quilted"
+              className = "collectionItem"
+            >
+              {props.collectionData.slice(0, 5).map((item) => (
+                <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} >
+                  <a href={item.img}>
+                    <img
+                      src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                      srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                      alt={item.title}
+                      loading="lazy"
+                    />
+                  </a>
+                </ImageListItem>
+              ))}
+              <ImageListItem className = "plusMore" cols={1} rows={1}>
+                <Typography> + More </Typography>
+              </ImageListItem>
+
+
+            </ImageList>
+               ))}
+          </Grid>
+
+        </>);
     }
+    {/* Displays users for search page*/ }
     function DisplayUsers(props) {
       {/*display users from data */ }
       console.log(props.userData);
       return (
-          <>
+        <>
           <br></br> <br></br>
           <Grid className="gridContainer" container spacing={3}>
             <Grid>
-              {props.userData.map(item=>  (   
-          
-                <Card sx={{ maxWidth: 345, maxHeight: 500 }}  key={item.img}>
+              {props.userData.map(item => (
+
+                <Card sx={{ maxWidth: 345, maxHeight: 500 }} key={item.img}>
                   <CardActionArea>
                     <Avatar
                       alt="Remy Sharp"
@@ -104,11 +132,11 @@ class DataGrid extends React.Component {
                     </CardContent>
                   </CardActionArea>
                 </Card>
-                ))}
+              ))}
             </Grid>
           </Grid>
-          </>
-      
+        </>
+
       );
     }
 
@@ -125,7 +153,7 @@ class DataGrid extends React.Component {
 
 
       }
-  
+
 
     }
 
@@ -140,10 +168,13 @@ class DataGrid extends React.Component {
     );
   }
 }
+const itemNums = [1,2,3,4,5,6]
 const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
     title: 'Breakfast',
+    rows: 2,
+    cols: 2,
   },
   {
     img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
@@ -168,6 +199,8 @@ const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
     title: 'Basketball',
+    rows: 2,
+    cols: 2,
   },
   {
     img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
@@ -180,10 +213,14 @@ const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
     title: 'Tomato basil',
+    rows: 2,
+    cols: 2,
   },
   {
     img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
     title: 'Sea star',
+    rows: 2,
+    cols: 2,
   },
   {
     img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
