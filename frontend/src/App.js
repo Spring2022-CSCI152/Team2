@@ -10,31 +10,35 @@ import Dropzone from './components/dropzone.jsx';
 import Login from './components/login.jsx';
 import AlertsPage from './components/alertsPage.jsx';
 import Registration from './components/registration.jsx';
+import ImageSimilarity from './components/ImageSimilarity';
 import SearchPage from './components/searchPage.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
+import Gallery1 from './components/gallery.jsx';
+import './assets/featUsers.css';
+
+import { AuthContextProvider } from './context/authContext';
+import axios from "axios";
+axios.defaults.withCredentials = true;
+
+
+
+
+
 
 
 function App() {
   return (
+  <AuthContextProvider>
     <BrowserRouter>
       <div className="App">
         <Navbar />
         <Routes>
-          
           <Route path= {"/login"} element={
             <div className="App-body-login">
               <Login />
             </div>
           }/>
-            <Route path = {"/registration"} element={
-              <div className ="App-body-registration">
-                <Registration/>
-              </div>
-
-            }/>
-            
-          
 
           <Route path = {"/registration"} element = {
             <div className ="App-body-registration">
@@ -61,6 +65,12 @@ function App() {
               
             </div>
           } />
+          <Route path="/imgSim" element={
+            <div className="App-body">
+              <ImageSimilarity/>
+            </div>
+          } />
+          
           <Route path="/search/" element={
             <div className="App-body-alerts">
            
@@ -77,6 +87,7 @@ function App() {
             // <div className = "App-body">
             <div className="App-body-about">
               <About/>
+              
               <FeaturedUsers />
             </div>
             // </div>
@@ -86,7 +97,17 @@ function App() {
             //<div className = "App-body">
             <div className="App-body">
               <Account/>
+               
             </div>
+            // </div>
+          }/>
+
+        <Route path= {"/gallery"} element={
+            //<div className = "App-body">
+            <div className="App-body">
+            
+            <Gallery1 />
+          </div>
             // </div>
           }/>
          
@@ -99,7 +120,8 @@ function App() {
         </Routes>
       </div>
       <Footer />
-  </BrowserRouter>
+    </BrowserRouter>
+  </AuthContextProvider>
   );
 }
 

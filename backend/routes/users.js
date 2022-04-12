@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const requireLogin = require('../middleware/requireLogin');
 
 // input validation
 const validateRegisterInput = require('../validation/register');
@@ -11,7 +12,14 @@ const validateLoginInput = require('../validation/login');
 // Load User model
 const User = require('../models/user');
 
+// Max age for token
+const maxAge = 3 * 24 * 60 * 60;
+
 // Register Route
+router.get('/register', (req, res) => {
+    res.render('register');
+});
+
 router.post('/register', (req, res) => {
     // Form Validation
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -46,12 +54,17 @@ router.post('/register', (req, res) => {
 });
 
 // Login Route
+router.get('/login', (req, res) => {
+    res.render('login');
+});
+
 router.post('/login', (req, res) => {
     // Form Validation
     const { errors, isValid } = validateLoginInput(req.body);
 
     // Check if valid
     if (!isValid) {
+        console.log("you are not valid");
         return res.status(400).json(errors);
     }
 
@@ -70,25 +83,58 @@ router.post('/login', (req, res) => {
                 // Create JWT Payload for matched user
                 const payload = {
                     id: user.id,
+                    email: user.email,
                     name: user.name
                 };
 
                 // Sign the token
-                jwt.sign(
-                    payload, 
-                    process.env.secretKey, { expiresIn: 15780000 }, // 6 months in seconds
-                    (err, token) => { 
-                        res.json({
-                            success: true,
-                            token: "Bearer " + token
-                        });
-                    }
-                );
+                const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
+                res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+                const result = res.status(200).json({ user: user._id });
+
+                
             } else {
                 return res.status(400).json({ passwordincorrect: "Incorrect password" });
             }
         });
     });
 });
+
+// Logout endpoint
+router.get("/logout", requireLogin, (req, res) =>{
+    res.cookie('jwt', "", {
+        httpOnly: true,
+        expires: new Date(0),
+        secure: true,
+        sameSite: "none",
+    })
+    .send();
+});
+
+// Logged in route to avoid javascript injection. Might use this who knows
+router.get('/loggedIn', (req,res) =>{
+    try{
+        const token = req.cookies.jwt;
+
+        if(!token) return res.json(false);
+
+        jwt.verify(token, process.env.secretKey);
+
+        res.send(true);
+    } catch (err){
+        res.res.json(false);
+    }
+});
+
+// This may be done front end wise?
+router.post('/account', requireLogin, async (req, res) => {
+    console.log("We're in");
+});
+
+router.get('/alertsPage', requireLogin, async (req, res) => {
+    console.log("We're in");
+});
+
+// Searching and other user routers below here
 
 module.exports = router;

@@ -5,13 +5,15 @@
     align-items: top;
     width: 100%;
     height: 100%;
+    margin-top: 5%;
+   margin-bottom: 5%;
 }
 
 .accountInfo {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 500px;
+    height: 100%;
     margin-left: 10%;
 }
 
@@ -29,7 +31,10 @@
     /* top:-100px; */
     border: 3px solid white;
     border-radius: 10px;
-    width: 50%;
+    width: 40%;
+    margin-top: 10px;
+    
+
 }
 
 .socialMedia {
@@ -71,6 +76,12 @@
     border: 3px solid white;
     border-radius: 10px;
     margin-right: 10%;
+    margin-left: 10%;
+  
+   -ms-flex: 50%; /* IE 10 */
+  flex: 50%;
+
+   
 }
 
 #profilePic{
@@ -94,7 +105,7 @@
     /* top:-90px; */
     border: 3px solid white;
     border-radius: 10px;
-    padding:-10px;
+    margin-top: 10px;
     width:250px;
 }
 #profileDrag{
@@ -105,7 +116,9 @@
     border: 3px solid white;
     border-radius: 10px;
     padding:-10px;
+    margin-top: 10px;
     cursor: copy;
+    width:250px;
 }
 
 #resize{
@@ -113,3 +126,80 @@
     width:100%;
 
 }
+
+
+.galleryButton {
+    border-radius: 1rem;
+    margin-right: 1rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    background-color: #efefef;
+    color: black;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+  
+  /* Dropzone */
+  .dropzone {
+    padding: 30px;
+    height: 30vh;
+    border: 5px dashed #7649bc;
+    outline: none;
+    cursor: pointer;
+  }
+  .dropzone-active {
+    background-color: #f1e2ff;
+    border: 5px solid #2fd7b5;
+  }
+  .dropzone-content {
+    align-self: center;
+    font-size: 24px;
+  }
+  
+  /* Images */
+  .file-list {
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .file-item {
+    width: calc(33% - 20px);
+    height: 300px;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    margin: 10px;
+    cursor: move;
+    transition: all 0.2s linear;
+  }
+  .file-img {
+    width: 100%;
+    height: 100%;
+  }
+  
+
+  
+  /* Tablets */
+  @media (max-width: 1000px) {
+    .Account {
+      max-width: 600px;
+    }
+    .file-item {
+      width: calc(50% - 22px);
+      height: 200px;
+    }
+  }
+  
+  /* Mobiles */
+  @media (max-width: 640px) {
+    .App {
+      max-width: 100%;
+      padding: 0 15px;
+    }
+    .file-item {
+      width: calc(100% - 22px);
+      height: 200px;
+    }
+  }

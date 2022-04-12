@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.0.0",
+    "concurrently": "^7.1.0",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0"
   }

@@ -1,34 +1,34 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useContext } from 'react';
+import AuthContext from '../context/authContext';
 import '../assets/login.css';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 
 const Login = () =>{
-    const [username, setUsername] = useState("");
+    
+    const navigate = useNavigate();
+    const [name, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loggingIn, setLoggingIn] = useState(true);
-
+    const { getLoggedIn } = useContext(AuthContext);
+    
     const HandleSubmit = (event) =>{
         event.preventDefault();
         const data = {
-            username: username,
-            email: "temporary-need-to-fill-in-login-form",
+            //username: username,
+            email: name,
             password: password
         };
         if (loggingIn) {
             // axios
-            axios.post('http://localhost:5000/app/login', data)
+            axios.post('http://localhost:5000/login', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("logging in");
+            // Turn this into an async function
+            //getLoggedIn();
+            navigate("/");
         } 
-        else {
-            // axios
-            axios.post('http://localhost:5000/app/registration', data)
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err));
-            console.log("registering");
-        }
     }
 
     return(
@@ -48,10 +48,10 @@ const Login = () =>{
 
                 </div>
                 <div className = "txt_field">
-                    <input type = "text" value={username} onChange={e => setUsername(e.target.value)} required>
+                    <input type = "text" value={name} onChange={e => setUsername(e.target.value)} required>
 
                     </input>
-                    <label> username</label>
+                    <label> email</label>
 
                 </div>
                 <div className = "txt_field">
@@ -64,9 +64,9 @@ const Login = () =>{
                 </div>
                 <div className = "regSub">
                     <div>
-                    <input type = "submit" value ="Login" onClick={e => setLoggingIn(true)}>
+                        <input type = "submit" value ="Login" onClick={e => setLoggingIn(true)}>
 
-                    </input>
+                        </input>
                     </div>
                     <Link to = "/registration">
                         <button  id = "reg"  onClick={e => setLoggingIn(false)}>
