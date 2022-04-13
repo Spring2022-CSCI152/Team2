@@ -4,9 +4,17 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const UserSchema = new Schema({
+    username: {
+        type: String,
+        required: false
+    },
     name: {
         type: String,
         required: true
+    },
+    userbio: {
+        type: String,
+        required: false
     },
     email: {
         type: String,
@@ -16,14 +24,22 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    date: {
-        type: Date,
-        default: Date.now
+    profileimg: {
+        type: String,
+        required: false
+    },
+    useralert: {
+        type: String,
+        required: false
     },
 
     collections: {
         type: Schema.Types.ObjectId,
         ref: 'collectionsModel'
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 
     

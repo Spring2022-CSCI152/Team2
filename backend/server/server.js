@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const routesUrls = require('../routes/routes');
+const collections = require('../routes/collections');
 const userApi = require('../routes/users');
 const passport = require('passport');
 
@@ -33,6 +34,7 @@ require('../config/passport')(passport);
 // www.blahblahblah/app/signup etc etc etc
 app.use('/app', routesUrls);
 app.use('/', userApi);
+app.use('/collection', collections);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
