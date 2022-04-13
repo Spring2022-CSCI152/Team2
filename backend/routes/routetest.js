@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const requireLogin  = require('../middleware/requireLogin')
 
 
 // Strictly used to test end points of our code. I.e if a request isn't working check here first with postman/REST Client 
@@ -18,7 +19,7 @@ router.get('/dbtest', function(req,res){
 // add a new item to the db
 // POST http://localhost:[PORT]/api/dbtest
 // should return type POST
-router.post('/dbtest', function(req, res){
+router.post('/dbtest', requireLogin, function(req, res){
     res.send({type: 'POST'});
 });
 

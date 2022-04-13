@@ -98,7 +98,7 @@ const Registration = () =>{
                         
                     
 
-                    <button className='submit' type = 'submit' onClick={e => setRegisteration(true)}>
+                    <button className='submit' type = 'submit'>
                         Submit
                     </button>
 
