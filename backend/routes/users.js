@@ -145,6 +145,66 @@ router.post('/alertsPage', requireLogin, async (req, res) => {
 });
 
 
+/*
+***********************************************************************************************************************************
+***********************************************************************************************************************************
+
+
+************************************************Upload code************************************************************************
+
+
+***********************************************************************************************************************************
+***********************************************************************************************************************************
+
+*/
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads");
+    },
+    filename: function (req, file, cb) {
+      cb(
+        null,
+        file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      );
+    },
+  }) ;
+
+
+  const upload = multer({ 
+      storage: storage,
+      fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+          cb(null, true);
+        } else {
+          cb(null, false);
+          return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+      } });
+
+
+  router.post("/collections", requireLogin, upload.single("myImage"), async (req, res) => {
+    
+    
+
+    const file = req.file
+    console.log(file)
+
+    // apply filter
+    // resize 
+    /*
+    //AWS image upload here commented out to prevent duplicate sends
+    const result = await uploadFile(file)
+    await unlinkFile(file.path)
+    console.log(result)
+    const description = req.body.description
+    res.send({imagePath: `/images/${result.Key}`})
+    */
+
+ )};
+
+
 
 // Searching and other user routers below here
 
