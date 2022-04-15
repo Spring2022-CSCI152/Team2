@@ -4,7 +4,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const requireLogin = require('../middleware/requireLogin');
-const multer = require('multer')
+const multer = require('multer');
+const path = require('path');
 
 // input validation
 const validateRegisterInput = require('../validation/register');
