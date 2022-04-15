@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const collectionImg = require('../models/collectionsModel');
 const Schema = mongoose.Schema;
 const collections = require('../models/collectionsModel')
 
@@ -44,12 +43,14 @@ const UserSchema = new Schema({
         default: null
     },
 
-    collections: {
+    collectionImg: {
         type: Schema.Types.ObjectId,
-        ref: 'collectionSchema'
+        ref: 'imgCollections' //export ref module.exports = User = mongoose.model("imgCollections", collections);
 
 
     },
+
+    
     date: {
         type: Date,
         default: Date.now
@@ -58,6 +59,5 @@ const UserSchema = new Schema({
     
 });
 
-var collectionSchema  = mongoose.model('collection', collections);
 
 module.exports = User = mongoose.model("users", UserSchema);

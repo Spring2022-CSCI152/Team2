@@ -4,36 +4,50 @@ const {ObjectId} = mongoose.Schema.Types;
 
 //imgName, tags, description, cName, date(auto) 
 // Create Schema
-const collection = new Schema({
+const collections = new Schema({
     imgName: {
         type: String,
-        required: true,
+        required: false
     },
+
+    image:{
+        data: Buffer,
+        contentType: String
+    },
+
     tags: {
         type: String,
-        required: false,
-        default: null
+        required: false
     },
+
     description: {
         type: String,
+        required: true,
+        default: " "
+    },
+
+    flaggedImage:{
+        type: Boolean,
+        required: false,
+        default: false
+    },
+    
+    cName: {
+        type: String,
         required: false,
         default: null
     },
-    flaggedImage:{
-        type: Boolean,
-        required: true,
-        default: null
-    }, 
-    collectionname:{
-        type: String,
-        required: true,
-        default: null
+
+    postedBy: {
+        type: ObjectId,
+        ref: "users",
+        required: false
     },
-    // enter the user schema here or something
+
     date: {
         type: Date,
         default: Date.now
     }
 });
 
-module.exports = User = mongoose.model("imgCollections", collection);
+module.exports = User = mongoose.model("imgCollections", collections);
