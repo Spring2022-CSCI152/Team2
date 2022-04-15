@@ -201,6 +201,21 @@ const storage = multer.diskStorage({
     const description = req.body.description
     res.send({imagePath: `/images/${result.Key}`})
     */
+      //errors here
+      
+      User.findByIdAndUpdate(
+          req.user,
+          {$push: {
+              collectionImg:{
+                  imgName: req.file.originalName,
+                  postedBy: req.user,
+                  tags: file.path}
+          }
+          },
+          {new: true,
+           userFindAndModify: false}
+          );
+ 
 
  )};
 
