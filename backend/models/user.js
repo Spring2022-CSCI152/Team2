@@ -43,12 +43,12 @@ const UserSchema = new Schema({
         default: null
     },
 
-    collectionImg: {
+    collectionArray: [{
         type: Schema.Types.ObjectId,
         ref: 'imgCollections' //export ref module.exports = User = mongoose.model("imgCollections", collections);
 
 
-    },
+    }],
 
     
     date: {

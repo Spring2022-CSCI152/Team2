@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const requireLogin = require('../middleware/requireLogin');
+const multer = require('multer')
 
 // input validation
 const validateRegisterInput = require('../validation/register');
@@ -185,9 +186,8 @@ const storage = multer.diskStorage({
 
 
   router.post("/collections", requireLogin, upload.single("myImage"), async (req, res) => {
-    
-    
 
+    
     const file = req.file
     console.log(file)
 
@@ -205,19 +205,19 @@ const storage = multer.diskStorage({
       
       User.findByIdAndUpdate(
           req.user,
-          {$push: {
-              collectionImg:{
-                  imgName: req.file.originalName,
-                  postedBy: req.user,
-                  tags: file.path}
+          {$push: {collectionArray:{
+                        collectionImg:{
+                            imgName: req.file.originalName,
+                            postedBy: req.user,
+                            tags: file.path}
+                        }
           }
           },
           {new: true,
            userFindAndModify: false}
           );
- 
 
- )};
+  });
 
 
 

@@ -3,10 +3,10 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const routesUrls = require('../routes/routes');
-const collections = require('../routes/collections');
 const userApi = require('../routes/users');
+const funcTest = require('../routes/routetest');
 const passport = require('passport');
-
+const cookieParser = require('cookie-parser');
 
 const cors = require('cors');
 
@@ -25,8 +25,12 @@ mongoose.connect(process.env.DB, {
 
 // middlewares
 app.use(express.json());
-app.use(cors());
-app.use(passport.initialize());
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  credentials: true,
+}));
+//app.use(passport.initialize());
+app.use(cookieParser());
 
 // passport config
 require('../config/passport')(passport);
@@ -34,7 +38,7 @@ require('../config/passport')(passport);
 // www.blahblahblah/app/signup etc etc etc
 app.use('/app', routesUrls);
 app.use('/', userApi);
-app.use('/collection', collections);
+app.use('/api', funcTest);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
