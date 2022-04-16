@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const collections = require('../models/collectionsModel')
+const {ObjectId} = mongoose.Schema.Types;
 
 
 // Create User Schema
@@ -44,9 +44,49 @@ const UserSchema = new Schema({
     },
 
     collectionArray: [{
-        type: Schema.Types.ObjectId,
-        ref: 'imgCollections' //export ref module.exports = User = mongoose.model("imgCollections", collections);
-
+        imgName: {
+            type: String,
+            required: false
+        },
+    
+        image:{
+            data: Buffer,
+            contentType: String
+        },
+    
+        tags: {
+            type: String,
+            required: false
+        },
+    
+        description: {
+            type: String,
+            required: true,
+            default: " "
+        },
+    
+        flaggedImage:{
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        
+        cName: {
+            type: String,
+            required: false,
+            default: null
+        },
+    
+        postedBy: {
+            type: ObjectId,
+            ref: "users",
+            required: false
+        },
+    
+        date: {
+            type: Date,
+            default: Date.now
+        }
 
     }],
 

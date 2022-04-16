@@ -14,6 +14,7 @@ const validateLoginInput = require('../validation/login');
 // Load User model
 const User = require('../models/user');
 
+
 // Max age for token
 const maxAge = 3 * 24 * 60 * 60;
 
@@ -192,31 +193,27 @@ const storage = multer.diskStorage({
     const file = req.file
     console.log(file)
 
-    // apply filter
-    // resize 
-    /*
     //AWS image upload here commented out to prevent duplicate sends
     const result = await uploadFile(file)
     await unlinkFile(file.path)
     console.log(result)
     const description = req.body.description
     res.send({imagePath: `/images/${result.Key}`})
-    */
-      //errors here
-      
-      User.findByIdAndUpdate(
-          req.user,
-          {$push: {collectionArray:{
-                        collectionImg:{
-                            imgName: req.file.originalName,
-                            postedBy: req.user,
-                            tags: file.path}
-                        }
-          }
-          },
-          {new: true,
-           userFindAndModify: false}
-          );
+    
+        
+      User.findOne(
+          {_id: req.user},
+      ).then(User => {
+        User.collectionArray.push({
+            imgName: req.file.originalName,
+            postedBy: req.user,
+            tags: file.path
+
+          });
+          User.save().then(User => res.json(User));
+      })
+     
+    
 
   });
 
