@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const requireLogin = require('../middleware/requireLogin');
 const multer = require('multer');
 const path = require('path');
+const s3 = require('../middleware/s3')
+const fs = require('fs')
 
 // input validation
 const validateRegisterInput = require('../validation/register');
@@ -194,10 +196,8 @@ const storage = multer.diskStorage({
     console.log(file)
 
     //AWS image upload here commented out to prevent duplicate sends
-    const result = await uploadFile(file)
-    await unlinkFile(file.path)
+    const result = await s3.uploadFile(file)
     console.log(result)
-    const description = req.body.description
     res.send({imagePath: `/images/${result.Key}`})
     
         
@@ -212,6 +212,8 @@ const storage = multer.diskStorage({
           });
           User.save().then(User => res.json(User));
       })
+
+      await fs.unlinkSync(file.path)
      
     
 

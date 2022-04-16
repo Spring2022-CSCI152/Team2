@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Spring2022-CSCI152/Team2#readme",
   "dependencies": {
+    "aws-sdk": "^2.1116.0",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
