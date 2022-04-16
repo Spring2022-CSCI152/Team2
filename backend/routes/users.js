@@ -198,7 +198,7 @@ const storage = multer.diskStorage({
     //AWS image upload here commented out to prevent duplicate sends
     const result = await s3.uploadFile(file)
     console.log(result)
-    res.send({imagePath: `/images/${result.Key}`})
+    
     
         
       User.findOne(
