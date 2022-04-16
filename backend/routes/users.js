@@ -4,6 +4,10 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const requireLogin = require('../middleware/requireLogin');
+const multer = require('multer');
+const path = require('path');
+const s3 = require('../middleware/s3')
+const fs = require('fs')
 
 // input validation
 const validateRegisterInput = require('../validation/register');
@@ -11,6 +15,7 @@ const validateLoginInput = require('../validation/login');
 
 // Load User model
 const User = require('../models/user');
+
 
 // Max age for token
 const maxAge = 3 * 24 * 60 * 60;
@@ -143,6 +148,76 @@ router.get('/alertsPage', requireLogin, async (req, res) => {
 router.post('/alertsPage', requireLogin, async (req, res) => {
     console.log("We're in");
 });
+
+
+/*
+***********************************************************************************************************************************
+***********************************************************************************************************************************
+
+
+************************************************Upload code************************************************************************
+
+
+***********************************************************************************************************************************
+***********************************************************************************************************************************
+
+*/
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads");
+    },
+    filename: function (req, file, cb) {
+      cb(
+        null,
+        file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      );
+    },
+  }) ;
+
+
+  const upload = multer({ 
+      storage: storage,
+      fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+          cb(null, true);
+        } else {
+          cb(null, false);
+          return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+      } });
+
+
+  router.post("/collections", requireLogin, upload.single("myImage"), async (req, res) => {
+
+    
+    const file = req.file
+    console.log(file)
+
+    //AWS image upload here commented out to prevent duplicate sends
+    const result = await s3.uploadFile(file)
+    console.log(result)
+    
+    
+        
+      User.findOne(
+          {_id: req.user},
+      ).then(User => {
+        User.collectionArray.push({
+            imgName: req.file.originalName,
+            postedBy: req.user,
+            tags: file.path
+
+          });
+          User.save().then(User => res.json(User));
+      })
+
+      await fs.unlinkSync(file.path)
+     
+    
+
+  });
 
 
 
