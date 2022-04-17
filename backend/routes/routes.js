@@ -4,6 +4,9 @@ const userTemplate = require('../models/user');
 const bcrypt = require('bcrypt');
 const requireLogin = require('../middleware/requireLogin');
 
+// Load User model for searching 
+const User = require('../models/user');
+
 //Note these routes could be right could be wrong. Edit and correct over time
 router.post('/index', (req, res) => {
     // Some code
@@ -21,9 +24,18 @@ router.post('/account', requireLogin, (req, res) => {
     res.redirect('/login');
 });
 
-router.post('/search', (req, res) => {
-    // Some code
+router.get('/search',  (req, res) => {
+    
+     res.send("hi");
+   { /* User.find({username: req.body.searchTerm}).then( user => {
+       
+         return res.json(user).catch(err => console.log(err));
+         
+    }) */}
+
+   
 });
+
 
 router.post('/collections', (req, res) => {
     // Some code

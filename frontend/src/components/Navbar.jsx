@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import '../assets/NavBar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSearch, faBars, faBell } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,8 @@ import LogOutBtn from './logout';
 
 
 const Navbar = () => {
+    //search
+    const [query, setQuery] = useState("");
 
     // loggedIn value to check if user is logged in
     const { loggedIn } = useContext(AuthContext);

@@ -74,22 +74,24 @@ class DataGrid extends React.Component {
           <Grid container spacing={4} >
             {itemNums.map((item) => (
 
-              <Grid item xs={4}>
-                <ImageList
+              <Grid item xs={3}>
+                <a className = "profileLink" href = "google.com" >
+                <ImageList 
                   cols={3}
+                  gap= {0}
                   variant="quilted"
                   className="collectionItem"
                 >
                   {props.collectionData.slice(0, 5).map((item) => (
                     <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} >
-                      <a href={item.img}>
+                     
                         <img
                           src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                           srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                           alt={item.title}
                           loading="lazy"
                         />
-                      </a>
+                    
                     </ImageListItem>
                   ))}
                   <ImageListItem className="plusMore" cols={1} rows={1}>
@@ -100,12 +102,12 @@ class DataGrid extends React.Component {
                     <Typography className = "collectionName">
                         Collection Name
                     </Typography>
-                    <Typography>
+                    <Typography className = "collectionArtist">
                         Artist Name
                     </Typography>
                   </div>
                 </ImageList> 
-              
+                </a>
               </Grid>
             ))}
           </Grid>

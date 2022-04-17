@@ -6,7 +6,9 @@
 
 }
 .dataGrid img:hover{
-    opacity:.8;
+    opacity:.52;
+    transition-duration: .2s;
+
 
 }
 .css-1msdtji-MuiPaper-root-MuiCard-root{
@@ -46,8 +48,18 @@ div.css-hidgkg-MuiAvatar-root{
 .css-b6lsxj-MuiButtonBase-root-MuiCardActionArea-root{
     height:100%;
 }
+
+/*styles for collections*/
 ul.collectionItem{
-    opacity:.7;
+    opacity:.85;
+   
+   
+  
+}
+ul.collectionItem:hover{
+    opacity:.52;
+    transition-duration: .2s;
+
    
   
 }
@@ -72,4 +84,13 @@ ul.collectionItem{
 }
 .filters{
     font-size:larger;
+}
+.collectionName, .collectionArtist{
+    opacity:1;
+}
+a.profileLink{
+    color:white;
+}
+img.MuiImageListItem-img{
+    pointer-events: none;
 }
