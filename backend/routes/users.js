@@ -6,8 +6,9 @@ const jwt = require('jsonwebtoken');
 const requireLogin = require('../middleware/requireLogin');
 const multer = require('multer');
 const path = require('path');
-const s3 = require('../middleware/s3')
-const fs = require('fs')
+const s3 = require('../middleware/s3');
+const fs = require('fs');
+const {OAuth2Client} = require('google-auth-library');
 
 // input validation
 const validateRegisterInput = require('../validation/register');
@@ -16,6 +17,8 @@ const validateLoginInput = require('../validation/login');
 // Load User model
 const User = require('../models/user');
 
+// Google client
+const googleClient = new OAuth2Client(process.env.clientId);
 
 // Max age for token
 const maxAge = 3 * 24 * 60 * 60;
@@ -104,6 +107,47 @@ router.post('/login', (req, res) => {
         });
     });
 });
+
+// Google Login Route
+router.post('/googlelogin', async (req, res) => {
+    
+    
+
+
+
+    /*
+    // Find user by email
+    User.findOne({ email }).then(user => {
+        // Check if the user exist
+        if(!user){
+            return res.status(404).json({ emailnotfound: "Email not found" });
+        }
+        // Check passord (bcrypt.compare can compare a hashed password with a non hashed here)
+        bcrypt.compare(password, user.password).then(isMatch => {
+            if (isMatch){
+                // Create JWT Payload for matched user
+                const payload = {
+                    id: user.id,
+                    email: user.email,
+                    name: user.name
+                };
+
+                // Sign the token
+                const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
+                res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+                const result = res.status(200).json({ user: user._id });
+
+                
+            } else {
+                return res.status(400).json({ passwordincorrect: "Incorrect password" });
+            }
+        });
+    });*/
+
+});
+
+
+
 
 // Logout endpoint
 router.get("/logout", requireLogin, (req, res) =>{

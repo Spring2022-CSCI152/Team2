@@ -2,7 +2,8 @@ import React, { Component, useState, useContext } from 'react';
 import AuthContext from '../context/authContext';
 import '../assets/login.css';
 import axios from 'axios';
-import {Link, Navigate, useNavigate} from 'react-router-dom'
+import {Link, Navigate, useNavigate} from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
 
 const Login = () =>{
     
@@ -11,6 +12,15 @@ const Login = () =>{
     const [password, setPassword] = useState("");
     const [loggingIn, setLoggingIn] = useState(true);
     const { getLoggedIn } = useContext(AuthContext);
+
+    // Google login handler
+    const responseGoogle = (response) => {
+        console.log(response);
+      }
+
+    const responseErrorGoogle = (response) => {
+        console.log(response);
+    }
     
     const HandleSubmit = async (event) =>{
         event.preventDefault();
@@ -36,9 +46,15 @@ const Login = () =>{
             <h1>Login</h1>
             <form method = "post" onSubmit={HandleSubmit}>
                 <div className="uniqueLogin" value = "test">
-                <input type = "button" value ="Login with Gmail">
-
-                </input>
+                <input type = "button" value ="Login with Gmail"></input>
+                
+                <GoogleLogin
+                    clientId="155459917287-hgt37hna82ei0h2hasqdljs003biladv.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={responseGoogle}
+                    onFailure={responseErrorGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />
                 <span></span>
                 <input type = "button" value ="Login with Twitter">
                     
