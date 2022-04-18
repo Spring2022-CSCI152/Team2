@@ -9,6 +9,7 @@ const path = require('path');
 const s3 = require('../middleware/s3');
 const fs = require('fs');
 const {OAuth2Client} = require('google-auth-library');
+const {} = require('google-auth-library');
 
 // input validation
 const validateRegisterInput = require('../validation/register');
@@ -111,39 +112,53 @@ router.post('/login', (req, res) => {
 // Google Login Route
 router.post('/googlelogin', async (req, res) => {
     
-    
+    const {tokenId} = req.body;
 
+    googleClient.verifyIdToken({idToken: tokenId, audience: process.env.clientId}).then(response => {
+        const {email_verified, name, email} = response.payload;
+        
+        if(email_verified){
+            User.findOne({email}).exec((err, user) =>{
+                if (err){
+                    return res.status(400).json({ error: "Something went wrong. Try again later." })
+                } else {
+                    if (user){
+                        // Create JWT Payload for matched user
+                        const payload = {
+                            id: user.id,
+                            email: user.email,
+                            name: user.name
+                        };
 
+                        // Sign the token
+                        const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
+                        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+                        const result = res.status(200).json({ user: user._id });
 
-    /*
-    // Find user by email
-    User.findOne({ email }).then(user => {
-        // Check if the user exist
-        if(!user){
-            return res.status(404).json({ emailnotfound: "Email not found" });
+                    } else {
+                        // Create a dummy password for the new user
+                        const password = email_verified+process.env.secretKey;
+                        // Create the new user schema
+                        const newUser = new User({
+                            name: name,
+                            email: email,
+                            password: password
+                        });
+
+                        // Hash and salt password before saving
+                        bcrypt.genSalt(10, (err, salt) => {
+                            bcrypt.hash(newUser.password, salt, (err, hash) => {
+                                if (err) throw err;
+                                newUser.password = hash;
+                                newUser.save().then(user => res.json(user)).catch(err => console.log(err));
+                            });
+                        });
+                    }
+                }
+
+            })
         }
-        // Check passord (bcrypt.compare can compare a hashed password with a non hashed here)
-        bcrypt.compare(password, user.password).then(isMatch => {
-            if (isMatch){
-                // Create JWT Payload for matched user
-                const payload = {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name
-                };
-
-                // Sign the token
-                const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
-                res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-                const result = res.status(200).json({ user: user._id });
-
-                
-            } else {
-                return res.status(400).json({ passwordincorrect: "Incorrect password" });
-            }
-        });
-    });*/
-
+    });
 });
 
 

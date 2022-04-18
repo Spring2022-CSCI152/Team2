@@ -14,12 +14,18 @@ const Login = () =>{
     const { getLoggedIn } = useContext(AuthContext);
 
     // Google login handler
-    const responseGoogle = (response) => {
-        console.log(response);
+    const responseGoogle = async (res) => {
+        console.log(res);
+        await axios.post('http://localhost:5000/googlelogin', {tokenId: res.tokenId})
+            .then(res => console.log("Google login success", res))
+            .catch(err => console.log(err));
+            console.log("logging in");
+            await getLoggedIn();
+            navigate("/");
       }
 
-    const responseErrorGoogle = (response) => {
-        console.log(response);
+    const responseErrorGoogle = (res) => {
+        console.log(res);
     }
     
     const HandleSubmit = async (event) =>{
@@ -35,7 +41,6 @@ const Login = () =>{
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("logging in");
-            // Turn this into an async function
             await getLoggedIn();
             navigate("/");
         } 
