@@ -17,6 +17,7 @@ const validateLoginInput = require('../validation/login');
 
 // Load User model
 const User = require('../models/user');
+const checkUser = require('../middleware/checkUser');
 
 // Google client
 const googleClient = new OAuth2Client(process.env.clientId);
@@ -93,13 +94,20 @@ router.post('/login', (req, res) => {
                 const payload = {
                     id: user.id,
                     email: user.email,
-                    name: user.name
+                    name: user.name,
+                    username: user.username,
+                    userbio: user.userbio,
+                    profileimg: user.profileimg,
+                    useralert: user.alert,
+                    socials: user.socials,
+                    collectionArray: user.collectionArray,
+                    date: user.date
                 };
 
                 // Sign the token
                 const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
                 res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-                const result = res.status(200).json({ user: user._id });
+                const result = res.status(200).json({ user: payload });
 
                 
             } else {
@@ -175,7 +183,7 @@ router.get("/logout", requireLogin, (req, res) =>{
     .send();
 });
 
-// Logged in route to avoid javascript injection. Might use this who knows
+// Logged in route to avoid javascript injection
 router.get('/loggedIn', (req,res) =>{
     try{
         const token = req.cookies.jwt;
@@ -183,10 +191,28 @@ router.get('/loggedIn', (req,res) =>{
         if(!token) return res.json(false);
 
         jwt.verify(token, process.env.secretKey);
-
+        
         res.send(true);
     } catch (err){
-        res.res.json(false);
+        res.json(false);
+    }
+});
+
+router.get('/setuser', (req,res) =>{
+    const token = req.cookies.jwt;
+
+    if(token){
+        jwt.verify(token, process.env.secretKey, async (err, decodedToken) => {
+            if (err){
+                console.log(err.message);
+                res.send(false);
+            } else {
+                console.log(decodedToken)
+                res.json(decodedToken);
+            }
+        })
+    } else {
+        res.send(false);
     }
 });
 

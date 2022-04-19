@@ -1,17 +1,21 @@
 import '../assets/account.css';
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import Dropzone from './dropzone.jsx';
 import ImageList from './ImageList.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Link } from "react-router-dom";
 import cuid from "cuid";
+import AuthContext from '../context/authContext';
 
 
 
 function Account() {
-
-      const [images, setImages] = useState([]);
+    const { loggedIn } = useContext(AuthContext);
+    const { userInfo } = useContext(AuthContext);
+    console.log(loggedIn);
+    console.log(userInfo.email);
+    const [images, setImages] = useState([]);
 
       const onDrop = useCallback(acceptedFiles => {
         // Loop through accepted files

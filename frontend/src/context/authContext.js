@@ -5,9 +5,19 @@ const AuthContext = createContext();
 
 function AuthContextProvider(props) {
   const [loggedIn, setLoggedIn] = useState(undefined);
+  const [userInfo, setUserInfo] = useState(undefined);
 
   async function getLoggedIn() {
     const loggedInRes = await axios.get("http://localhost:5000/loggedIn");
+    const setUser = await axios.get('http://localhost:5000/setuser');
+    if(setUser.data === false){
+      localStorage.clear();
+    } else {
+      console.log(setUser.data);
+      localStorage.setItem('user', JSON.stringify(setUser));
+    }
+    
+    setUserInfo(setUser.data);
     setLoggedIn(loggedInRes.data);
   }
 
@@ -16,7 +26,7 @@ function AuthContextProvider(props) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loggedIn, getLoggedIn }}>
+    <AuthContext.Provider value={{ loggedIn, userInfo, getLoggedIn }}>
       {props.children}
     </AuthContext.Provider>
   );
