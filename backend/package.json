@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Spring2022-CSCI152/Team2#readme",
   "dependencies": {
+    "aws-sdk": "^2.1116.0",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
@@ -27,13 +28,17 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "google-auth-library": "^7.14.1",
     "is-empty": "^1.2.0",
     "joi-password-complexity": "^5.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.4",
+    "multer": "^1.4.4",
+    "node-localstorage": "^2.2.1",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "start": "^5.1.0",
+    "uuid": "^8.3.2",
     "validator": "^13.7.0"
   },
   "devDependencies": {

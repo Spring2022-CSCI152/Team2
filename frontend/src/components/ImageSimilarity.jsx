@@ -1,8 +1,8 @@
 import React, { Component, useState } from 'react';
 import { S3FileUpload, uploadFile } from 'react-s3';
 import axios from 'axios';
-import Buffer from 'buffer';
-window.Buffer = window.Buffer || require("buffer").Buffer;
+//import buffer from 'buffer';
+//window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const config = {
     bucketName: 'notforthieves',

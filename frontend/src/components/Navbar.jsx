@@ -5,6 +5,7 @@ import { faUser, faSearch, faBars, faBell } from '@fortawesome/free-solid-svg-ic
 import { Link } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 // AuthContext needed to check if user logged in
+// Note: React, { useContext } from 'react'; is needed
 import AuthContext from '../context/authContext';
 import LogOutBtn from './logout';
 

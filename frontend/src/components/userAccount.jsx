@@ -78,10 +78,6 @@ function Account() {
                         </p>
                     </div>
                     
-                    <div id="profileDrag">
-                    <Dropzone onDrop={onDrop} accept={"image/*"} />
-                     
-                    </div>
                 </div>
 
                 <div id="tableinfo">
