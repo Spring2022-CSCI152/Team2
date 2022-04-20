@@ -10,7 +10,7 @@ const Registration = () =>{
     const [password, setPassword] = useState("");
     const [confPassword, checkPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [registration, setRegisteration] = useState(true);
+    
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -21,12 +21,12 @@ const Registration = () =>{
             password2: confPassword
         };
         // axios
-        if(registration){
+        
             axios.post('http://localhost:5000/register', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("registering");
-        }
+        
     }
 
     return(
