@@ -15,7 +15,7 @@ class DataGrid extends React.Component {
     super(props);
 
     this.state = {
-
+      userData:props.userData,
       searchType: props.searchType,
       data: props.data,
       per: 4,
@@ -128,17 +128,16 @@ class DataGrid extends React.Component {
                 <Card sx={{ maxWidth: 345, maxHeight: 500 }} key={item.img}>
                   <CardActionArea>
                     <Avatar
-                      alt="Remy Sharp"
-                      src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                      alt={item.username}
+                      src={`${item.profileImg}?w=164&h=164&fit=crop&auto=format`}
                       sx={{ width: 100, height: 100 }}
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h6" component="div">
-                        {item.title}
+                        {item.name}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                        species, ranging across all continents except Antarctica
+                        {item.userbio}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
@@ -152,13 +151,13 @@ class DataGrid extends React.Component {
     }
 
     function SearchContent(props) {
-      console.log("dataGrid:" + props.searchType);
+    
 
       switch (props.searchType) {
         case 0:
           return <DisplayImages imgData={props.data}></DisplayImages>
         case 1:
-          return <DisplayUsers userData={props.data}></DisplayUsers>
+          return <DisplayUsers userData={props.userData}></DisplayUsers>
         case 2:
           return <DisplayCollections collectionData={props.data}></DisplayCollections>
 
@@ -172,7 +171,7 @@ class DataGrid extends React.Component {
 
       <section className="dataGrid">
 
-        <SearchContent searchType={this.state.searchType} data={itemData}></SearchContent>
+        <SearchContent searchType={this.state.searchType} userData = {this.state.userData}data={itemData}></SearchContent>
 
 
       </section>

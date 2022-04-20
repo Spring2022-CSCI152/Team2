@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 const userTemplate = require('../models/user');
@@ -24,18 +25,36 @@ router.post('/account', requireLogin, (req, res) => {
     res.redirect('/login');
 });
 
-router.get('/search',  (req, res) => {
-    
-     res.send("hi");
-   { /* User.find({username: req.body.searchTerm}).then( user => {
-       
-         return res.json(user).catch(err => console.log(err));
-         
-    }) */}
-
+router.post('/search/users',  (req, res) => { // queries the user collection and returns JSON of results
+    const keyword = req.body.searchTerm.toString();
+    const query = {$text: {$search: keyword}};
+    const searchScope =  {select: ['username', 'name', 'userbio', 'profileimg']}
    
-});
+    User.find(query).then(function(records){
+        res.send(JSON.stringify(records))
+      });
 
+});
+router.post('/search/collections',  (req, res) => {// queries the 'collection' collection and returns JSON of results
+    const keyword = req.body.searchTerm.toString();
+    const query = {$text: {$search: keyword}};
+    
+   
+    User.find(query).then(function(records){
+        res.send(JSON.stringify(records))
+      });
+
+});
+router.post('/search/images',  (req, res) => { // queries the 'image' collection and returns JSON of results
+    const keyword = req.body.searchTerm.toString();
+    const query = {$text: {$search: keyword}};
+    
+   
+    User.find(query).then(function(records){
+        res.send(JSON.stringify(records))
+      });
+
+});
 
 router.post('/collections', (req, res) => {
     // Some code

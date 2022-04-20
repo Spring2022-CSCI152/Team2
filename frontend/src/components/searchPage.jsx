@@ -20,6 +20,7 @@ class SearchPage extends React.Component {
 
     this.state = {
       data: [],
+      userData: [],
       keyword: "",
       searchType: 0,
       page: 1,
@@ -31,40 +32,40 @@ class SearchPage extends React.Component {
 
 
   }
+  componentDidMount(){
+    this.setKeyword();
   
+ 
+  
+  };
   setKeyword(){
     const url = new URL(window.location.href);
     const searchTerm = url.searchParams.get("searchField");
     this.state.keyword = searchTerm;
   };
  
-  componentDidMount() {
 
-   this.setKeyword();
-  
-    const sKey = {
-      searchTerm: this.state.keyword,
-      searchType: this.state.searchType
-    };
-   
-    console.log(sKey);
-
- 
-
-  }
   render() {
-    const getData = async () => {
-      axios.get('app/search', sKey)
-            .then(res => console.log(res.data))
+    const getData =  () => {
+
+      axios.post('app/search/users', 
+      {searchTerm : this.state.keyword,
+        searchType: this.state.searchType
+       })
+            .then(res =>  this.setState( {userData : res.data}))
             .catch(err => console.log(err));
+      
+     
     }
+  
+
 
     const SearchFilters = () => {
 
       const [value, setValue] = React.useState(this.state.searchType);
       /*changes value of searchType on change */
       const handleChange = (event, newValue) => {
-
+        getData();
         setValue(newValue);
         this.setState({
 
@@ -74,10 +75,8 @@ class SearchPage extends React.Component {
         })
 
       };
+     
 
-
-      getData();
-      console.log("searchType : " + this.state.searchType);
       return (
         /*tabs component */
         <article>
@@ -96,7 +95,7 @@ class SearchPage extends React.Component {
     /*calls data grid based on searchType */
     function CallDataGrid(props) {
       return (
-        <DataGrid searchType={props.searchType} data={props.data}></DataGrid>
+        <DataGrid searchType={props.searchType} userData = {props.userData} data={props.data}></DataGrid>
       );
 
     }
@@ -107,7 +106,7 @@ class SearchPage extends React.Component {
 
         <SearchFilters ></SearchFilters>
 
-        <CallDataGrid searchType={this.state.searchType} data={this.state.data}></CallDataGrid>
+        <CallDataGrid searchType={this.state.searchType} data={this.state.data} userData = {this.state.userData} keyword = {this.state.keyword}></CallDataGrid>
 
       </>
     );
