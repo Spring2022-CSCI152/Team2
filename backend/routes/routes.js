@@ -28,9 +28,14 @@ router.post('/account', requireLogin, (req, res) => {
 router.post('/search/users',  (req, res) => { // queries the user collection and returns JSON of results
     const keyword = req.body.searchTerm.toString();
     const query = {$text: {$search: keyword}};
-    const searchScope =  {select: ['username', 'name', 'userbio', 'profileimg']}
+    const searchScope = {
+        username: 1, 
+        name: 1, 
+        userbio: 1, 
+        profileimg: 1
+    };
    
-    User.find(query).then(function(records){
+    User.find(query,searchScope).then(function(records){
         res.send(JSON.stringify(records))
       });
 
@@ -55,7 +60,18 @@ router.post('/search/images',  (req, res) => { // queries the 'image' collection
       });
 
 });
+router.get('/featUsers', (req, res) => {
+    const query = null;
+    const searchScope = {
+        username: 1, 
+        name: 1, 
+        userbio: 1, 
+        profileimg: 1
+    };
 
+   
+
+});
 router.post('/collections', (req, res) => {
     // Some code
 });
