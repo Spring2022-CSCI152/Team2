@@ -61,14 +61,24 @@ router.post('/search/images',  (req, res) => { // queries the 'image' collection
 
 });
 router.get('/featUsers', (req, res) => {
-    const query = null;
+    const query = User.aggregate([
+        {$match : {
+            "collectionArray" :{
+                "$exists": true
+            }
+        }},
+        {$sample: {
+            size: 10
+        }}]);;
     const searchScope = {
         username: 1, 
         name: 1, 
         userbio: 1, 
         profileimg: 1
     };
-
+    User.find(query,searchScope).then(function(records){
+        res.send(JSON.stringify(records))
+      });
    
 
 });
