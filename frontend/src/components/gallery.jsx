@@ -34,8 +34,7 @@ function Gallery1 () {
     <div className="App-body">
       <h3> Users Gallery </h3>
       <p>
-        Gallery Example  {" "}
-       
+        Gallery Example {" "}
       </p>
 
       <ImageGallery />
@@ -91,7 +90,6 @@ function ImageGallery() {
     }
   };
   
-
   return (
     <>
       <div>{imageCards}</div>
@@ -111,6 +109,6 @@ function ImageGallery() {
   );
 }
 
-ReactDOM.render(<Gallery1 />, document.getElementById("root"));
+//ReactDOM.render(<Gallery1 />, document.getElementById("root"));
 
 export default Gallery1;
