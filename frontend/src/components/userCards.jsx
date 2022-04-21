@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-;
+import React, { Component } from "react";
 import '../assets/featUsers.css';
+import axios from "axios";
 
 class UserCards extends Component {
   state = {
@@ -28,7 +28,14 @@ class UserCards extends Component {
         });
       });
   };
+   getData =  () => {
 
+    axios.get('app/featUsers')
+          .then(res =>  this.setState( {data : res.data}))
+          .catch(err => console.log(err));   
+        
+   
+  }
   loadMore = () => {
     this.setState(
       prevState => ({
@@ -36,34 +43,36 @@ class UserCards extends Component {
         page: prevState.page + 1,
         scrolling: true
       }),
-      this.loadData
+    
     );
   };
 
   componentDidMount() {
-    this.loadData();
+    this.getData();
+    
+
   }
 
   render() {
+  
+    console.log(this.state);
     return (
      <>
     
         <div className="row">
           {this.state.data.map(data => (
-            <div className="col-md-4 animated fadeIn" key={data.id.value}>
+            <div className="col-md-4 animated fadeIn" key={data._id}>
               <div className="card">
                 <div className="card-body">
                   <div className="avatar">
                     <img
-                      src={data.picture.large}
+                      src={data.profileimg}
                       className="card-img-top"
-                      alt=""
+                      alt={data.name}
                     />
                   </div>
                   <h5 className="card-title">
-                    {this.uppercase(data.name.first) +
-                      " " +
-                      this.uppercase(data.name.last)}
+                    {this.uppercase(data.name)} 
                   </h5>
                   <p className="card-text">
                     {"Bio"}
@@ -87,6 +96,7 @@ class UserCards extends Component {
         
    </>
     );
+    
   }
 }
 

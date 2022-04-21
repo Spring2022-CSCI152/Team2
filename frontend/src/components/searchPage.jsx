@@ -54,7 +54,7 @@ class SearchPage extends React.Component {
        })
             .then(res =>  this.setState( {userData : res.data}))
             .catch(err => console.log(err));
-      
+     
      
     }
   

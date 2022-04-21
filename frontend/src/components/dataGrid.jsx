@@ -129,7 +129,7 @@ class DataGrid extends React.Component {
                   <CardActionArea>
                     <Avatar
                       alt={item.username}
-                      src={item.profileImg}//?w=164&h=164&fit=crop&auto=format`
+                      src={item.profileimg}//?w=164&h=164&fit=crop&auto=format`
                       sx={{ width: 100, height: 100 }}
                     />
                     <CardContent>
