@@ -117,10 +117,15 @@
     border-radius: 10px;
     padding:-10px;
     margin-top: 10px;
+    margin-bottom: 10px;
     cursor: copy;
     width:250px;
 }
 
+#editButton{
+    margin-top: 10px;
+    border-radius: 10px;
+}
 #resize{
     height:100%;
     width:100%;

@@ -73,11 +73,9 @@ function Router() {
 
           <Route path="/" element={
             <div className="App-body">
-            {/* < img src={logo} className="App-logo" alt="logo" /> */}
-            <br></br>
-             <Carousel/>
+              <br></br>
+              <Carousel/>
               <FeaturedUsers />
-              
             </div>
           } />
           
@@ -89,43 +87,30 @@ function Router() {
           
           <Route path="/search/" element={
             <div className="App-body-alerts">
-           
-            <br></br>
-            <SearchPage></SearchPage>
-            
-            
-              
+              <br></br>
+              <SearchPage></SearchPage>
             </div>
           } 
           />
 
           <Route path= {"/about"} element={
-            // <div className = "App-body">
             <div className="App-body-about">
               <About/>
-              
               <FeaturedUsers />
             </div>
-            // </div>
           }/>
-          
-          
 
-        <Route path= {"/gallery"} element={
-            //<div className = "App-body">
+          <Route path= {"/gallery"} element={
             <div className="App-body">
-            
-            <Gallery1 />
-          </div>
-            // </div>
+              <Gallery1 />
+            </div>
           }/>
-         
-
+        
           <Route path="*" element={ // This is the catch-all route
             <div className="App-body">
               <a href="/" style={{textDecoration: "none", color: "#61dafb"}}>Go back to home</a>
             </div>
-          } />
+          }/>
         </Routes>
       </div>
       <Footer />
