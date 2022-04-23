@@ -1,5 +1,6 @@
 import UserCard from "../components/userCards.jsx";
 import '../assets/featUsers.css';
+
 import React from "react";
 function FeaturedUsers(){
     return(
