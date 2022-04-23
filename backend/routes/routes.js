@@ -25,61 +25,68 @@ router.post('/account', requireLogin, (req, res) => {
     res.redirect('/login');
 });
 
-router.post('/search/users',  (req, res) => { // queries the user collection and returns JSON of results
+router.post('/search/users', (req, res) => { // queries the user collection and returns JSON of results
     const keyword = req.body.searchTerm.toString();
-    const query = {$text: {$search: keyword}};
+    const query = { $text: { $search: keyword } };
     const searchScope = {
-        username: 1, 
-        name: 1, 
-        userbio: 1, 
+        username: 1,
+        name: 1,
+        userbio: 1,
         profileimg: 1
     };
-   
-    User.find(query,searchScope).then(function(records){
+
+    User.find(query, searchScope).then(function (records) {
         res.send(JSON.stringify(records))
-      });
+    });
 
 });
-router.post('/search/collections',  (req, res) => {// queries the 'collection' collection and returns JSON of results
+router.post('/search/collections', (req, res) => {// queries the 'collection' collection and returns JSON of results
     const keyword = req.body.searchTerm.toString();
-    const query = {$text: {$search: keyword}};
-    
-   
-    User.find(query).then(function(records){
+    const query = { $text: { $search: keyword } };
+
+
+    User.find(query).then(function (records) {
         res.send(JSON.stringify(records))
-      });
+    });
 
 });
-router.post('/search/images',  (req, res) => { // queries the 'image' collection and returns JSON of results
+router.post('/search/images', (req, res) => { // queries the 'image' collection and returns JSON of results
     const keyword = req.body.searchTerm.toString();
-    const query = {$text: {$search: keyword}};
-    
-   
-    User.find(query).then(function(records){
+    const query = { $text: { $search: keyword } };
+
+
+    User.find(query).then(function (records) {
         res.send(JSON.stringify(records))
-      });
+    });
 
 });
 router.get('/featUsers', (req, res) => {
-    const query = User.aggregate([
-        {$match : {
-            "collectionArray" :{
-                "$exists": true
-            }
-        }},
-        {$sample: {
+    const query = User.aggregate([{
+        $sample: {
             size: 10
-        }}]);;
-    const searchScope = {
-        username: 1, 
-        name: 1, 
-        userbio: 1, 
-        profileimg: 1
-    };
-    User.find(query,searchScope).then(function(records){
-        res.send(JSON.stringify(records))
-      });
-   
+        }
+    }, {
+        $match: {
+            collectionArray: {
+                $exists: true
+            }
+        }
+    }]);
+
+
+
+const searchScope = {
+    username: 1,
+    name: 1,
+    userbio: 1,
+    profileimg: 1,
+    collectionArray: 1
+};
+query.then(function (records) {
+    res.send(JSON.stringify(records))
+});
+
+
 
 });
 router.post('/collections', (req, res) => {
@@ -92,12 +99,12 @@ router.post('/user', (req, res) => {
 
 router.get('/testScript', (req, res) => {
     const spawn = require("child_process").spawn;
-    const pythonProcess = spawn('python',["./python/test.py", "hello"]);
+    const pythonProcess = spawn('python', ["./python/test.py", "hello"]);
     pythonProcess.stdout.on('data', (data) => {
-      // Do something with the data returned from python script
-      console.log(data.toString());
+        // Do something with the data returned from python script
+        console.log(data.toString());
     });
-  
+
     res.send({ express: 'process finished' });
 });
 
