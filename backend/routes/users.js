@@ -246,9 +246,15 @@ router.post("/retrievImageJSON", requireLogin, async (req, res) => {
     })
 
     
-
-    
 });
+
+router.post("/AWSRetrieval",requireLogin, async(req, res) =>{
+        console.log(req.params)
+        const key = req.params.key
+        const readStream = s3.getFileStream(key)
+        readStream.pipe(res)
+
+})
 
 
 // Searching and other user routers below here

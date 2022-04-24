@@ -31,7 +31,7 @@ class HomeCarousel extends Component{
             this.setState({
               pictures: pictures
             })
-            console.log("state", this.state.pictures)
+         //   console.log("state", this.state.pictures)
           })
       }
     render(){

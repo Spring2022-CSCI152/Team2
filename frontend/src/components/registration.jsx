@@ -1,11 +1,12 @@
 import React, { Component, useState } from 'react';
 import '../assets/registration.css';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 
 
 const Registration = () =>{
+    const navigate = useNavigate();
     const [name, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confPassword, checkPassword] = useState("");
@@ -26,7 +27,12 @@ const Registration = () =>{
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("registering");
+<<<<<<< HEAD
         
+=======
+            navigate("/login");
+        }
+>>>>>>> 9a1a88ce7f02890c8cddf9c470f265d18fbe4a60
     }
 
     return(

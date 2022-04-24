@@ -33,10 +33,9 @@ function Gallery1 () {
    
     <div className="App-body">
       <h3> Users Gallery </h3>
-      <p1>
-        Gallery Example  {" "}
-       
-      </p1>
+      <p>
+        Gallery Example {" "}
+      </p>
 
       <ImageGallery />
     </div>
@@ -52,8 +51,8 @@ function ImageGallery() {
   const [lightboxDisplay, setLightBoxDisplay] = useState(false);
   
   //looping through our images array to create img elements
-  const imageCards = images.map((image) => (
-    <img className="image-card" onClick={() => showImage(image)} src={image} />
+  const imageCards = images.map((image, index) => (
+    <img className="image-card" key={"image" + index} src={image} alt="image" onClick={() => setImageToShow(image)} />
   ));
 
   //function to show a specific image in the lightbox, amd make lightbox visible
@@ -91,7 +90,6 @@ function ImageGallery() {
     }
   };
   
-
   return (
     <>
       <div>{imageCards}</div>
@@ -111,6 +109,6 @@ function ImageGallery() {
   );
 }
 
-ReactDOM.render(<Gallery1 />, document.getElementById("root"));
+//ReactDOM.render(<Gallery1 />, document.getElementById("root"));
 
 export default Gallery1;

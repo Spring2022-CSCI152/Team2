@@ -1,14 +1,15 @@
 .featUsers{
   margin-left:5%;
   margin-right:5%;
-  width:90%;
+  width:85%;
+  
  
 
  
 
 }
 .row .card {
-  height:300px;
+  height:38vh;
 }
 
 
@@ -94,10 +95,12 @@ h2.featUsersLabel {
     padding: 30px;
     border: solid 1px rgba(0, 0, 0, 0.08);
     cursor: pointer;
+    align-items:center;
+    align-content: center;
     
   }
   .card:hover {
-    box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.8);
   }
   .card-title {
     margin-top: 20px;
@@ -109,19 +112,16 @@ h2.featUsersLabel {
   .card-text .fa {
     font-size: 26px;
   }
-  .avatar {
-    width: 140px;
-    margin: auto;
+  /*avatar root*/
+  div.css-w4s36x-MuiAvatar-root{
+    margin-right:auto;
+    margin-left:auto;
   }
-  .avatar img {
-    border: solid 6px transparent;
-    border-radius: 50%;
-  }
-  .card:hover .avatar img {
-    border-color: rgb(99, 204, 131);
-    border-width:2px;
-  }
+  .card:hover div.css-w4s36x-MuiAvatar-root{
+    margin-right:auto;
+    margin-left:auto;
   
+  }
   .btn {
     border-radius: 25px;
   }
