@@ -71,17 +71,13 @@ router.get('/featUsers', (req, res) => {
                 $exists: true
             }
         }
-    }]);
+    }, 
+    {$project: {_id: 1, profileimg:1 , userbio: 1, username: 1, name: 1}}
+]);
 
 
 
-const searchScope = {
-    username: 1,
-    name: 1,
-    userbio: 1,
-    profileimg: 1,
-    collectionArray: 1
-};
+
 query.then(function (records) {
     res.send(JSON.stringify(records))
 });
