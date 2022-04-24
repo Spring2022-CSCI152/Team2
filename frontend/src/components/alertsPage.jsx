@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import Alert  from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Card from '@mui/material/Card';
@@ -8,7 +8,12 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import '../assets/alertsPage.css';
+import { Link } from "react-router-dom";
+import cuid from "cuid";
+import AuthContext from '../context/authContext';
+
 class AlertsPage extends React.Component{
+
    // Constructor 
    constructor(props) {
     super(props);
@@ -22,6 +27,9 @@ class AlertsPage extends React.Component{
 // ComponentDidMount is used to
 // execute the code 
 componentDidMount() {
+  
+  
+  
     fetch(
       "https://picsum.photos/v2/list?page=0&limit=3")
         .then((res) => res.json())
@@ -34,6 +42,7 @@ componentDidMount() {
 }
 
   render(){
+    
      {/* Different alerts can be used for different messages
           https://mui.com/components/alert/#api
           Use "Severity" to change type of alert
@@ -115,6 +124,10 @@ componentDidMount() {
         )));
     }
     function AlertContent(props){
+      const { loggedIn } = useContext(AuthContext);
+      const { userInfo } = useContext(AuthContext);
+      console.log(loggedIn);
+      console.log(userInfo.email);
       const nAlerts = props.numAlert;
 
       if(nAlerts == 0){
@@ -129,7 +142,9 @@ componentDidMount() {
     const{DataisLoaded,items} = this.state;
        
     return (
+    
     <>
+      
       <section className = "alertBoxContainer">
           <br></br>
         <AlertBox numAlert = {items.length}/> 
