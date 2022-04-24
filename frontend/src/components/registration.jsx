@@ -11,7 +11,7 @@ const Registration = () =>{
     const [password, setPassword] = useState("");
     const [confPassword, checkPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [registration, setRegisteration] = useState(true);
+    
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -22,13 +22,17 @@ const Registration = () =>{
             password2: confPassword
         };
         // axios
-        if(registration){
+        
             axios.post('http://localhost:5000/register', data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("registering");
+<<<<<<< HEAD
+        
+=======
             navigate("/login");
         }
+>>>>>>> 9a1a88ce7f02890c8cddf9c470f265d18fbe4a60
     }
 
     return(
