@@ -8,6 +8,7 @@ const multer = require('multer');
 const path = require('path');
 const s3 = require('../middleware/s3')
 const fs = require('fs')
+const S3 = require('aws-sdk/clients/s3')
 
 // input validation
 const validateRegisterInput = require('../validation/register');
@@ -131,6 +132,11 @@ router.get('/loggedIn', (req,res) =>{
     }
 });
 
+// set user
+router.get('/setuser', requireLogin, (req, res) => {
+    res.send(req.user);
+});
+
 // Accounts will probably where the image upload will be done
 router.post('/account', requireLogin, async (req, res) => {
     res.render('account');
@@ -178,9 +184,9 @@ router.post('/alertsPage', requireLogin, async (req, res) => {
 
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, "uploads");
-    },
+    // destination: function (req, file, cb) {
+    //   cb(null, "uploads");
+    // },
     filename: function (req, file, cb) {
       cb(
         null,
@@ -190,49 +196,39 @@ const storage = multer.diskStorage({
   }) ;
 
 
-  const upload = multer({ 
-      storage: storage,
-      fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-          cb(null, true);
-        } else {
-          cb(null, false);
-          return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
-        }
-      } });
+const upload = multer({ 
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+        cb(null, true);
+    } else {
+        cb(null, false);
+        return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+    }
+} });
 
 
-  router.post("/collections", requireLogin, upload.single("myImage"), async (req, res) => {
-
-    
+router.post("/collections", requireLogin, upload.single("myImage"), async (req, res) => {
     const file = req.file
-    console.log(file)
 
     //AWS image upload here commented out to prevent duplicate sends
     const result = await s3.uploadFile(file)
     console.log(result)
-    
-    
-        
-      User.findOne(
-          {_id: req.user},
-      ).then(User => {
-        User.collectionArray.push({
-            imgName: req.file.originalName,
-            postedBy: req.user,
-            tags: file.path
 
-          });
-          User.save().then(User => res.json(User));
-      })
+    User.findOne(
+        {_id: req.user},
+            ).then(User => {
+                User.collectionArray.push({
+                imgName: req.file.originalname,
+                postedBy: req.user,
+                tags: "tag",
+                imgURL: result.Location
+            });
+        User.save().then(User => res.json(User));
+    })
 
-      await fs.unlinkSync(file.path)
-     
-    
-
-  });
-
-
+    await fs.unlinkSync(file.path)
+});
   
 
 

@@ -4,7 +4,7 @@ import React, { createContext, useEffect, useState } from "react";
 const AuthContext = createContext();
 
 function AuthContextProvider(props) {
-  const [loggedIn, setLoggedIn] = useState(undefined);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(undefined);
 
   async function getLoggedIn() {
