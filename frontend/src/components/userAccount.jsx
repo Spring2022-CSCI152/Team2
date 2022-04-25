@@ -1,44 +1,52 @@
 import '../assets/account.css';
-import React, { useCallback, useState, useContext } from "react";
-import Dropzone from './dropzone.jsx';
-import ImageList from './ImageList.jsx';
+import React, { useState, useContext, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { Link } from "react-router-dom";
-import cuid from "cuid";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import AuthContext from '../context/authContext';
+import axios from 'axios';
 
 
-
-function Account() {
+function UserAccount() {
     const { loggedIn } = useContext(AuthContext);
     const { userInfo } = useContext(AuthContext);
-    console.log(loggedIn);
-    console.log(userInfo.email);
-    const [images, setImages] = useState([]);
+    const [userProfile, setProfile] = useState(null);
+    const navigate = useNavigate();  
+    // get userid from link
+    const { userid } = useParams();
+    //console.log(userid);
+    //console.log(loggedIn);
 
-      const onDrop = useCallback(acceptedFiles => {
-        // Loop through accepted files
-        acceptedFiles.map(file => {
-          // Initialize FileReader browser API
-          const reader = new FileReader();
-          // onload callback gets called after the reader reads the file data
-          reader.onload = function(e) {
-            // add the image into the state. Since FileReader reading process is asynchronous, its better to get the latest snapshot state (i.e., prevState) and update it. 
-            setImages(prevState => [
-              ...prevState,
-              { id: cuid(), src: e.target.result }
-            ]);
-          };
-          // Read the file as Data URL (since we accept only images)
-          reader.readAsDataURL(file);
-          return file;
-        });
-    }, []) ;
+    async function getUserProfile() {
+        const setUser = await axios.get(`http://localhost:5000/account/${userid}`);
+        if(loggedIn === true && userInfo.id === userid){
+            navigate('/account');
+        }
+        else {
+            console.log(setUser.data);
+            setProfile(setUser.data);
+        }
+    }
+
+    useEffect(()  => {
+        /*if(loggedIn === true && userInfo.id === userid){
+            navigate('/account');
+        }
+        else {
+            fetch(`/user/${userid}`)
+            .then(res => res.json())
+            .then(result => { 
+               console.log(result) 
+               setProfile(result);
+            });
+        }*/
+        getUserProfile();
+    }, []);
 
 
     return (
-        <><main className="Account">
+        <>
+        <main className="Account">
            
            
         </main>
@@ -52,9 +60,7 @@ function Account() {
 
                     <div className='usernameAndSocials'>
                         <div id="profileCont">
-                            <p>
-                                Username
-                            </p>
+                            <p>{userProfile.user.name}</p>
                         </div>
 
                         <div className='socialMedia'>
@@ -83,7 +89,7 @@ function Account() {
                 <div id="tableinfo">
                 <Link to={"/gallery"} className="galleryButton"> Gallery </Link>
                     <table>
-                    <ImageList images={images} />
+                    
                     
                         
 
@@ -94,4 +100,4 @@ function Account() {
     );
 }
 
-export default Account;
+export default UserAccount;
