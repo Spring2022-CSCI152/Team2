@@ -7,20 +7,29 @@ import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Link } from "react-router-dom";
 import cuid from "cuid";
 import AuthContext from '../context/authContext';
+import axios from 'axios';
 
 
 
 function Account() {
     const { loggedIn } = useContext(AuthContext);
     const { userInfo } = useContext(AuthContext);
-    console.log(loggedIn);
-    console.log(userInfo.id);
-    console.log(userInfo.email);
+    // console.log(loggedIn);
+    // console.log(userInfo.id);
+    // console.log(userInfo.email);
     const [images, setImages] = useState([]);
 
       const onDrop = useCallback(acceptedFiles => {
         // Loop through accepted files
         acceptedFiles.map(file => {
+            // upload to /collections
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            }
+            let data = new FormData();
+            data.append('myImage', file);
+            axios.post('http://localhost:5000/collections', data, config).then(res => console.log(res.data));
+
           // Initialize FileReader browser API
           const reader = new FileReader();
           // onload callback gets called after the reader reads the file data
