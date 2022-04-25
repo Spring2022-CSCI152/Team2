@@ -17,7 +17,7 @@ const UserSchema = new Schema({
     userbio: {
         type: String,
         required: false,
-        default: null
+        default: "Empty bio"
     },
     email: {
         type: String,

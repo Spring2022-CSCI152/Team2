@@ -13,7 +13,7 @@ function AuthContextProvider(props) {
     if(setUser.data === false){
       localStorage.clear();
     } else {
-      console.log(setUser.data);
+      //console.log(setUser.data);
       localStorage.setItem('user', JSON.stringify(setUser));
     }
     

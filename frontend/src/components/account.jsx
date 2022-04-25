@@ -9,8 +9,6 @@ import cuid from "cuid";
 import AuthContext from '../context/authContext';
 import axios from 'axios';
 
-
-
 function Account() {
     const { loggedIn } = useContext(AuthContext);
     const { userInfo } = useContext(AuthContext);
@@ -47,6 +45,10 @@ function Account() {
     }, []) ;
 
     const [profileImg, setProfileImg] = useState(null);
+    const [profileData, setProfileData] = useState({
+        name: '',
+        bio: '',
+    });
 
     useEffect(() => {
         // CHANGE LATER TO GET USER DATA (NOT IMAGE)
@@ -54,6 +56,14 @@ function Account() {
         axios.get("http://localhost:5000/gallery").then((res) => {
             //console.log(res.data);
             setProfileImg(res.data[0]);
+        });
+        axios.get("http://localhost:5000/profileData").then((res) => {
+            const data = {
+                name: res.data.name,
+                bio: res.data.userbio
+            }
+            console.log(data);
+            setProfileData(data);
         });
     }, []);
 
@@ -74,7 +84,7 @@ function Account() {
                     <div className='usernameAndSocials'>
                         <div id="profileCont">
                             <p>
-                                Username
+                                {profileData.name}
                             </p>
                         </div>
 
@@ -94,9 +104,7 @@ function Account() {
                     </div>
 
                     <div id="profileBio">
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, explicabo corporis? Sequi repellendus expedita, veritatis nam sed neque quisquam, repellat tempore et possimus perspiciatis sapiente! Quisquam incidunt mollitia nulla aliquid.
-                        </p>
+                        <p> {profileData.bio} </p>
                     </div>
                     
                     <div id="profileDrag">
@@ -114,12 +122,12 @@ function Account() {
 
                 <div id="tableinfo">
                 <Link to={"/gallery"} className="galleryButton"> Gallery </Link>
-                    <table>
+                    {/* <table> */}
                     <ImageList images={images} />
                     
                         
 
-                    </table>
+                    {/* </table> */}
                 </div>
             </div></>
 

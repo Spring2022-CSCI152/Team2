@@ -278,3 +278,14 @@ router.get("/gallery", requireLogin, async (req, res) => {
         console.log(err);
     })
 });
+
+// user data
+router.get("/profileData", requireLogin, async (req, res) => {
+    User.findOne({_id: req.user}).select("-password").then( result =>{
+        console.log(result);
+        res.send(result);
+    }
+    ).catch((err) =>{
+        console.log(err);
+    })
+});
