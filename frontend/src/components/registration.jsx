@@ -27,12 +27,7 @@ const Registration = () =>{
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
             console.log("registering");
-<<<<<<< HEAD
-        
-=======
             navigate("/login");
-        }
->>>>>>> 9a1a88ce7f02890c8cddf9c470f265d18fbe4a60
     }
 
     return(
