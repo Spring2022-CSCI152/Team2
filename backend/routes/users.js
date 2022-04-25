@@ -136,8 +136,21 @@ router.post('/account', requireLogin, async (req, res) => {
     res.render('account');
 });
 
-router.get('/account', requireLogin, async (req, res) => {
-    res.render('account');
+// Return user profile for browsing other profiles
+router.get('/account/:id', async (req, res) => {
+    // Find the user based on the params attached to the link
+    User.findOne({_id:req.params.id})
+    // Do not include password for the user
+    .select("-password")
+    // send back a response with the found user data
+    .then(user => {
+        //console.log(user);
+        res.json({user});
+    })
+    // Otherwise catch an error that the user has not been found in the database
+    .catch(err => {
+        return res.status(404).json({err: "User not found."});
+    })
 });
 
 // Alerts route for the python script

@@ -13,6 +13,7 @@ import ImageSimilarity from './components/ImageSimilarity';
 import SearchPage from './components/searchPage.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
+import UserAccount from './components/userAccount';
 import Gallery1 from './components/gallery.jsx';
 import './assets/featUsers.css';
 
@@ -60,7 +61,7 @@ function Router() {
                         </div>
                     } />
 
-                    <Route path= {"/account"} element={
+                    <Route exact path= {"/account"} element={
                         //<div className = "App-body">
                         <div className="App-body">
                         <Account/>
@@ -68,6 +69,8 @@ function Router() {
                         </div>
                         // </div>
                     }/>
+
+                    
                 </>
             )}
 
@@ -78,6 +81,17 @@ function Router() {
               <FeaturedUsers />
             </div>
           } />
+
+
+          <Route path= {"/account/:userid"} element={
+                        //<div className = "App-body">
+                        <div className="App-body">
+                        <UserAccount/>
+                                
+                        </div>
+                        // </div>
+                    }/>
+          
           
           <Route path="/imgSim" element={
             <div className="App-body">

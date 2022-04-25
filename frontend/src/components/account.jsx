@@ -14,6 +14,7 @@ function Account() {
     const { loggedIn } = useContext(AuthContext);
     const { userInfo } = useContext(AuthContext);
     console.log(loggedIn);
+    console.log(userInfo.collectionArray[1]);
     console.log(userInfo.email);
     const [images, setImages] = useState([]);
 
