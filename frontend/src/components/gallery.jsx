@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import * as ReactDOM from 'react-dom';
 import '../assets/gallery.css';
 import Navbar from './Navbar.jsx';
@@ -29,8 +30,8 @@ const images = [image1, image2, image3, image4, image5, image6];
 
 //MAIN APP COMPONENT
 function Gallery1 () {
+
   return (
-   
     <div className="App-body">
       <h3> Users Gallery </h3>
       <p>
@@ -49,9 +50,18 @@ function Gallery1 () {
 function ImageGallery() {
   const [imageToShow, setImageToShow] = useState("");
   const [lightboxDisplay, setLightBoxDisplay] = useState(false);
+  const [urls, setUrls] = useState([]);
+
+  useEffect(() => {
+    // axios request to get images
+    axios.get("http://localhost:5000/gallery").then((res) => {
+      //console.log(res.data);
+      setUrls(res.data);
+    });
+  }, []);
   
   //looping through our images array to create img elements
-  const imageCards = images.map((image, index) => (
+  const imageCards = urls.map((image, index) => (
     <img className="image-card" key={"image" + index} src={image} alt="image" onClick={() => setImageToShow(image)} />
   ));
 

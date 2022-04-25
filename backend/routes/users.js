@@ -213,7 +213,6 @@ router.post("/collections", requireLogin, upload.single("myImage"), async (req, 
 
     //AWS image upload here commented out to prevent duplicate sends
     const result = await s3.uploadFile(file)
-    console.log(result)
 
     User.findOne(
         {_id: req.user},
@@ -258,7 +257,6 @@ router.post("/retrievImageJSON", requireLogin, async (req, res) => {
 });
 
 router.post("/AWSRetrieval",requireLogin, async(req, res) =>{
-        console.log(req.params)
         const key = req.params.key
         const readStream = s3.getFileStream(key)
         readStream.pipe(res)
@@ -269,3 +267,14 @@ router.post("/AWSRetrieval",requireLogin, async(req, res) =>{
 // Searching and other user routers below here
 
 module.exports = router;
+
+// Gallery image url retrieval
+router.get("/gallery", requireLogin, async (req, res) => {
+    User.findOne({_id: req.user}).select("collectionArray").then( result =>{
+        // send list of the image urls
+        res.send(result.collectionArray.map(x => x.imgURL));
+    }
+    ).catch((err) =>{
+        console.log(err);
+    })
+});

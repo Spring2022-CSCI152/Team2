@@ -1,5 +1,5 @@
 import '../assets/account.css';
-import React, { useCallback, useState, useContext } from "react";
+import React, { useCallback, useState, useContext, useEffect } from "react";
 import Dropzone from './dropzone.jsx';
 import ImageList from './ImageList.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -46,6 +46,17 @@ function Account() {
         });
     }, []) ;
 
+    const [profileImg, setProfileImg] = useState(null);
+
+    useEffect(() => {
+        // CHANGE LATER TO GET USER DATA (NOT IMAGE)
+        // axios request to get images
+        axios.get("http://localhost:5000/gallery").then((res) => {
+            //console.log(res.data);
+            setProfileImg(res.data[0]);
+        });
+    }, []);
+
 
     return (
         <><main className="Account">
@@ -57,7 +68,7 @@ function Account() {
 
                 <div className='accountInfo'>
                     <div id="profilePic">
-                        <img id="profileImg" src="/logo192.png"></img>
+                        <img id="profileImg" src={profileImg}></img>
                     </div>
 
                     <div className='usernameAndSocials'>
