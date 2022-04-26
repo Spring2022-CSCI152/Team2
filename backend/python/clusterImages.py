@@ -20,20 +20,20 @@ import pandas as pd
 import pickle
 
 path = r'C:\Users\john\Desktop\Repos\Team2\backend\python\dataset'
+path = r'C:\Users\johne\Desktop\Repos\Team2\backend\python\dataset'
 # change the working directory to the path where the images are located
 os.chdir(path)
 
 # this list holds all the image filename
-flowers = []
+images = []
 
 # creates a ScandirIterator aliased as files
 with os.scandir(path) as files:
   # loops through each file in the directory
     for file in files:
         if file.name.endswith('.png') or file.name.endswith('.jpg'):
-          # adds only the image files to the flowers list
-            flowers.append(file.name)
-            
+          # adds only the image files to the images list
+            images.append(file.name)
             
             
 model = VGG16()
@@ -53,14 +53,14 @@ def extract_features(file, model):
     return features
    
 data = {}
-p = './featVectors'
+p = r'C:\Users\johne\Desktop\Repos\Team2\backend\python\features.pkl'
 
 # lop through each image in the dataset
-for flower in flowers:
+for image in images:
     # try to extract the features and update the dictionary
     try:
-        feat = extract_features(flower,model)
-        data[flower] = feat
+        feat = extract_features(image,model)
+        data[image] = feat
     # if something fails, save the extracted features as a pickle file (optional)
     except:
         with open(p,'wb') as file:
@@ -76,13 +76,15 @@ feat = np.array(list(data.values()))
 # reshape so that there are 210 samples of 4096 vectors
 feat = feat.reshape(-1,4096)
 
-# get the unique labels (from the flower_labels.csv)
-df = pd.read_csv('flower_labels.csv')
-label = df['label'].tolist()
-unique_labels = list(set(label))
+# get the unique labels (from the image_labels.csv)
+# df = pd.read_csv('image_labels.csv')
+# label = df['label'].tolist()
+# unique_labels = list(set(label))
+k = 5
+unique_labels = [str(x) for x in range(0,k)]
 
 # reduce the amount of dimensions in the feature vector
-pca = PCA(n_components=100, random_state=22)
+pca = PCA(n_components=3, random_state=22)
 pca.fit(feat)
 x = pca.transform(feat)
 
@@ -101,7 +103,7 @@ for file, cluster in zip(filenames,kmeans.labels_):
 
 # function that lets you view a cluster (based on identifier)        
 def view_cluster(cluster):
-    plt.figure(figsize = (25,25))
+    plt.figure(figsize = (10,10))
     # gets the list of filenames for a cluster
     files = groups[cluster]
     # only allow up to 30 images to be shown at a time
@@ -115,11 +117,17 @@ def view_cluster(cluster):
         img = np.array(img)
         plt.imshow(img)
         plt.axis('off')
+
+# view all clusters
+# for cluster in groups.keys():
+#     view_cluster(cluster)
+# plt.show()
         
    
 # this is just incase you want to see which value for k might be the best 
 sse = []
-list_k = list(range(3, 50))
+start = 2
+list_k = list(range(start, len(unique_labels)+1))
 
 for k in list_k:
     km = KMeans(n_clusters=k, random_state=22, n_jobs=-1)
@@ -132,3 +140,17 @@ plt.figure(figsize=(6, 6))
 plt.plot(list_k, sse)
 plt.xlabel('Number of clusters *k*')
 plt.ylabel('Sum of squared distance')
+plt.show()
+
+# get best k value
+k = sse.index(min(sse)) + start
+print(k)
+
+# cluster the data
+kmeans = KMeans(n_clusters=k, random_state=22, n_jobs=-1)
+kmeans.fit(x)
+
+# view all clusters
+for cluster in groups.keys():
+    view_cluster(cluster)
+plt.show()
