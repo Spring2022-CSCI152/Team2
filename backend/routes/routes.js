@@ -19,7 +19,8 @@ router.post('/about', (req, res) => {
 
 router.post('/alerts', (req, res) => {
     // Some code
-
+    console.log("in"); //not sure why this needs to be here, but it breaks if you remove it
+    
 });
 
 router.post('/account', requireLogin, (req, res) => {
