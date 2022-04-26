@@ -238,6 +238,19 @@ router.get('/account/:id', async (req, res) => {
     })
 });
 
+// update user bio and stuff like that
+router.post('/account/update', requireLogin, async (req, res) => {
+    // Get req.body.bio
+
+    // update bio
+
+    // update other things?
+    // possibly check if anything different from what's stored?
+    // Problems: empty string replacing filled in values
+    // Easy fix: Make different routes for different reasons
+});
+
+
 // Alerts route for the python script
 router.get('/alertsPage', requireLogin, async (req, res) => {
     console.log("We're in");
