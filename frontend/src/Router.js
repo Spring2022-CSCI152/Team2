@@ -13,6 +13,7 @@ import ImageSimilarity from './components/ImageSimilarity';
 import SearchPage from './components/searchPage.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
+import EditAccount from './components/editAccount.jsx';
 import UserAccount from './components/userAccount';
 import Gallery1 from './components/gallery.jsx';
 import './assets/featUsers.css';
@@ -70,6 +71,11 @@ function Router() {
                         // </div>
                     }/>
 
+                    <Route exact path= {"/editAccount"} element={
+                      <div className = "App-body">
+                      <EditAccount/>
+                      </div>
+                    }/>
                     
                 </>
             )}

@@ -4,7 +4,7 @@ import React from "react";
 const Image = ({ image }) => {
   return (
     <div className="file-item">
-      <img alt={`img - ${image.id}`} src={image.src} className="file-img" />
+      <img alt={`img - ${image.id}`} src={image} className="file-img" />
     </div>
   );
 };
@@ -17,7 +17,7 @@ const ImageList = ({ images }) => {
     return (
       <Image
         image={image}
-        key={`${image.id}-image`}
+        key={`${index}-image`}
       />
     );
   };

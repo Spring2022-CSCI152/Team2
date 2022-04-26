@@ -9,8 +9,6 @@ import cuid from "cuid";
 import AuthContext from '../context/authContext';
 import axios from 'axios';
 
-
-
 function Account() {
     const { loggedIn } = useContext(AuthContext);
     const { userInfo } = useContext(AuthContext);
@@ -18,6 +16,10 @@ function Account() {
     // console.log(userInfo.id);
     // console.log(userInfo.email);
     const [images, setImages] = useState([]);
+
+    useEffect (() => {
+        axios.get('http://localhost:5000/gallery').then(res => { setImages(res.data) });
+    }, []);
 
       const onDrop = useCallback(acceptedFiles => {
         // Loop through accepted files
@@ -46,14 +48,24 @@ function Account() {
         });
     }, []) ;
 
-    const [profileImg, setProfileImg] = useState(null);
+    const [profileData, setProfileData] = useState({
+        profileimg: '',
+        name: '',
+        bio: '',
+        instagram: '',
+        twitter: ''});
 
     useEffect(() => {
-        // CHANGE LATER TO GET USER DATA (NOT IMAGE)
-        // axios request to get images
-        axios.get("http://localhost:5000/gallery").then((res) => {
-            //console.log(res.data);
-            setProfileImg(res.data[0]);
+        axios.get("http://localhost:5000/profileData").then((res) => {
+            const data = {
+                profileimg: res.data.profileimg,
+                name: res.data.name,
+                bio: res.data.userbio,
+                instagram: res.data.socials.instagram,
+                twitter: res.data.socials.twitter
+            }
+            //console.log(data);
+            setProfileData(data);
         });
     }, []);
 
@@ -68,25 +80,25 @@ function Account() {
 
                 <div className='accountInfo'>
                     <div id="profilePic">
-                        <img id="profileImg" src={profileImg}></img>
+                        <img id="profileImg" src={profileData.profileimg}></img>
                     </div>
 
                     <div className='usernameAndSocials'>
                         <div id="profileCont">
                             <p>
-                                Username
+                                {profileData.name}
                             </p>
                         </div>
 
                         <div className='socialMedia'>
                             <div id="profileInsta">
-                                <button className="socialButton">
+                                <button className="socialButton" onClick={() => window.open("https://instagram.com/" + profileData.instagram, "_blank")}>
                                     <FontAwesomeIcon icon={faInstagram} />
                                 </button>
                             </div>
 
                             <div id="profileTwitter">
-                                <button className="socialButton">
+                                <button className="socialButton" onClick={() => window.open("https://twitter.com/" + profileData.twitter, "_blank")}>
                                     <FontAwesomeIcon icon={faTwitter} />
                                 </button>
                             </div>
@@ -94,19 +106,16 @@ function Account() {
                     </div>
 
                     <div id="profileBio">
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, explicabo corporis? Sequi repellendus expedita, veritatis nam sed neque quisquam, repellat tempore et possimus perspiciatis sapiente! Quisquam incidunt mollitia nulla aliquid.
-                        </p>
+                        <p> {profileData.bio} </p>
                     </div>
                     
                     <div id="profileDrag">
-                    <Dropzone onDrop={onDrop} accept={"image/*"} />
-                     
+                        <Dropzone onDrop={onDrop} accept={"image/*"} />
                     </div>
+
                     <div id="editButton">
-                    <input type = "button" value ="Edit Profile">
-                    
-                    </input>
+                        <Link to="/editAccount"> Edit Profile </Link>
+                        {/* <input type = "button" value ="Edit Profile"></input> */}
                     </div>
                     
                     
@@ -114,12 +123,12 @@ function Account() {
 
                 <div id="tableinfo">
                 <Link to={"/gallery"} className="galleryButton"> Gallery </Link>
-                    <table>
+                    {/* <table> */}
                     <ImageList images={images} />
                     
                         
 
-                    </table>
+                    {/* </table> */}
                 </div>
             </div></>
 
