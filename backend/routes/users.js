@@ -305,3 +305,15 @@ router.post("/updateProfileData", requireLogin, async (req, res) => {
         console.log(err);
     })
 });
+
+// upload single image to aws and send back url
+router.post("/uploadSingle", requireLogin, upload.single("myImage"), async (req, res) => {
+    const file = req.file
+
+    //AWS image upload here commented out to prevent duplicate sends
+    const result = await s3.uploadFile(file)
+
+    res.json(result.Location);
+
+    await fs.unlinkSync(file.path)
+});

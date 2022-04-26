@@ -104,4 +104,14 @@ router.get('/testScript', (req, res) => {
     res.send({ express: 'process finished' });
 });
 
+router.get('/computeSimilarity', (req, res) => {
+    const spawn = require("child_process").spawn;
+    const pythonProcess = spawn('python', ["./python/computeSimilarity.py", req.query.imageOne, req.query.imageTwo]);
+    pythonProcess.stdout.on('data', (data) => {
+        // Do something with the data returned from python script
+        console.log(data.toString());
+        res.send(data.toString());
+    });
+});
+
 module.exports = router;
