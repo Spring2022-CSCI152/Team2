@@ -5,19 +5,34 @@ import '../assets/editAccount.css';
 const EditAccount = () => {
     // Update the account using axios post request
     const updateAccount = (formData) => {
-        console.log(formData
-        // const data = {
-        //     profileimg: profileData.profileimg,
-        //     name: profileData.name,
-        //     bio: profileData.bio,
-        //     instagram: profileData.instagram,
-        //     twitter: profileData.twitter
-        // }
+        var fileUrl = "";
+        const file = formData['profile-img'].files[0];
+        if (file) {
+            // upload to /collections
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            }
+            let data = new FormData();
+            data.append('myImage', file);
+            axios.post('http://localhost:5000/collections', data, config).then(
+                res => {
+                    fileUrl = res.data;
 
-        // axios.post('http://localhost:5000/updateAccount', data)
-        //     .then(res => console.log(res.data));
+                    const profileData = {
+                        // get img
+                        profileImg: fileUrl,
+                        name: formData['profile-name'].value,
+                        bio: formData['profile-bio'].value,
+                        instagram: formData['profile-insta'].value,
+                        twitter: formData['profile-twitter'].value
+                    }
+                    console.log(profileData);
+
+                    axios.post('http://localhost:5000/updateProfileData', profileData)
+                        .then(res => console.log(res.data));
+                })
+        }
     }
-
 
     return (
         <div className="edit-account">

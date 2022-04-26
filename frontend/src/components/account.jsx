@@ -17,6 +17,10 @@ function Account() {
     // console.log(userInfo.email);
     const [images, setImages] = useState([]);
 
+    useEffect (() => {
+        axios.get('http://localhost:5000/gallery').then(res => { setImages(res.data) });
+    }, []);
+
       const onDrop = useCallback(acceptedFiles => {
         // Loop through accepted files
         acceptedFiles.map(file => {
@@ -88,13 +92,13 @@ function Account() {
 
                         <div className='socialMedia'>
                             <div id="profileInsta">
-                                <button className="socialButton">
+                                <button className="socialButton" onClick={() => window.open("https://instagram.com/" + profileData.instagram, "_blank")}>
                                     <FontAwesomeIcon icon={faInstagram} />
                                 </button>
                             </div>
 
                             <div id="profileTwitter">
-                                <button className="socialButton">
+                                <button className="socialButton" onClick={() => window.open("https://twitter.com/" + profileData.twitter, "_blank")}>
                                     <FontAwesomeIcon icon={faTwitter} />
                                 </button>
                             </div>

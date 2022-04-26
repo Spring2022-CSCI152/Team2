@@ -224,7 +224,7 @@ router.post("/collections", requireLogin, upload.single("myImage"), async (req, 
                 tags: "tag",
                 imgURL: result.Location
             });
-        User.save().then(User => res.json(User));
+        User.save().then(User => res.json(result.Location));
     })
 
     await fs.unlinkSync(file.path)
@@ -285,6 +285,21 @@ router.get("/profileData", requireLogin, async (req, res) => {
     User.findOne({_id: req.user}).select("-password").then( result =>{
         //console.log(result);
         res.send(result);
+    }
+    ).catch((err) =>{
+        console.log(err);
+    })
+});
+
+// update user data in db
+router.post("/updateProfileData", requireLogin, async (req, res) => {
+    User.findOne({_id: req.user}).then( result =>{
+        if (req.body.profileImg !== ''){ result.profileimg = req.body.profileImg; }
+        if (req.body.name !== ''){ result.name = req.body.name; }
+        if (req.body.bio !== ''){ result.userbio = req.body.bio; }
+        if (req.body.instagram !== ''){ result.socials.instagram = req.body.instagram; }
+        if (req.body.twitter !== ''){ result.socials.twitter = req.body.twitter; }
+        result.save().then(result => res.send(result));
     }
     ).catch((err) =>{
         console.log(err);
