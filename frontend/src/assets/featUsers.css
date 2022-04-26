@@ -1,7 +1,6 @@
 .featUsers{
-  margin-left:5%;
-  margin-right:5%;
-  width:85%;
+  
+  width:100%;
   
  
 
@@ -36,10 +35,13 @@
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
   gap:5%;
   margin-bottom:2%;
+  margin-left:5%;
+  margin-right:5%;
 
 
   

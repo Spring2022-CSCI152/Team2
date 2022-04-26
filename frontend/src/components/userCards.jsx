@@ -29,14 +29,7 @@ class UserCards extends Component {
         });
       });
   };
-   getData =  () => {
-
-    axios.get('app/featUsers')
-          .then(res =>  this.setState( {data : res.data}))
-          .catch(err => console.log(err));   
-        
-   
-  }
+ 
   loadMore = () => {
     this.setState(
       prevState => ({
@@ -48,9 +41,12 @@ class UserCards extends Component {
     );
   };
 
-  componentDidMount() {
-    this.getData();
-    
+  async componentDidMount() {
+   
+    axios.get('app/featUsers')
+    .then(res =>  this.setState( {data : res.data}))
+    .catch(err => console.log(err)) 
+ 
 
   }
 
