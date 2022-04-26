@@ -30,19 +30,26 @@ const UserSchema = new Schema({
     profileimg: {
         type: String,
         required: false,
-        default: null
+        default: "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
     },
     useralert: {
         type: String,
         required: false,
         default: null
     },
-    socials: {
-        type: String,
-        required: false,
-        default: null
-    },
 
+    socials: {
+        instagram: {
+            type: String,
+            required: false,
+            default: null
+        },
+        twitter: {
+            type: String,
+            required: false,
+            default: null
+        }
+    },
     collectionArray: [{
         imgName: {
             type: String,

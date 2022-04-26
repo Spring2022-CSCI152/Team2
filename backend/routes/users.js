@@ -42,6 +42,7 @@ router.post('/register', (req, res) => {
         } else {
             const newUser = new User({
                 name: req.body.name,
+                username: req.body.name,
                 email: req.body.email,
                 password: req.body.password
             });
@@ -282,7 +283,7 @@ router.get("/gallery", requireLogin, async (req, res) => {
 // user data
 router.get("/profileData", requireLogin, async (req, res) => {
     User.findOne({_id: req.user}).select("-password").then( result =>{
-        console.log(result);
+        //console.log(result);
         res.send(result);
     }
     ).catch((err) =>{

@@ -44,25 +44,23 @@ function Account() {
         });
     }, []) ;
 
-    const [profileImg, setProfileImg] = useState(null);
     const [profileData, setProfileData] = useState({
+        profileimg: '',
         name: '',
         bio: '',
-    });
+        instagram: '',
+        twitter: ''});
 
     useEffect(() => {
-        // CHANGE LATER TO GET USER DATA (NOT IMAGE)
-        // axios request to get images
-        axios.get("http://localhost:5000/gallery").then((res) => {
-            //console.log(res.data);
-            setProfileImg(res.data[0]);
-        });
         axios.get("http://localhost:5000/profileData").then((res) => {
             const data = {
+                profileimg: res.data.profileimg,
                 name: res.data.name,
-                bio: res.data.userbio
+                bio: res.data.userbio,
+                instagram: res.data.socials.instagram,
+                twitter: res.data.socials.twitter
             }
-            console.log(data);
+            //console.log(data);
             setProfileData(data);
         });
     }, []);
@@ -78,7 +76,7 @@ function Account() {
 
                 <div className='accountInfo'>
                     <div id="profilePic">
-                        <img id="profileImg" src={profileImg}></img>
+                        <img id="profileImg" src={profileData.profileimg}></img>
                     </div>
 
                     <div className='usernameAndSocials'>
@@ -108,13 +106,12 @@ function Account() {
                     </div>
                     
                     <div id="profileDrag">
-                    <Dropzone onDrop={onDrop} accept={"image/*"} />
-                     
+                        <Dropzone onDrop={onDrop} accept={"image/*"} />
                     </div>
+
                     <div id="editButton">
-                    <input type = "button" value ="Edit Profile">
-                    
-                    </input>
+                        <Link to="/editAccount"> Edit Profile </Link>
+                        {/* <input type = "button" value ="Edit Profile"></input> */}
                     </div>
                     
                     
