@@ -19,6 +19,7 @@ router.post('/about', (req, res) => {
 
 router.post('/alerts', (req, res) => {
     // Some code
+
 });
 
 router.post('/account', requireLogin, (req, res) => {

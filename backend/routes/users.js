@@ -169,7 +169,19 @@ router.post('/alertsPage', requireLogin, async (req, res) => {
     console.log("We're in");
 });
 
+router.post('/getAlerts', requireLogin, async (req, res) => {
+    //  const userId = req.body.userId.toString();
+    //  const query = { _id: userId };
+    //  const searchScope = {
+    //     useralert:1
+    // };
+    // User.findOne(query,searchScope).then(function (records) {
+    //     res.send(JSON.stringify(records));
+    // });
+    console.log("We're in");
+ 
 
+});
 /*
 ***********************************************************************************************************************************
 ***********************************************************************************************************************************

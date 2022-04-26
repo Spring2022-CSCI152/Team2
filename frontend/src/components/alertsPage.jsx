@@ -11,6 +11,7 @@ import '../assets/alertsPage.css';
 import { Link } from "react-router-dom";
 import cuid from "cuid";
 import AuthContext from '../context/authContext';
+import axios from "axios";
 
 class AlertsPage extends React.Component{
 
@@ -24,24 +25,18 @@ class AlertsPage extends React.Component{
     };
 }
 
-// ComponentDidMount is used to
-// execute the code 
-componentDidMount() {
-  
-  
-  
-    fetch(
-      "https://picsum.photos/v2/list?page=0&limit=3")
-        .then((res) => res.json())
-        .then((json) => {
-            this.setState({
-                items: json,
-                DataisLoaded: true
-            });
-        })
-}
+
 
   render(){
+    const getData =  (userId) => {
+
+      axios.post('/getAlerts' , {userId: userId}  )
+            .then(res =>  this.setState( {items : res.data, DataisLoaded: true}))
+            .catch(err => console.log(err));
+     console.log(this.state.items);
+     
+    }
+  
     
      {/* Different alerts can be used for different messages
           https://mui.com/components/alert/#api
@@ -51,7 +46,7 @@ componentDidMount() {
      return(
       <Alert severity="success"> 
       <AlertTitle> No Re-uploads Detected!</AlertTitle>
-      You have 0 new alerts!
+     <p>You have 0 new alerts!</p> 
       </Alert> )
       ;
     }
@@ -126,8 +121,9 @@ componentDidMount() {
     function AlertContent(props){
       const { loggedIn } = useContext(AuthContext);
       const { userInfo } = useContext(AuthContext);
-      console.log(loggedIn);
-      console.log(userInfo.email);
+      getData(userInfo.id);
+      
+
       const nAlerts = props.numAlert;
 
       if(nAlerts == 0){
