@@ -317,3 +317,20 @@ router.post("/uploadSingle", requireLogin, upload.single("myImage"), async (req,
 
     await fs.unlinkSync(file.path)
 });
+
+// upload profile image
+router.post("/uploadProfileImg", requireLogin, upload.single("myImage"), async (req, res) => {
+    const file = req.file
+
+    //AWS image upload here commented out to prevent duplicate sends
+    const result = await s3.uploadFile(file)
+
+    User.findOne(
+        {_id: req.user},
+            ).then(User => {
+                User.profileimg = result.Location;
+                User.save().then(User => res.json(result.Location));
+    })
+
+    await fs.unlinkSync(file.path)
+});

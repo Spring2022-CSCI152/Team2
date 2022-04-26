@@ -30,21 +30,23 @@ function Account() {
             }
             let data = new FormData();
             data.append('myImage', file);
-            axios.post('http://localhost:5000/collections', data, config).then(res => console.log(res.data));
+            axios.post('http://localhost:5000/collections', data, config).then(res => {
+                console.log(res.data);
 
-          // Initialize FileReader browser API
-          const reader = new FileReader();
-          // onload callback gets called after the reader reads the file data
-          reader.onload = function(e) {
-            // add the image into the state. Since FileReader reading process is asynchronous, its better to get the latest snapshot state (i.e., prevState) and update it. 
-            setImages(prevState => [
-              ...prevState,
-              { id: cuid(), src: e.target.result }
-            ]);
-          };
-          // Read the file as Data URL (since we accept only images)
-          reader.readAsDataURL(file);
-          return file;
+                // Initialize FileReader browser API
+                const reader = new FileReader();
+                // onload callback gets called after the reader reads the file data
+                reader.onload = function(e) {
+                    // add the image into the state. Since FileReader reading process is asynchronous, its better to get the latest snapshot state (i.e., prevState) and update it. 
+                    setImages(prevState => [
+                    ...prevState,
+                    { id: cuid(), src: res.data }
+                    ]);
+                };
+                // Read the file as Data URL (since we accept only images)
+                reader.readAsDataURL(file);
+                return file;
+            });
         });
     }, []) ;
 
