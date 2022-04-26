@@ -14,7 +14,7 @@ const EditAccount = () => {
             }
             let data = new FormData();
             data.append('myImage', file);
-            axios.post('http://localhost:5000/collections', data, config).then(
+            axios.post('http://localhost:5000/uploadProfileImg', data, config).then(
                 res => {
                     fileUrl = res.data;
 
