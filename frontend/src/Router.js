@@ -10,9 +10,11 @@ import Login from './components/login.jsx';
 import AlertsPage from './components/alertsPage.jsx';
 import Registration from './components/registration.jsx';
 import ImageSimilarity from './components/ImageSimilarity';
+import ImageCluster from './components/imageCluster';
 import SearchPage from './components/searchPage.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
+import EditAccount from './components/editAccount.jsx';
 import UserAccount from './components/userAccount';
 import Gallery1 from './components/gallery.jsx';
 import './assets/featUsers.css';
@@ -70,6 +72,11 @@ function Router() {
                         // </div>
                     }/>
 
+                    <Route exact path= {"/editAccount"} element={
+                      <div className = "App-body">
+                      <EditAccount/>
+                      </div>
+                    }/>
                     
                 </>
             )}
@@ -96,6 +103,12 @@ function Router() {
           <Route path="/imgSim" element={
             <div className="App-body">
               <ImageSimilarity/>
+            </div>
+          } />
+
+          <Route path="/imgCluster" element={
+            <div className="App-body">
+              <ImageCluster/>
             </div>
           } />
           

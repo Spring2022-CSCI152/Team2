@@ -1,7 +1,7 @@
 .no-content{
     color:gray;
     justify-content: center;
-    margin-top:20%;
+    margin-top:10%;
 }
 .singleAlert{
     
@@ -13,10 +13,11 @@
   
     
 }
+
 .activeAlerts{
     width:70%;
     margin-top:10%;
-    margin-right:5em;
+
 }
 /*Image CSS*/
 
@@ -45,6 +46,7 @@ div.cardButtons {
     
     
 }
+
 div.cardButtons button{
 
   padding:5%;
@@ -91,4 +93,11 @@ p.MuiTypography-body1{
     font-size:1.2vw;
     
 
+}
+/*alert box*/
+.css-acap47-MuiAlert-message {
+    padding: .1em;
+}
+div.css-efvcc7-MuiPaper-root-MuiAlert-root{
+    line-height: 0;
 }

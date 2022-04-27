@@ -47,6 +47,12 @@ const collections = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+
+    imgURL: {
+        type: String,
+        default: "URL not found",
+        required: false
     }
 });
 

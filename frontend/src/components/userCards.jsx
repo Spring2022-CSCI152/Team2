@@ -1,6 +1,7 @@
-import React, { Component } from "react"
-;
+import React, { Component } from "react";
 import '../assets/featUsers.css';
+import Avatar from '@mui/material/Avatar';
+import axios from "axios";
 
 class UserCards extends Component {
   state = {
@@ -28,7 +29,7 @@ class UserCards extends Component {
         });
       });
   };
-
+ 
   loadMore = () => {
     this.setState(
       prevState => ({
@@ -36,37 +37,42 @@ class UserCards extends Component {
         page: prevState.page + 1,
         scrolling: true
       }),
-      this.loadData
+    
     );
   };
 
-  componentDidMount() {
-    this.loadData();
+  async componentDidMount() {
+   
+    axios.get('app/featUsers')
+    .then(res =>  this.setState( {data : res.data}))
+    .catch(err => console.log(err)) 
+ 
+
   }
 
   render() {
+  
+    console.log(this.state);
     return (
      <>
     
         <div className="row">
           {this.state.data.map(data => (
-            <div className="col-md-4 animated fadeIn" key={data.id.value}>
+            <div className="col-md-4 animated fadeIn" key={data._id}>
               <div className="card">
                 <div className="card-body">
                   <div className="avatar">
-                    <img
-                      src={data.picture.large}
-                      className="card-img-top"
-                      alt=""
+                  <Avatar
+                    alt={data.name}
+                   src={data.profileimg}
+                    sx={{ width: 70, height: 70 }}
                     />
                   </div>
                   <h5 className="card-title">
-                    {this.uppercase(data.name.first) +
-                      " " +
-                      this.uppercase(data.name.last)}
+                    {this.uppercase(data.name)} 
                   </h5>
                   <p className="card-text">
-                    {"Bio"}
+                    {data.userbio}
                     <br />
                     {/* <span className="phone">{data.phone}</span> */}
                   </p>
@@ -87,6 +93,7 @@ class UserCards extends Component {
         
    </>
     );
+    
   }
 }
 

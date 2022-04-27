@@ -15,7 +15,7 @@ module.exports =  async (req, res, next) => {
                 res.locals.user = null;
                 next();
             } else {
-                console.log(decodedToken)
+                //console.log(decodedToken)
                 const user = await User.findById(decodedToken.id);
                 res.locals.user = user;
                 next();
