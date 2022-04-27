@@ -32,11 +32,31 @@ const UserSchema = new Schema({
         required: false,
         default: "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
     },
-    useralert: {
-        type: String,
-        required: false,
-        default: null
-    },
+    alerts: [{
+        alertedEmail: {
+            type: String,
+            required: false,
+            default: null
+        },
+
+        alertedURL: {
+            type: String,
+            required: false,
+            default: null
+        },
+
+        thiefEmail: {
+            type: String,
+            required: false,
+            default: null
+        },
+
+        thiefURL: {
+            type: String,
+            required: false,
+            default: null
+        }
+    }],
 
     socials: {
         instagram: {
