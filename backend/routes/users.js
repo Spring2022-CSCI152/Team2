@@ -10,6 +10,8 @@ const s3 = require('../middleware/s3')
 const fs = require('fs')
 const S3 = require('aws-sdk/clients/s3')
 const mongoose = require('mongoose');
+const {OAuth2Client} = require('google-auth-library');
+const {} = require('google-auth-library');
 
 // input validation
 const validateRegisterInput = require('../validation/register');
@@ -17,7 +19,10 @@ const validateLoginInput = require('../validation/login');
 
 // Load User model
 const User = require('../models/user');
+const checkUser = require('../middleware/checkUser');
 
+// Google client
+const googleClient = new OAuth2Client(process.env.clientId);
 
 // Max age for token
 const maxAge = 3 * 24 * 60 * 60;
@@ -108,6 +113,58 @@ router.post('/login', (req, res) => {
     });
 });
 
+// Google Login Route
+router.post('/googlelogin', async (req, res) => {
+    
+    const {tokenId} = req.body;
+
+    googleClient.verifyIdToken({idToken: tokenId, audience: process.env.clientId}).then(response => {
+        const {email_verified, name, email} = response.payload;
+        
+        if(email_verified){
+            User.findOne({email}).exec((err, user) =>{
+                if (err){
+                    return res.status(400).json({ error: "Something went wrong. Try again later." })
+                } else {
+                    if (user){
+                        // Create JWT Payload for matched user
+                        const payload = {
+                            id: user.id,
+                            email: user.email,
+                            name: user.name
+                        };
+
+                        // Sign the token
+                        const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
+                        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+                        const result = res.status(200).json({ user: user._id });
+
+                    } else {
+                        // Create a dummy password for the new user
+                        const password = email_verified+process.env.secretKey;
+                        // Create the new user schema
+                        const newUser = new User({
+                            name: name,
+                            email: email,
+                            password: password
+                        });
+
+                        // Hash and salt password before saving
+                        bcrypt.genSalt(10, (err, salt) => {
+                            bcrypt.hash(newUser.password, salt, (err, hash) => {
+                                if (err) throw err;
+                                newUser.password = hash;
+                                newUser.save().then(user => res.json(user)).catch(err => console.log(err));
+                            });
+                        });
+                    }
+                }
+
+            })
+        }
+    });
+});
+
 // Logout endpoint
 router.get("/logout", requireLogin, (req, res) =>{
     res.cookie('jwt', "", {
@@ -134,14 +191,22 @@ router.get('/loggedIn', (req,res) =>{
     }
 });
 
-// set user
-router.get('/setuser', requireLogin, (req, res) => {
-    res.send(req.user);
-});
-
-// Accounts will probably where the image upload will be done
-router.post('/account', requireLogin, async (req, res) => {
-    res.render('account');
+// set user for account comparison
+router.get('/setuser', (req, res) => {
+    const token = req.cookies.jwt;
+    if(token){
+        jwt.verify(token, process.env.secretKey, async (err, decodedToken) => {
+            if (err){
+                console.log(err.message);
+                res.send(false);
+            } else {
+                console.log(decodedToken.id);
+                res.json(decodedToken.id);
+            }
+        })
+    } else {
+        res.send(false);
+    }
 });
 
 // Return user profile for browsing other profiles
@@ -161,6 +226,7 @@ router.get('/account/:id', async (req, res) => {
         return res.status(404).json({err: "User not found."});
     })
 });
+
 
 // Alerts route for the python script
 router.get('/alertsPage', requireLogin, async (req, res) => {

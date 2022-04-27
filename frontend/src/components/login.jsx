@@ -51,19 +51,22 @@ const Login = () =>{
             <h1>Login</h1>
             <form method = "post" onSubmit={HandleSubmit}>
                 <div className="uniqueLogin" value = "test">
-                <input type = "button" value ="Login with Gmail"></input>
                 
+                
+                <div id = "GButton">
                 <GoogleLogin
                     clientId="155459917287-hgt37hna82ei0h2hasqdljs003biladv.apps.googleusercontent.com"
                     buttonText="Login"
+                    render={renderProps => (
+                        <input type = "button" onClick={renderProps.onClick} value ="Login with Gmail"></input>
+                    )}
                     onSuccess={responseGoogle}
                     onFailure={responseErrorGoogle}
                     cookiePolicy={'single_host_origin'}
                 />
+                </div>
                 <span></span>
-                <input type = "button" value ="Login with Twitter">
-                    
-                </input>
+               
 
                 <div className = "sep"></div>
 
