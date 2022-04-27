@@ -81,7 +81,7 @@ async getData(){
       let i = 0;
       let e = [];
       while(i < x){
-       e.push( <a class = "indivLink" href = {propsL.thiefURL}>Link</a>);
+       e.push( <a class = "indivLink" href = {propsL .thiefURL}>Link</a>);
         i++;
       }
      return e;
