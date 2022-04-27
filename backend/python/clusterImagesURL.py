@@ -39,14 +39,14 @@ if __name__ == '__main__':
     # load the image files from the image urls
     images = []
     for url in image_urls.split(','):
-        try:
-            img = Image.open(requests.get(url, stream=True).raw)
-            img = img.resize((224, 224))
-            img = img.convert('RGB')
-            img = np.array(img)
-            images.append(img)
-        except:
-            print('Failed to download image: %s' % url)
+       # try:
+        img = Image.open(requests.get(url.strip('\''), stream=True).raw)
+        img = img.resize((224, 224))
+        img = img.convert('RGB')
+        img = np.array(img)
+        images.append(img)
+        # except:
+        #     print('Failed to download image: %s' % url)
                 
     model = VGG16()
     model = Model(inputs = model.inputs, outputs = model.layers[-2].output)
@@ -66,15 +66,10 @@ if __name__ == '__main__':
     # lop through each image in the dataset
     for image in images:
         # try to extract the features and update the dictionary
-        try:
-            feat = extract_features(image,model)
-            data[image] = feat
-        # if something fails, save the extracted features as a pickle file (optional)
-        except:
-            with open(p,'wb') as file:
-                pickle.dump(data,file)
-            
-    
+        print(type(image))
+        feat = extract_features(image,model)
+        data[image] = feat
+
     # get a list of the filenames
     filenames = np.array(list(data.keys()))
 
@@ -92,7 +87,7 @@ if __name__ == '__main__':
     unique_labels = ["c" + str(x) for x in range(0,k)]
 
     # reduce the amount of dimensions in the feature vector
-    pca = PCA(n_components=3, random_state=22)
+    pca = PCA(n_components=1, random_state=22)
     pca.fit(feat)
     x = pca.transform(feat)
 
