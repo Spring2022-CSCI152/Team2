@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import '../assets/editAccount.css';
+import { useNavigate } from 'react-router-dom';
 
 const EditAccount = () => {
+    const navigate = useNavigate();
     // Update the account using axios post request
-    const updateAccount = (formData) => {
+    const updateAccount = async (formData) => {
         var fileUrl = "";
         const file = formData['profile-img'].files[0];
         if (file) {
@@ -14,24 +16,26 @@ const EditAccount = () => {
             }
             let data = new FormData();
             data.append('myImage', file);
-            axios.post('http://localhost:5000/uploadProfileImg', data, config).then(
+            await axios.post('http://localhost:5000/uploadProfileImg', data, config).then(
                 res => {
                     fileUrl = res.data;
-
-                    const profileData = {
-                        // get img
-                        profileImg: fileUrl,
-                        name: formData['profile-name'].value,
-                        bio: formData['profile-bio'].value,
-                        instagram: formData['profile-insta'].value,
-                        twitter: formData['profile-twitter'].value
-                    }
-                    console.log(profileData);
-
-                    axios.post('http://localhost:5000/updateProfileData', profileData)
-                        .then(res => console.log(res.data));
                 })
         }
+        const profileData = {
+            // get img
+            profileImg: fileUrl,
+            name: formData['profile-name'].value,
+            bio: formData['profile-bio'].value,
+            instagram: formData['profile-insta'].value,
+            twitter: formData['profile-twitter'].value
+        }
+        console.log(profileData);
+
+        await axios.post('http://localhost:5000/updateProfileData', profileData)
+            .then(res => {
+                console.log(res.data);
+                navigate("/account");
+            });
     }
 
     return (

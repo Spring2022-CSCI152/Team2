@@ -66,7 +66,7 @@ function Account() {
                 instagram: res.data.socials.instagram,
                 twitter: res.data.socials.twitter
             }
-            //console.log(data);
+            console.log(data);
             setProfileData(data);
         });
     }, []);
