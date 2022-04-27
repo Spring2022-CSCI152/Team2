@@ -58,6 +58,7 @@ function UserAccount() {
 
     useEffect(()  => {
         getUserProfile();
+        axios.get('http://localhost:5000/galleryOther', { params: { id: userid } }).then(res => { setImages(res.data) });
     }, []);
 
 
@@ -104,8 +105,8 @@ function UserAccount() {
             <div id="tableinfo">
             <Link to={"/gallery"} className="galleryButton"> Gallery </Link>
                 {/* <table> */}
-                <ImageList images={images} />
                 
+                <ImageList images={images}/>
                     
 
                 {/* </table> */}
