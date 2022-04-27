@@ -39,8 +39,10 @@ const EditAccount = () => {
     }
 
     return (
+        <div className = "center1">
+
         <div className="edit-account">
-            <p> Test </p>
+           
             <form className="edit-account-form" onSubmit={(e) => {
                 e.preventDefault();
                 updateAccount(e.target.elements);
@@ -59,10 +61,12 @@ const EditAccount = () => {
 
                 <label htmlFor="profile-twitter">Twitter Name</label>
                 <input type="text" id="profile-twitter" name="profile-twitter" />
-
-                <button type="submit">Save</button>
+                <div id = "SaveB">
+                <button type="submit">Save</button></div>
             </form>
         </div>
+        </div>
+    
     )
 }
 

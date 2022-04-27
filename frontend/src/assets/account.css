@@ -124,8 +124,23 @@
 }
 
 #editButton{
-    margin-top: 10px;
+    align-self: center;
+    width: 120px;
+    height:25px;
+    border: 1px solid;
+    background: rgb(85, 172, 201);
     border-radius: 10px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+}
+
+a.editButton, a.editButton:hover ,a.visted{
+  text-decoration: none;
+  color: white;
+  
 }
 #resize{
     height:100%;

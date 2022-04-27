@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
 }
 
 .edit-account {
@@ -16,19 +17,51 @@
     height: 100%;
     margin-top: 5%;
     margin-bottom: 5%;
+   
 }
 
 label {
+    
     font-size: 1.5rem;
     font-weight: bold;
     color: #489eb6;
 }
 
 input {
-    width: 10%;
+    width: 90%;
     height: 5%;
-    border: none;
+    
     border-bottom: 2px solid #489eb6;
     font-size: 1.5rem;
     color: #489eb6;
 }
+
+.center1{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: lightgrey;
+    border-radius: 10px;
+    padding-bottom: 5vh;
+    width:50vh;
+  
+  }
+  
+  .center1 h1{
+    text-align:center;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid silver;
+  
+  }
+  
+  .center1 form{
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  #SaveB{
+      padding-top: 5px;
+    
+
+ }
