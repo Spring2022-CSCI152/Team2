@@ -6,31 +6,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Link } from "react-router-dom";
 import cuid from "cuid";
-import AuthContext from '../context/authContext';
 import axios from 'axios';
 
 function Account() {
-    const { loggedIn } = useContext(AuthContext);
-    const { userInfo } = useContext(AuthContext);
-    // console.log(loggedIn);
-    // console.log(userInfo.id);
-    // console.log(userInfo.email);
     const [images, setImages] = useState([]);
 
     useEffect (() => {
         axios.get('http://localhost:5000/gallery').then(res => { setImages(res.data) });
     }, []);
 
-      const onDrop = useCallback(acceptedFiles => {
+      const onDrop = useCallback(async acceptedFiles => {
         // Loop through accepted files
-        acceptedFiles.map(file => {
+        acceptedFiles.map(async file => {
             // upload to /collections
             const config = {
                 headers: { 'content-type': 'multipart/form-data' }
             }
             let data = new FormData();
             data.append('myImage', file);
-            axios.post('http://localhost:5000/collections', data, config).then(res => {
+            await axios.post('http://localhost:5000/collections', data, config).then(async res => {
                 console.log(res.data);
 
                 // Initialize FileReader browser API
@@ -45,6 +39,8 @@ function Account() {
                 };
                 // Read the file as Data URL (since we accept only images)
                 reader.readAsDataURL(file);
+                // Recall get request for updated information
+                await axios.get('http://localhost:5000/gallery').then(res => { setImages(res.data) });
                 return file;
             });
         });
