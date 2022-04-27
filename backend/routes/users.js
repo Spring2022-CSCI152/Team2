@@ -346,3 +346,18 @@ router.post("/uploadProfileImg", requireLogin, upload.single("myImage"), async (
 
     await fs.unlinkSync(file.path)
 });
+
+// get all image urls from db (from every user)
+router.get("/getAllImageURLs", requireLogin, async (req, res) => {
+    // find users with collectionArray field and get all image urls
+    User.find({}, 'collectionArray').then( result =>{
+        // send list of the image urls that aren't empty
+        responseData = result.map(x => x.collectionArray.map(y => y.imgURL)).filter(x => x.length > 0);
+        // flatten array
+        responseData = [].concat.apply([], responseData);
+        res.send(responseData);
+    }
+    ).catch((err) =>{
+        console.log(err);
+    })
+});

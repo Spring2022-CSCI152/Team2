@@ -21,7 +21,7 @@ import pandas as pd
 import pickle
 
 path = r'C:\Users\john\Desktop\Repos\Team2\backend\python\dataset'
-path = r'C:\Users\johne\Desktop\Repos\Team2\backend\python\dataset'
+path = r'C:\Users\john\Desktop\Repos\Team2\backend\python\dataset'
 # change the working directory to the path where the images are located
 os.chdir(path)
 
@@ -61,6 +61,7 @@ for image in images:
     # try to extract the features and update the dictionary
     try:
         feat = extract_features(image,model)
+        print(type(image))
         data[image] = feat
     # if something fails, save the extracted features as a pickle file (optional)
     except:

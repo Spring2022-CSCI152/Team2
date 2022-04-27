@@ -36,16 +36,18 @@ if __name__ == '__main__':
     # remove brackets
     image_urls = image_urls.replace('[', '')
     image_urls = image_urls.replace(']', '')
+    image_urls = image_urls.replace('\'', '')
+    image_urls = image_urls.replace('\"', '')
 
     # load the image files from the image urls
     images = []
     for url in image_urls.split(','):
        # try:
-        img = Image.open(requests.get(url.strip('\''), stream=True).raw)
+        img = Image.open(requests.get(url, stream=True).raw)
         img = img.resize((224, 224))
         img = img.convert('RGB')
         img = np.array(img)
-        images.append(img)
+        images.append((img, url))
         # except:
         #     print('Failed to download image: %s' % url)
                 
@@ -65,11 +67,10 @@ if __name__ == '__main__':
     p = r'C:\Users\johne\Desktop\Repos\Team2\backend\python\features.pkl'
 
     # lop through each image in the dataset
-    for image in images:
+    for image,url in images:
         # try to extract the features and update the dictionary
-        print(type(image))
         feat = extract_features(image,model)
-        data[image] = feat
+        data[url] = feat
 
     # get a list of the filenames
     filenames = np.array(list(data.keys()))
@@ -84,18 +85,18 @@ if __name__ == '__main__':
     # df = pd.read_csv('image_labels.csv')
     # label = df['label'].tolist()
     # unique_labels = list(set(label))
-    k = 5
+    k = 2
     unique_labels = ["c" + str(x) for x in range(0,k)]
 
     # reduce the amount of dimensions in the feature vector
-    pca = PCA(n_components=1, random_state=22)
+    pca = PCA(n_components=10, random_state=22)
     pca.fit(feat)
     x = pca.transform(feat)
 
     # this is just incase you want to see which value for k might be the best 
     sse = []
     start = 2
-    list_k = list(range(start, len(unique_labels)+1))
+    list_k = list(range(start, start+10))
 
     for k in list_k:
         km = KMeans(n_clusters=k, random_state=22, n_jobs=-1)
