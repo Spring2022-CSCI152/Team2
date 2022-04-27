@@ -381,30 +381,53 @@ router.post("/updateAlerts", requireLogin, async (req, res) => {
             // current url
             currentURL = clusterURLs[j];
             otherURLS = clusterURLs.filter(x => x !== currentURL);
-                // for each other url, add alert to user
-                for (let k = 0; k < otherURLS.length; k++) {
-                    otherURL = otherURLS[k];
-                    // get current user based off current url
-                    User.findOne({collectionArray: {$elemMatch: {imgURL: currentURL}}}).then( user1 =>{
-                        // get other user based off other url
-                        User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}).then( user2 =>{
-                            if (user1.email != user2.email) {
+            // console.log(otherURLS);
+            // for each other url, add alert to user
+            for (let k = 0; k < otherURLS.length; k++) {
+                otherURL = otherURLS[k];
+                // console.log("Verify: " + otherURL);
+                // get current user based off current url
+                const asyncQuery = async (url) => {
+                    // console.log("Async Query: " + url);
+                    return await User.findOne({collectionArray: {$elemMatch: {imgURL: url}}}, 'email').then(result => {
+                        // console.log("Async Query Result: " + result.email);
+                        return result.email;
+                    });
+                }
+                const currentUser = await asyncQuery(currentURL);
+                // console.log("Current user: " + currentUser);
+                // get other user based off other url
+                const asyncQuery2 = async () => {
+                    return await User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}, 'email').then(result => {
+                        // console.log("Async Query Result222: " + result.email);
+                        return result.email;
+                    });
+                }
+                const otherUser = await asyncQuery2();
+                // console.log("Other user: " + otherUser);
+                // add alert to current user
+                const asyncQuery3 = async () => {
+                    return await User.findOne({email: currentUser}).then(result => {
+                            if (currentUser != otherUser) {
                                 // add alert to user1
-                                console.log("Adding alert to " + user1.email);
-                                console.log("Other user: " + user2.email);
-                                user1.alerts.push({
-                                    alertedEmail: user1.email,
+                                // console.log("Adding alert to " + currentUser);
+                                // console.log("Other user: " + otherUser);
+                                // console.log("Current URL: " + currentURL);
+                                // console.log("Other URL: " + otherURL);
+                                result.alerts.push({
+                                    alertedEmail: currentUser,
                                     alertedURL: currentURL,
-                                    thiefEmail: user2.email,
+                                    thiefEmail: otherUser,
                                     thiefURL: otherURL
                                 });
-                                user1.save().then(user1 => {
-                                    console.log("Alert added to " + user1.email);
+                                result.save().then(currentUser => {
+                                    console.log("Alert added to " + currentUser.email);
                                 });
                             }
-                        })
-                    })
+                        });
                 }
+                await asyncQuery3();
+            }
         }
     }
     res.send("Alerts Updated");
@@ -433,3 +456,34 @@ router.post("/updateAlerts", requireLogin, async (req, res) => {
                 //     alertedURL: currentURL,
                 //     thiefEmail: user2.email,
                 //     thiefURL: otherURL
+
+
+
+
+
+
+
+
+
+
+                // let x = await User.findOne({collectionArray: {$elemMatch: {imgURL: currentURL}}}).then( user1 =>{
+                //     // get other user based off other url
+                //     let y = User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}).then( user2 =>{
+                //         if (user1.email != user2.email) {
+                //             // add alert to user1
+                //             console.log("Adding alert to " + user1.email);
+                //             console.log("Other user: " + user2.email);
+                //             console.log("Current URL: " + currentURL);
+                //             console.log("Other URL: " + otherURL);
+                //             user1.alerts.push({
+                //                 alertedEmail: user1.email,
+                //                 alertedURL: currentURL,
+                //                 thiefEmail: user2.email,
+                //                 thiefURL: otherURL
+                //             });
+                //             user1.save().then(user1 => {
+                //                 console.log("Alert added to " + user1.email);
+                //             });
+                //         }
+                //     })
+                // })
