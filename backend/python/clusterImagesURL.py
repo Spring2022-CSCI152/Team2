@@ -30,6 +30,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # get image urls from argv
+    # py clusterImagesURL.py ['https://notforthieves.s3.us-west-1.amazonaws.com/myImage-1649983183000.jpg','https://notforthieves.s3.us-west-1.amazonaws.com/myImage-1650489958184.png']
     image_urls = sys.argv[1]
 
     # remove brackets
