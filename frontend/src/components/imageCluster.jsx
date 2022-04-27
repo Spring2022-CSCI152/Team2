@@ -25,7 +25,30 @@ const ImageCluster = () => {
                 });
                 setClusters(c);
                 console.log(c);
+
+                // // update alerts
+                // let reqData = {
+                //     imageClusters: JSON.stringify(c)
+                // }
+                // axios.post('http://localhost:5000/updateAlerts', reqData).then(res => {
+                //     console.log(res.data);
+                // });
             });
+        });
+    }
+
+    const updateAlerts = () => {
+        let reqData = {
+            imageClusters: JSON.stringify(clusters)
+        }
+        axios.post('http://localhost:5000/updateAlerts', reqData).then(res => {
+            console.log(res.data);
+        });
+    }
+
+    const clearAlerts = () => {
+        axios.post('http://localhost:5000/clearAlerts').then(res => {
+            console.log(res.data);
         });
     }
 
@@ -35,6 +58,8 @@ const ImageCluster = () => {
                 {/* Input for multiple image files */}
                 <input type="file" id="file" multiple />
                 <button onClick={ clusterImages }>Cluster Images</button>
+                <button onClick={ updateAlerts }>Update Alerts</button>
+                <button onClick={ clearAlerts }>Clear Alerts</button>
             </div>
             <div className="imageClusterResult">
                 <p>Result: {JSON.stringify(clusters)} </p>
