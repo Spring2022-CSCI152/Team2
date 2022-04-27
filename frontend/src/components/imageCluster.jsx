@@ -1,26 +1,31 @@
 import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
 import '../assets/imageCluster.css';
-//import buffer from 'buffer';
-//window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const ImageCluster = () => {
     const [clusters, setClusters] = useState([]);
+    const [imageData, setImageData] = useState([]);
 
     const clusterImages = () => {
-        let data = {
-            imageFiles: []
-        }
-        axios.get('http://localhost:5000/app/clusterImages', data).then(res => { 
-            console.log(res.data);
-            // replace single quotes with double quotes
-            let c = JSON.parse(res.data.replace(/'/g, '"'));
-            // convert to array
-            c = Object.keys(c).map(function (key) {
-                return [key, c[key]];
+        var data = []
+        axios.get('http://localhost:5000/getAllImageURLs').then(res => { 
+            setImageData(res.data);
+            data = res.data;
+            data = {
+                imageFiles: JSON.stringify(data)
+            }
+            //console.log(JSON.stringify(data));
+            axios.get('http://localhost:5000/app/clusterImagesURL', { params: data }).then(res => { 
+                console.log(res.data);
+                // replace single quotes with double quotes
+                let c = JSON.parse(res.data.replace(/'/g, '"'));
+                // convert to array
+                c = Object.keys(c).map(function (key) {
+                    return [key, c[key]];
+                });
+                setClusters(c);
+                console.log(c);
             });
-            setClusters(c);
-            console.log(c);
         });
     }
 
@@ -45,7 +50,7 @@ const ImageCluster = () => {
                                 {cimages.map((image, index) => {
                                     return (
                                         <div className="image" key={index}>
-                                            <img src={"/dataset/" + image} />
+                                            <img src={image} alt="cluster" />
                                         </div>
                                     );
                                 })}

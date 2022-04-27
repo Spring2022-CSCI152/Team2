@@ -22,6 +22,7 @@ def main():
     # pull two image file paths from the command line
     if len(sys.argv) != 3:
         print("Usage: python3 similarity.py <image1> <image2>")
+        # py clusterImagesURL.py ['https://notforthieves.s3.us-west-1.amazonaws.com/myImage-1649983183000.jpg','https://notforthieves.s3.us-west-1.amazonaws.com/myImage-1650489958184.png']
         sys.exit(1)
     image1 = sys.argv[1]
     image2 = sys.argv[2]

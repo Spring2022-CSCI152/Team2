@@ -126,4 +126,14 @@ router.get('/clusterImages', (req, res) => {
     });
 });
 
+router.get('/clusterImagesURL', (req, res) => {
+    const spawn = require("child_process").spawn;
+    const pythonProcess = spawn('python', ["./python/clusterImagesURL.py", req.query.imageFiles]);
+    pythonProcess.stdout.on('data', (data) => {
+        // Do something with the data returned from python script
+        console.log(data.toString());
+        res.send(data.toString());
+    });
+});
+
 module.exports = router;
