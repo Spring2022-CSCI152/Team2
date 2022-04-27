@@ -9,6 +9,7 @@ const path = require('path');
 const s3 = require('../middleware/s3')
 const fs = require('fs')
 const S3 = require('aws-sdk/clients/s3')
+const mongoose = require('mongoose');
 
 // input validation
 const validateRegisterInput = require('../validation/register');
@@ -147,6 +148,7 @@ router.post('/account', requireLogin, async (req, res) => {
 router.get('/account/:id', async (req, res) => {
     // Find the user based on the params attached to the link
     User.findOne({_id:req.params.id})
+    //User.findOne({name: req.params.id})
     // Do not include password for the user
     .select("-password")
     // send back a response with the found user data
@@ -284,6 +286,20 @@ module.exports = router;
 // Gallery image url retrieval
 router.get("/gallery", requireLogin, async (req, res) => {
     User.findOne({_id: req.user}).select("collectionArray").then( result =>{
+        // send list of the image urls
+        res.send(result.collectionArray.map(x => x.imgURL));
+    }
+    ).catch((err) =>{
+        console.log(err);
+    })
+});
+
+// Gallery (other user) image url retrieval
+router.get("/galleryOther", requireLogin, async (req, res) => {
+    console.log(req.query.id);
+    // convert id to object id
+    const id = mongoose.Types.ObjectId(req.query.id);
+    User.findOne({_id: id}).select("collectionArray").then( result =>{
         // send list of the image urls
         res.send(result.collectionArray.map(x => x.imgURL));
     }

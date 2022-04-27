@@ -1,6 +1,7 @@
 import '../assets/account.css';
 import React, { useState, useContext, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ImageList from './ImageList.jsx';
 import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
@@ -9,6 +10,7 @@ import AuthContext from '../context/authContext';
 
 function UserAccount() {
     const [userProfile, setProfile] = useState(null);
+    const [images, setImages] = useState([]);
     const navigate = useNavigate();  
     // get userid from link
     const { userid } = useParams();
@@ -39,6 +41,7 @@ function UserAccount() {
 
     useEffect(()  => {
         getUserProfile();
+        axios.get('http://localhost:5000/galleryOther', { params: { id: userid } }).then(res => { setImages(res.data) });
     }, []);
 
 
@@ -50,7 +53,7 @@ function UserAccount() {
 
             <div className='accountInfo'>
                 <div id="profilePic">
-                    <img id="profileImg" src="/logo192.png"></img>
+                    <img id="profileImg" src={userProfile.user.profileimg}></img>
                 </div>
 
                 <div className='usernameAndSocials'>
@@ -60,13 +63,13 @@ function UserAccount() {
 
                     <div className='socialMedia'>
                         <div id="profileInsta">
-                            <button className="socialButton">
+                            <button className="socialButton" onClick={() => window.open("https://instagram.com/" + userProfile.user.socials.instagram, "_blank")}>
                                 <FontAwesomeIcon icon={faInstagram} />
                             </button>
                         </div>
 
                         <div id="profileTwitter">
-                            <button className="socialButton">
+                            <button className="socialButton" onClick={() => window.open("https://twitter.com/" + userProfile.user.socials.twitter, "_blank")}>
                                 <FontAwesomeIcon icon={faTwitter} />
                             </button>
                         </div>
@@ -74,21 +77,19 @@ function UserAccount() {
                 </div>
 
                 <div id="profileBio">
-                    <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, explicabo corporis? Sequi repellendus expedita, veritatis nam sed neque quisquam, repellat tempore et possimus perspiciatis sapiente! Quisquam incidunt mollitia nulla aliquid.
-                    </p>
+                    <p> {userProfile.user.userbio} </p>
                 </div>
                 
             </div>
 
             <div id="tableinfo">
             <Link to={"/gallery"} className="galleryButton"> Gallery </Link>
-                <table>
+                {/* <table> */}
                 
-                
+                <ImageList images={images}/>
                     
 
-                </table>
+                {/* </table> */}
             </div>
             </div>
 
