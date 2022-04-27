@@ -5,19 +5,11 @@ const AuthContext = createContext();
 
 function AuthContextProvider(props) {
   const [loggedIn, setLoggedIn] = useState(false);
-  //const [userInfo, setUserInfo] = useState(undefined);
+  const [dummyId, setUserId] = useState(undefined);
 
   async function getLoggedIn() {
     const loggedInRes = await axios.get("http://localhost:5000/loggedIn");
-    // const setUser = await axios.get('http://localhost:5000/setuser');
-    // if(setUser.data === false){
-    //   localStorage.clear();
-    // } else {
-    //   //console.log(setUser.data);
-    //   localStorage.setItem('user', JSON.stringify(setUser));
-    // }
-    
-    // setUserInfo(setUser.data);
+
     setLoggedIn(loggedInRes.data);
   }
 

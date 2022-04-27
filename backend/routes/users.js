@@ -190,14 +190,22 @@ router.get('/loggedIn', (req,res) =>{
     }
 });
 
-// set user
-router.get('/setuser', requireLogin, (req, res) => {
-    res.send(req.user);
-});
-
-// Accounts will probably where the image upload will be done
-router.post('/account', requireLogin, async (req, res) => {
-    res.render('account');
+// set user for account comparison
+router.get('/setuser', (req, res) => {
+    const token = req.cookies.jwt;
+    if(token){
+        jwt.verify(token, process.env.secretKey, async (err, decodedToken) => {
+            if (err){
+                console.log(err.message);
+                res.send(false);
+            } else {
+                console.log(decodedToken.id);
+                res.json(decodedToken.id);
+            }
+        })
+    } else {
+        res.send(false);
+    }
 });
 
 // Return user profile for browsing other profiles
@@ -215,18 +223,6 @@ router.get('/account/:id', async (req, res) => {
     .catch(err => {
         return res.status(404).json({err: "User not found."});
     })
-});
-
-// update user bio and stuff like that
-router.post('/account/update', requireLogin, async (req, res) => {
-    // Get req.body.bio
-
-    // update bio
-
-    // update other things?
-    // possibly check if anything different from what's stored?
-    // Problems: empty string replacing filled in values
-    // Easy fix: Make different routes for different reasons
 });
 
 
