@@ -21,21 +21,35 @@ class AlertsPage extends React.Component{
 
     this.state = {
         items: [],
-        DataisLoaded: false
+        DataisLoaded: false,
+        uId : '0'
     };
 }
+async getData(){
+  const setUser =  await axios.get('http://localhost:5000/setuser');
+  const userInfo = setUser.data;
+
+  this.setState({uId: userInfo});
+  
+   axios.post('/getAlerts' , {userId: userInfo}  )
+    .then(res =>  this.setState( {items : res.data, DataisLoaded: true}))
+    .catch(err => console.log(err));
+    console.log(this.state.items);
+
+  }
+
+  
 
 
+  componentDidMount(){
+    
+    this.getData();
+
+   
+  }
 
   render(){
-    const getData =  (userId) => {
-
-      axios.post('/getAlerts' , {userId: userId}  )
-            .then(res =>  this.setState( {items : res.data, DataisLoaded: true}))
-            .catch(err => console.log(err));
-     console.log(this.state.items);
-     
-    }
+    const{DataisLoaded,items} = this.state;
   
     
      {/* Different alerts can be used for different messages
@@ -67,7 +81,7 @@ class AlertsPage extends React.Component{
       let i = 0;
       let e = [];
       while(i < x){
-       e.push( <a class = "indivLink" href = "https://www.google.com">Test</a>);
+       e.push( <a class = "indivLink" href = {propsL.thiefURL}>Link</a>);
         i++;
       }
      return e;
@@ -83,12 +97,12 @@ class AlertsPage extends React.Component{
     function Alerts(props){
       return(items.map((item) => ( 
         <>
-        <article className = "singleAlert" key = { item.id } >
+        <article className = "singleAlert" key = { item._id } >
           
           {/*   User_Name: { item.author }, 
             Full_Name: { item.width }, 
             User_Email: { item.height }  */}
-            <div className = "alertImgContainer"><img src = {item.download_url}></img></div>
+            <div className = "alertImgContainer"><img src = {item.alertedURL}></img></div>
             <Card className = "alertCard">
                 <CardContent>
                 
@@ -99,7 +113,7 @@ class AlertsPage extends React.Component{
                   </Typography>
                   <Divider></Divider>
                   <Typography variant="body2" color="text.primary">
-                    Your image has been detected on
+                    Your image has been detected on {item.thiefURL}
                   </Typography>
                 </CardContent>
                 <div className = "cardButtons">
@@ -110,7 +124,7 @@ class AlertsPage extends React.Component{
                 </div>
             </Card>
             <div className = "alertLinks">
-                <RenderLinks propsLinks = {3}/>
+                <RenderLinks theifURL = {item.theifURL} propsLinks = {1}/>
                 
             </div>
         
@@ -132,8 +146,8 @@ class AlertsPage extends React.Component{
     }
 
     
-    const{DataisLoaded,items} = this.state;
-       
+   
+    
     return (
     
     <>

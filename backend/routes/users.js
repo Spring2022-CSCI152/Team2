@@ -238,15 +238,18 @@ router.post('/alertsPage', requireLogin, async (req, res) => {
 });
 
 router.post('/getAlerts', requireLogin, async (req, res) => {
-    //  const userId = req.body.userId.toString();
-    //  const query = { _id: userId };
-    //  const searchScope = {
-    //     useralert:1
-    // };
-    // User.findOne(query,searchScope).then(function (records) {
-    //     res.send(JSON.stringify(records));
-    // });
-    console.log("We're in");
+    //console.log("hi");
+     const userId = req.body.userId;
+    // console.log(userId);
+     const query = { _id: userId };
+     const searchScope = {
+        alerts:1
+    };
+   User.findOne(query,searchScope).then(function (records) {
+       //console.log(JSON.stringify(records.alerts));
+     res.send(JSON.stringify(records.alerts));
+   });
+ 
  
 
 });
