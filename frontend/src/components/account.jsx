@@ -116,7 +116,8 @@ function Account() {
                     </div>
 
                     <div id="editButton">
-                        <Link to="/editAccount"> Edit Profile </Link>
+                        
+                        <Link to={"/editAccount"} className="editButton"> Edit Profile</Link>
                         {/* <input type = "button" value ="Edit Profile"></input> */}
                     </div>
                     
