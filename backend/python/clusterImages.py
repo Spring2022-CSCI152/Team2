@@ -13,6 +13,7 @@ from sklearn.decomposition import PCA
 
 # for everything else
 import os
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from random import randint
@@ -81,7 +82,7 @@ feat = feat.reshape(-1,4096)
 # label = df['label'].tolist()
 # unique_labels = list(set(label))
 k = 5
-unique_labels = [str(x) for x in range(0,k)]
+unique_labels = ["c" + str(x) for x in range(0,k)]
 
 # reduce the amount of dimensions in the feature vector
 pca = PCA(n_components=3, random_state=22)
@@ -103,7 +104,7 @@ for file, cluster in zip(filenames,kmeans.labels_):
 
 # function that lets you view a cluster (based on identifier)        
 def view_cluster(cluster):
-    plt.figure(figsize = (10,10))
+    plt.figure(figsize = (5,5))
     # gets the list of filenames for a cluster
     files = groups[cluster]
     # only allow up to 30 images to be shown at a time
@@ -112,7 +113,7 @@ def view_cluster(cluster):
         files = files[:29]
     # plot each image in the cluster
     for index, file in enumerate(files):
-        plt.subplot(10,10,index+1)
+        plt.subplot(5,5,index+1)
         img = load_img(file)
         img = np.array(img)
         plt.imshow(img)
@@ -135,22 +136,38 @@ for k in list_k:
     
     sse.append(km.inertia_)
 
-# Plot sse against k
-plt.figure(figsize=(6, 6))
-plt.plot(list_k, sse)
-plt.xlabel('Number of clusters *k*')
-plt.ylabel('Sum of squared distance')
-plt.show()
+# # Plot sse against k
+# plt.figure(figsize=(6, 6))
+# plt.plot(list_k, sse)
+# plt.xlabel('Number of clusters *k*')
+# plt.ylabel('Sum of squared distance')
+# plt.show()
 
 # get best k value
 k = sse.index(min(sse)) + start
-print(k)
+# print(k)
 
 # cluster the data
 kmeans = KMeans(n_clusters=k, random_state=22, n_jobs=-1)
 kmeans.fit(x)
 
 # view all clusters
-for cluster in groups.keys():
-    view_cluster(cluster)
-plt.show()
+# for cluster in groups.keys():
+#     view_cluster(cluster)
+# plt.show()
+
+# save the clusters
+groups = {}
+for file, cluster in zip(filenames,kmeans.labels_):
+    if cluster not in groups.keys():
+        groups[cluster] = []
+        groups[cluster].append(file)
+    else:
+        groups[cluster].append(file)
+
+# convert group keys to c + number
+groups = {'c' + str(x): groups[x] for x in groups.keys()}
+
+# print the clusters
+print(groups)
+sys.stdout.flush()

@@ -10,6 +10,7 @@ import Login from './components/login.jsx';
 import AlertsPage from './components/alertsPage.jsx';
 import Registration from './components/registration.jsx';
 import ImageSimilarity from './components/ImageSimilarity';
+import ImageCluster from './components/imageCluster';
 import SearchPage from './components/searchPage.jsx';
 import About from './components/about.jsx';
 import Account from './components/account.jsx';
@@ -102,6 +103,12 @@ function Router() {
           <Route path="/imgSim" element={
             <div className="App-body">
               <ImageSimilarity/>
+            </div>
+          } />
+
+          <Route path="/imgCluster" element={
+            <div className="App-body">
+              <ImageCluster/>
             </div>
           } />
           
