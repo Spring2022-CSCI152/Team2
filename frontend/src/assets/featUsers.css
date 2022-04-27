@@ -1,10 +1,7 @@
 .featUsers{
   
   width:100%;
-  
- 
-
- 
+   
 
 }
 .row .card {
@@ -115,6 +112,10 @@ h2.featUsersLabel {
     font-size: 26px;
   }
   /*avatar root*/
+  div.css-3xou8u-MuiAvatar-root{
+    margin-right:auto;
+    margin-left:auto;
+  }
   div.css-w4s36x-MuiAvatar-root{
     margin-right:auto;
     margin-left:auto;
