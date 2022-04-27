@@ -119,9 +119,6 @@ class AlertsPage extends React.Component{
         )));
     }
     function AlertContent(props){
-      const { loggedIn } = useContext(AuthContext);
-      const { userInfo } = useContext(AuthContext);
-      getData(userInfo.id);
       
 
       const nAlerts = props.numAlert;
