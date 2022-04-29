@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
 import { Link } from "react-router-dom";
 import { CardActionArea } from '@mui/material';
-
+import '../assets/dataGrid.css';
 class DataGrid extends React.Component {
 
   constructor(props) {
@@ -20,12 +20,13 @@ class DataGrid extends React.Component {
       searchType: props.searchType,
       data: props.data,
       per: 4,
-      page: 1
-
+      page: 1,
+      imgData: props.imgData,
+      collectionData: props.collectionData
     };
 
   }
-  loadData = () => {
+   loadData = () => {
     const { per, page, data } = this.state;
     const endpoint = `https://randomuser.me/api/?nat=us&results=${per}&page=${page}`;
 
@@ -39,7 +40,7 @@ class DataGrid extends React.Component {
       });
   };
   componentDidMount() {
-    this.loadData();
+   
   }
 
 
@@ -48,9 +49,11 @@ class DataGrid extends React.Component {
     {/* Displays images for search page*/ }
     function DisplayImages(props) {
       {/*display images from data */ }
+      console.log(props.data);
       return (
+        
         <ImageList cols={5}>
-          {props.imgData.map((item) => (
+          {props.data.map((item) => (
             <ImageListItem key={item.img}  >
               <a href={item.img}>
                 <img
@@ -73,7 +76,7 @@ class DataGrid extends React.Component {
         <>
           <br></br> <br></br>
           <Grid container spacing={4} >
-            {itemNums.map((item) => (
+            {props.data.map((item) => (
 
               <Grid item xs={3}>
                 <a className = "profileLink" href = "google.com" >
@@ -118,15 +121,17 @@ class DataGrid extends React.Component {
     {/* Displays users for search page*/ }
     function DisplayUsers(props) {
       {/*display users from data */ }
-      console.log(props.userData);
+     // console.log(props.data);
+     console.log("users: "+ props.data);
+     console.log( props.data);
       return (
         <>
           <br></br> <br></br>
           <Grid className="gridContainer" container spacing={3}>
             <Grid>
-              {props.userData.map(item => (
+              {props.data.map(item => (
 
-                <Card sx={{ maxWidth: 345, maxHeight: 500 }} key={item.img}>
+                <Card sx={{ maxWidth: 345, maxHeight: 500 }} key={item._id}>
                   <CardActionArea>
                     <Avatar
                       alt={item.username}
@@ -153,15 +158,15 @@ class DataGrid extends React.Component {
     }
 
     function SearchContent(props) {
-    
+     // console.log(props.data);
 
       switch (props.searchType) {
         case 0:
-          return <DisplayImages imgData={props.data}></DisplayImages>
+          return <DisplayImages data={props.imgData}></DisplayImages>
         case 1:
-          return <DisplayUsers userData={props.userData}></DisplayUsers>
+          return <DisplayUsers data={props.userData}></DisplayUsers>
         case 2:
-          return <DisplayCollections collectionData={props.data}></DisplayCollections>
+          return <DisplayCollections data ={props.collectionData}></DisplayCollections>
 
 
       }
@@ -173,7 +178,7 @@ class DataGrid extends React.Component {
 
       <section className="dataGrid">
 
-        <SearchContent searchType={this.state.searchType} userData = {this.state.userData}data={itemData}></SearchContent>
+        <SearchContent searchType={this.state.searchType} userData = {this.state.userData} imgData = {this.state.imgData} collectionData = {this.state.collectionData}></SearchContent>
 
 
       </section>

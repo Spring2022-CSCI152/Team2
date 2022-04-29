@@ -7,6 +7,7 @@ const requireLogin = require('../middleware/requireLogin');
 
 // Load User model for searching 
 const User = require('../models/user');
+const { collection } = require('../models/user');
 
 //Note these routes could be right could be wrong. Edit and correct over time
 router.post('/index', (req, res) => {
@@ -31,6 +32,7 @@ router.post('/search/users', (req, res) => { // queries the user collection and 
     const keyword = req.body.searchTerm.toString();
     const query = { $text: { $search: keyword } };
     const searchScope = {
+        _id: 1,
         username: 1,
         name: 1,
         userbio: 1,
@@ -40,27 +42,28 @@ router.post('/search/users', (req, res) => { // queries the user collection and 
     User.find(query, searchScope).then(function (records) {
         res.send(JSON.stringify(records))
     });
+  
 
 });
 router.post('/search/collections', (req, res) => {// queries the 'collection' collection and returns JSON of results
-    const keyword = req.body.searchTerm.toString();
-    const query = { $text: { $search: keyword } };
 
-
-    User.find(query).then(function (records) {
-        res.send(JSON.stringify(records))
-    });
-
+console.log("hi");
 });
 router.post('/search/images', (req, res) => { // queries the 'image' collection and returns JSON of results
+    console.log('success');
     const keyword = req.body.searchTerm.toString();
-    const query = { $text: { $search: keyword } };
+    const query = {$text: { $search: keyword } };
+    
+    const searchScope = {
+        imgName:1,
+        tags:1
+    };
 
-
-    User.find(query).then(function (records) {
+    User.find(query, searchScope).then(function (records) {
         res.send(JSON.stringify(records))
     });
-
+    
+   
 });
 router.get('/featUsers', (req, res) => {
     const query = User.aggregate([{
