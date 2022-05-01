@@ -7,6 +7,7 @@ const requireLogin = require('../middleware/requireLogin');
 
 // Load User model for searching 
 const User = require('../models/user');
+const Col = require('../models/collectionsModel');
 const { collection } = require('../models/user');
 
 //Note these routes could be right could be wrong. Edit and correct over time
@@ -51,18 +52,28 @@ console.log("hi");
 });
 router.post('/search/images', (req, res) => { // queries the 'image' collection and returns JSON of results
     console.log('success');
+  
     const keyword = req.body.searchTerm.toString();
-    const query = {$text: { $search: keyword } };
-    
-    const searchScope = {
-        imgName:1,
-        tags:1
-    };
+   console.log(keyword);
+    const aggr = User.aggregate([
+        {$unwind : "$collectionArray"},
+        { $match : { $or: [
+           {"collectionArray.tags": keyword},
+            {"collectionArray.imgName": keyword},
+            {"collectionArray.description": keyword}
+        ]
+        }},
+        {$project:{
+            collectionArray:1
+        }
+        }
+    ]);
+   
 
-    User.find(query, searchScope).then(function (records) {
+    aggr.then(function (records) {
         res.send(JSON.stringify(records))
     });
-    
+    console.log("hi");    
    
 });
 router.get('/featUsers', (req, res) => {

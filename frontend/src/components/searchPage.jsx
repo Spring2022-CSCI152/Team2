@@ -35,8 +35,8 @@ class SearchPage extends React.Component {
 
 
   }
-  getUsers(){
-    axios.post('app/search/users', 
+ async getUsers(){
+   await axios.post('app/search/users', 
       {searchTerm : this.state.keyword,
         searchType: this.state.searchType
        })
@@ -44,19 +44,19 @@ class SearchPage extends React.Component {
             .catch(err => console.log(err));
      console.log(this.state.data);
   }
-  getImages(){
-    console.log("geImages");
+ async getImages(){
+    
 
-    axios.post('app/search/images', 
+   await axios.post('app/search/images', 
       {searchTerm : this.state.keyword,
         searchType: this.state.searchType
        })
             .then(res =>  this.setState( {imgData : res.data}))
             .catch(err => console.log(err));
-     
+            console.log(this.state.imgData);
   }
-  getCollections(){
-    axios.post('app/search/collections', 
+  async getCollections(){
+   await axios.post('app/search/collections', 
       {searchTerm : this.state.keyword,
         searchType: this.state.searchType
        })

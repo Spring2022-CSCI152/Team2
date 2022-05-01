@@ -57,9 +57,9 @@ class DataGrid extends React.Component {
             <ImageListItem key={item.img}  >
               <a href={item.img}>
                 <img
-                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.title}
+                  src={item.collectionArray.imgURL}
+                  srcSet={item.collectionArray.imgURL}
+                  alt={item.collectionArray.imgName}
                   loading="lazy"
                 />
               </a>
