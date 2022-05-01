@@ -48,8 +48,13 @@ class DataGrid extends React.Component {
 
     {/* Displays images for search page*/ }
     function DisplayImages(props) {
+  console.log(props.data.length);
       {/*display images from data */ }
-      console.log(props.data);
+       if(props.data.length == 0){
+        return( <p className = "noResults">
+          No Results Found;
+        </p>);
+      }else{
       return (
         
         <ImageList cols={5}>
@@ -66,12 +71,18 @@ class DataGrid extends React.Component {
             </ImageListItem>
           ))}
         </ImageList>
-      );
+      );}
     }
 
     {/* Displays collections for search page*/ }
     function DisplayCollections(props) {
+  
       {/*display collections from data */ }
+      if(props.data.length == 0){
+        return( <p className = "noResults">
+          No Results Found
+        </p>);
+      }else{
       return (
         <>
           <br></br> <br></br>
@@ -86,7 +97,7 @@ class DataGrid extends React.Component {
                   variant="quilted"
                   className="collectionItem"
                 >
-                  {props.collectionData.slice(0, 5).map((item) => (
+                  {props.data.slice(0, 5).map((item) => (
                     <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} >
                      
                         <img
@@ -116,14 +127,18 @@ class DataGrid extends React.Component {
             ))}
           </Grid>
 
-        </>);
+        </>);}
     }
     {/* Displays users for search page*/ }
     function DisplayUsers(props) {
       {/*display users from data */ }
-     // console.log(props.data);
-     console.log("users: "+ props.data);
-     console.log( props.data);
+      console.log(props.data);
+    if(props.data.length == 0){
+      console.log("hi");
+      return( <p className = "noResults">
+        No Results Found;
+      </p>);
+    }else{
       return (
         <>
           <br></br> <br></br>
@@ -155,6 +170,7 @@ class DataGrid extends React.Component {
         </>
 
       );
+      }
     }
 
     function SearchContent(props) {

@@ -42,7 +42,7 @@ class SearchPage extends React.Component {
        })
             .then(res =>  this.setState( {userData : res.data}))
             .catch(err => console.log(err));
-     console.log(this.state.data);
+   
   }
  async getImages(){
     
@@ -53,7 +53,7 @@ class SearchPage extends React.Component {
        })
             .then(res =>  this.setState( {imgData : res.data}))
             .catch(err => console.log(err));
-            console.log(this.state.imgData);
+           
   }
   async getCollections(){
    await axios.post('app/search/collections', 
@@ -62,6 +62,7 @@ class SearchPage extends React.Component {
        })
             .then(res =>  this.setState( {collectionData : res.data}))
             .catch(err => console.log(err));
+             console.log(this.state.collectionData);
      
   }
   
