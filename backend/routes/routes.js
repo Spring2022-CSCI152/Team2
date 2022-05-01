@@ -61,18 +61,34 @@ router.post('/search/collections', (req, res) => {// queries the 'collection' co
     const keyword = req.body.searchTerm.toString();
     const aggr = User.aggregate([
         {$unwind : "$collectionArray"},
-        { $match : { $or: [
+        { 
+            $match : { $or: [
            {"collectionArray.tags": {$regex: ".*" + keyword + ".*"}},
             {"collectionArray.imgName": {$regex: ".*" + keyword + ".*"}},
-            {"collectionArray.description": {$regex: ".*" + keyword + ".*"}}
-        ]
-        }},
-        {$project:{
-            collectionArray:1
+            {"collectionArray.description": {$regex: ".*" + keyword + ".*"}},
+            {"collectionArray.cName": {$regex: ".*" + keyword + ".*"}} ]
+       
+            }
+        },
+        {
+            $project:{
+            _id:1,
+            collectionArray: 1,
+            username: 1,
+            name:1
         }
-        }
+        },
+        {$group: {
+            _id: {"postedBy":"$collectionArray.postedBy","cName":"$collectionArray.cName"},
+             name : { $first: '$name' },
+              cName : { $first: '$collectionArray.cName' },
+              images : {$push:"$collectionArray.imgURL"}
+            
+          }}
     ]);
-
+    aggr.then(function (records) {
+        res.send(JSON.stringify(records))
+    });
 });
 router.post('/search/images', (req, res) => { // queries the 'image' collection and returns JSON of results
   

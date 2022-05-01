@@ -57,28 +57,36 @@ ul.collectionItem{
    
   
 }
-ul.collectionItem:hover{
+ul.css-dvamat-MuiImageList-root{
+    width:100%;
+}
+.css-480o17-MuiGrid-root>.MuiGrid-item:hover{
     opacity:.52;
     transition-duration: .2s;
-
-   
-  
 }
- ul div.collectionNameBar{
-    position:absolute;
-    height:20%;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-around;
-    left:0;
-    right:0;
-    margin-right:inherit;
-    opacity:.95;
-    bottom:0;
+.css-dvamat-MuiImageList-root{
+    margin-bottom:0;
+   
+    background-color: #a7acb0;
+   
+
+
+}
+a.profileLink div{
+    color:black; 
+}
+.noResults{
+    margin:auto;
+    margin-top:25%;
+}
+
+   div.collectionNameBar{
+    width:100%;
     background-color: black;
 }
 .css-rvv586-MuiImageList-root{
     position:relative;
+    
 }
 ::-webkit-scrollbar{
     width:0;

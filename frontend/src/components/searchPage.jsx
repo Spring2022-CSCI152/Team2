@@ -62,24 +62,23 @@ class SearchPage extends React.Component {
        })
             .then(res =>  this.setState( {collectionData : res.data}))
             .catch(err => console.log(err));
-             console.log(this.state.collectionData);
+         
      
   }
   
   componentDidMount(){
-    var route;
+
     this.setKeyword();
     this.getData();
   };
     
     getData(){
-      switch (this.state.searchType) {
-        case 0:
-          return this.getImages(); 
-        case 1:
-          return this.getUsers();
-        case 2:
-          return this.getCollection(); 
+    
+       this.getImages(); 
+    
+           this.getUsers();
+  
+          this.getCollections(); 
   
 
       };
@@ -88,7 +87,7 @@ class SearchPage extends React.Component {
    
         
   
-  };
+  
   setKeyword(){
     const url = new URL(window.location.href);
     const searchTerm = url.searchParams.get("searchField");
@@ -114,7 +113,8 @@ class SearchPage extends React.Component {
 
 
         })
-        this.getData();
+
+     
 
       };
      

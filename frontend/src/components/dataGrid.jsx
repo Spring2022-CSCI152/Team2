@@ -16,7 +16,7 @@ class DataGrid extends React.Component {
     super(props);
 
     this.state = {
-      userData:props.userData,
+      userData: props.userData,
       searchType: props.searchType,
       data: props.data,
       per: 4,
@@ -26,7 +26,7 @@ class DataGrid extends React.Component {
     };
 
   }
-   loadData = () => {
+  loadData = () => {
     const { per, page, data } = this.state;
     const endpoint = `https://randomuser.me/api/?nat=us&results=${per}&page=${page}`;
 
@@ -40,7 +40,7 @@ class DataGrid extends React.Component {
       });
   };
   componentDidMount() {
-   
+
   }
 
 
@@ -48,133 +48,143 @@ class DataGrid extends React.Component {
 
     {/* Displays images for search page*/ }
     function DisplayImages(props) {
-  console.log(props.data.length);
+
       {/*display images from data */ }
-       if(props.data.length == 0){
-        return( <p className = "noResults">
-          No Results Found;
+      if (props.data.length == 0) {
+        return (<p className="noResults">
+          No Results Found
         </p>);
-      }else{
-      return (
-        
-        <ImageList cols={5}>
-          {props.data.map((item) => (
-            <ImageListItem key={item.img}  >
-              <a href={item.img}>
-                <img
-                  src={item.collectionArray.imgURL}
-                  srcSet={item.collectionArray.imgURL}
-                  alt={item.collectionArray.imgName}
-                  loading="lazy"
-                />
-              </a>
-            </ImageListItem>
-          ))}
-        </ImageList>
-      );}
+      } else {
+        return (
+
+          <ImageList cols={5}>
+            {props.data.map((item) => (
+              <Link to={`/account/${item.collectionArray.postedBy}`}>
+                <ImageListItem key={item.img}  >
+                  <a href={item.img}>
+                    <img
+                      src={item.collectionArray.imgURL}
+                      srcSet={item.collectionArray.imgURL}
+                      alt={item.collectionArray.imgName}
+                      loading="lazy"
+                    />
+                  </a>
+                </ImageListItem>
+              </Link>
+            ))}
+          </ImageList>
+        );
+      }
     }
 
     {/* Displays collections for search page*/ }
     function DisplayCollections(props) {
-  
+
       {/*display collections from data */ }
-      if(props.data.length == 0){
-        return( <p className = "noResults">
+      if (props.data.length == 0) {
+        return (<p className="noResults">
           No Results Found
         </p>);
-      }else{
-      return (
-        <>
-          <br></br> <br></br>
-          <Grid container spacing={4} >
-            {props.data.map((item) => (
+      } else {
+        return (
+          <>
+            <br></br> <br></br>
+            <Grid container spacing={4} >
+              {props.data.map((item) => (
 
-              <Grid item xs={3}>
-                <a className = "profileLink" href = "google.com" >
-                <ImageList 
-                  cols={3}
-                  gap= {0}
-                  variant="quilted"
-                  className="collectionItem"
-                >
-                  {props.data.slice(0, 5).map((item) => (
-                    <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} >
-                     
-                        <img
-                          src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                          srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={item.title}
-                          loading="lazy"
-                        />
-                    
-                    </ImageListItem>
-                  ))}
+                <Grid item id={item._id} xs={3}>
+                  <Link to={`/account/${item._id.postedBy}`} className="profileLink" >
+                    <ImageList
+                      sx={{ width: 200, height: 200 }}
+                      rowHeight={100}
+                      cols={2}
+
+
+                      className="collectionItem"
+                    >
+                      {item.images.slice(0, 3).map((item2) => (
+                        <ImageListItem key={item2} >
+
+                          <img
+                            className="cimages"
+                            src={item2}
+                            srcSet={item2}
+
+                            loading="lazy"
+                          />
+
+                        </ImageListItem>
+                      ))}
+                      {/*
                   <ImageListItem className="plusMore" cols={1} rows={1}>
-                    <Typography> + More </Typography>
+                 <Typography> + More </Typography>
                   </ImageListItem>
-                 
-                  <div className = "collectionNameBar"> 
-                    <Typography className = "collectionName">
-                        Collection Name
-                    </Typography>
-                    <Typography className = "collectionArtist">
-                        Artist Name
-                    </Typography>
-                  </div>
-                </ImageList> 
-                </a>
-              </Grid>
-            ))}
-          </Grid>
+                 */}
 
-        </>);}
+                    </ImageList>
+                    <div className="collectionNameBar">
+                      <Typography className="collectionName">
+                        {item.cName}
+                      </Typography>
+                      <Typography className="collectionArtist">
+                        {item.name}
+                      </Typography>
+                    </div>
+                  </Link>
+                </Grid>
+              ))}
+            </Grid>
+
+          </>);
+      }
     }
     {/* Displays users for search page*/ }
     function DisplayUsers(props) {
       {/*display users from data */ }
-      console.log(props.data);
-    if(props.data.length == 0){
-      console.log("hi");
-      return( <p className = "noResults">
-        No Results Found;
-      </p>);
-    }else{
-      return (
-        <>
-          <br></br> <br></br>
-          <Grid className="gridContainer" container spacing={3}>
-            <Grid>
-              {props.data.map(item => (
+   
+      if (props.data.length == 0) {
+        console.log("hi");
+        return (<p className="noResults">
+          No Results Found
+        </p>);
+      } else {
+        return (
+          <>
+            <br></br> <br></br>
+            <Grid className="gridContainer" container spacing={3}>
+              <Grid>
+                {props.data.map(item => (
+                  <Card sx={{ maxWidth: 345, maxHeight: 500 }} key={item._id}>
+                    <Link className = "profileLink" to={`/account/${item._id}`}>
 
-                <Card sx={{ maxWidth: 345, maxHeight: 500 }} key={item._id}>
-                  <CardActionArea>
-                    <Avatar
-                      alt={item.username}
-                      src={item.profileimg}//?w=164&h=164&fit=crop&auto=format`
-                      sx={{ width: 100, height: 100 }}
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h6" component="div">
-                        {item.name}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {item.userbio}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <Link to={`/account/${item._id}`}>Go to Profile</Link>
-                </Card>
-              ))}
+                      <CardActionArea>
+                        <Avatar
+                          alt={item.username}
+                          src={item.profileimg}//?w=164&h=164&fit=crop&auto=format`
+                          sx={{ width: 100, height: 100 }}
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h6" component="div">
+                            {item.name}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {item.userbio}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Link>
+                  </Card>
+                ))}
+              </Grid>
             </Grid>
-          </Grid>
-        </>
+          </>
 
-      );
+        );
       }
     }
 
     function SearchContent(props) {
-     // console.log(props.data);
+      // console.log(props.data);
 
       switch (props.searchType) {
         case 0:
@@ -182,7 +192,7 @@ class DataGrid extends React.Component {
         case 1:
           return <DisplayUsers data={props.userData}></DisplayUsers>
         case 2:
-          return <DisplayCollections data ={props.collectionData}></DisplayCollections>
+          return <DisplayCollections data={props.collectionData}></DisplayCollections>
 
 
       }
@@ -194,7 +204,7 @@ class DataGrid extends React.Component {
 
       <section className="dataGrid">
 
-        <SearchContent searchType={this.state.searchType} userData = {this.state.userData} imgData = {this.state.imgData} collectionData = {this.state.collectionData}></SearchContent>
+        <SearchContent searchType={this.state.searchType} userData={this.state.userData} imgData={this.state.imgData} collectionData={this.state.collectionData}></SearchContent>
 
 
       </section>
