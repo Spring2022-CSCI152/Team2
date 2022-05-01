@@ -7,7 +7,7 @@ import Tab from '@mui/material/Tab';
 import DataGrid from "./dataGrid.jsx";
 
 import '../assets/searchPage.css';
-import '../assets/dataGrid.css';
+
 import axios from "axios";
 
 
@@ -19,25 +19,75 @@ class SearchPage extends React.Component {
     super(props);
 
     this.state = {
-      data: [],
+  
       userData: [],
+      
       keyword: "",
       searchType: 0,
       page: 1,
       total_pages: 4,
-      DataisLoaded: false
+      DataisLoaded: false,
+      imgData:[],
+      collectionData: []
     };
    
 
 
 
   }
+ async getUsers(){
+   await axios.post('app/search/users', 
+      {searchTerm : this.state.keyword,
+        searchType: this.state.searchType
+       })
+            .then(res =>  this.setState( {userData : res.data}))
+            .catch(err => console.log(err));
+   
+  }
+ async getImages(){
+    
+
+   await axios.post('app/search/images', 
+      {searchTerm : this.state.keyword,
+        searchType: this.state.searchType
+       })
+            .then(res =>  this.setState( {imgData : res.data}))
+            .catch(err => console.log(err));
+           
+  }
+  async getCollections(){
+   await axios.post('app/search/collections', 
+      {searchTerm : this.state.keyword,
+        searchType: this.state.searchType
+       })
+            .then(res =>  this.setState( {collectionData : res.data}))
+            .catch(err => console.log(err));
+         
+     
+  }
+  
   componentDidMount(){
+
     this.setKeyword();
-  
- 
-  
+    this.getData();
   };
+    
+    getData(){
+    
+       this.getImages(); 
+    
+           this.getUsers();
+  
+          this.getCollections(); 
+  
+
+      };
+  
+   
+   
+        
+  
+  
   setKeyword(){
     const url = new URL(window.location.href);
     const searchTerm = url.searchParams.get("searchField");
@@ -46,17 +96,7 @@ class SearchPage extends React.Component {
  
 
   render() {
-    const getData =  () => {
-
-      axios.post('app/search/users', 
-      {searchTerm : this.state.keyword,
-        searchType: this.state.searchType
-       })
-            .then(res =>  this.setState( {userData : res.data}))
-            .catch(err => console.log(err));
-     
-     
-    }
+    
   
 
 
@@ -65,7 +105,7 @@ class SearchPage extends React.Component {
       const [value, setValue] = React.useState(this.state.searchType);
       /*changes value of searchType on change */
       const handleChange = (event, newValue) => {
-        getData();
+       
         setValue(newValue);
         this.setState({
 
@@ -73,6 +113,8 @@ class SearchPage extends React.Component {
 
 
         })
+
+     
 
       };
      
@@ -95,7 +137,7 @@ class SearchPage extends React.Component {
     /*calls data grid based on searchType */
     function CallDataGrid(props) {
       return (
-        <DataGrid searchType={props.searchType} userData = {props.userData} data={props.data}></DataGrid>
+        <DataGrid searchType={props.searchType} userData =  {props.userData} imgData =  {props.imgData} collectionData =  {props.collectionData}></DataGrid>
       );
 
     }
@@ -106,7 +148,7 @@ class SearchPage extends React.Component {
 
         <SearchFilters ></SearchFilters>
 
-        <CallDataGrid searchType={this.state.searchType} data={this.state.data} userData = {this.state.userData} keyword = {this.state.keyword}></CallDataGrid>
+        <CallDataGrid searchType={this.state.searchType} userData =  {this.state.userData} imgData =  {this.state.imgData} collectionData =  {this.state.collectionData} keyword = {this.state.keyword} ></CallDataGrid>
 
       </>
     );

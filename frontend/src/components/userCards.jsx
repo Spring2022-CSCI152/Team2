@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../assets/featUsers.css';
 import Avatar from '@mui/material/Avatar';
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 class UserCards extends Component {
@@ -51,14 +52,15 @@ class UserCards extends Component {
   }
 
   render() {
-  
-    console.log(this.state);
+
     return (
      <>
     
         <div className="row">
           {this.state.data.map(data => (
+         
             <div className="col-md-4 animated fadeIn" key={data._id}>
+                 <Link to ={`/account/${data._id}`}>
               <div className="card">
                 <div className="card-body">
                   <div className="avatar">
@@ -78,7 +80,8 @@ class UserCards extends Component {
                   </p>
                 </div>
               </div>
-            </div>
+              </Link>
+            </div>          
           ))}
         </div>
         {/*<button

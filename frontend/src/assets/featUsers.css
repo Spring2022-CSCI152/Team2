@@ -2,7 +2,13 @@
   
   width:100%;
    
+  
 
+
+}
+a {
+  color: white;
+  text-decoration: none; /* no underline */
 }
 .row .card {
   height:38vh;
@@ -115,11 +121,18 @@ h2.featUsersLabel {
   div.css-3xou8u-MuiAvatar-root{
     margin-right:auto;
     margin-left:auto;
+    height:10vh;
+    width:10vh;
   }
   div.css-w4s36x-MuiAvatar-root{
     margin-right:auto;
     margin-left:auto;
+     height:10vh;
+    width:10vh;
+ 
+    
   }
+
   .card:hover div.css-w4s36x-MuiAvatar-root{
     margin-right:auto;
     margin-left:auto;
