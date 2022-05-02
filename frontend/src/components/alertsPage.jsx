@@ -28,14 +28,12 @@ class AlertsPage extends React.Component{
 async getData(){
   const setUser =  await axios.get('http://localhost:5000/setuser');
   const userInfo = setUser.data;
-
   this.setState({uId: userInfo});
   
    axios.post('/getAlerts' , {userId: userInfo}  )
     .then(res =>  this.setState( {items : res.data, DataisLoaded: true}))
     .catch(err => console.log(err));
     console.log(this.state.items);
-
   }
 
   
@@ -81,7 +79,7 @@ async getData(){
       let i = 0;
       let e = [];
       while(i < x){
-       e.push( <a class = "indivLink" href = {propsL .thiefURL}>Link</a>);
+       e.push( <a class="indivLink" href={propsL.thiefURL}>Link</a>);
         i++;
       }
      return e;
@@ -120,6 +118,7 @@ async getData(){
                 
                  
                     <Button size="small">Rescan</Button>
+                    <hr/>
                     <Button size="small">Resolved</Button>
                 </div>
             </Card>
