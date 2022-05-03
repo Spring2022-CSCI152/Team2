@@ -4,11 +4,12 @@ import '../assets/featUsers.css';
 
 
 function about () {
+    
     return (
         <div class = "header"> 
             <h1>NOT FOR THIEVES</h1>
             <div class = "para"> 
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, explicabo corporis? Sequi repellendus expedita, veritatis nam sed neque quisquam, repellat tempore et possimus perspiciatis sapiente! Quisquam incidunt mollitia nulla aliquid.
+                <p>Not for Thieves is a website where artist like you can upload their digital artwork and have it cross reference OpenSeas to see if it has been minted. Outside Users can browse through other profiles and see others' digital artwork as well.
                 </p> 
             </div>
         </div>

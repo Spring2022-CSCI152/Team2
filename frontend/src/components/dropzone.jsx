@@ -1,18 +1,14 @@
 import React from "react";
-// Import the useDropzone hooks from react-dropzone
+
 import { useDropzone, useCallback  } from "react-dropzone";
 
 const Dropzone = ({ onDrop, accept }) => {
-  // Initializing useDropzone hooks with options
+  
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept
   });
 
-  /* 
-    useDropzone hooks exposes two functions called getRootProps and getInputProps
-    and also exposes isDragActive boolean
-  */
 
   return (
     <div {...getRootProps()}>

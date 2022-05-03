@@ -16,9 +16,9 @@ function Account() {
     }, []);
 
       const onDrop = useCallback(async acceptedFiles => {
-        // Loop through accepted files
+        // Loop
         acceptedFiles.map(async file => {
-            // upload to /collections
+            
             const config = {
                 headers: { 'content-type': 'multipart/form-data' }
             }
@@ -27,19 +27,19 @@ function Account() {
             await axios.post('http://localhost:5000/collections', data, config).then(async res => {
                 console.log(res.data);
 
-                // Initialize FileReader browser API
+            
                 const reader = new FileReader();
-                // onload callback gets called after the reader reads the file data
+                
                 reader.onload = function(e) {
-                    // add the image into the state. Since FileReader reading process is asynchronous, its better to get the latest snapshot state (i.e., prevState) and update it. 
+                     
                     setImages(prevState => [
                     ...prevState,
                     { id: cuid(), src: res.data }
                     ]);
                 };
-                // Read the file as Data URL (since we accept only images)
+                
                 reader.readAsDataURL(file);
-                // Recall get request for updated information
+                
                 await axios.get('http://localhost:5000/gallery').then(res => { setImages(res.data) });
                 return file;
             });
