@@ -103,7 +103,7 @@ function UserAccount() {
             </div>
 
             <div id="tableinfo">
-            <Link to={"/gallery"} className="galleryButton"> Gallery </Link>
+            <Link to={`/gallery/${userid}`} className="galleryButton"> Gallery </Link>
                 {/* <table> */}
                 
                 <ImageList images={images}/>

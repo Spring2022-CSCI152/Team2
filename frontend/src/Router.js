@@ -17,6 +17,7 @@ import Account from './components/account.jsx';
 import EditAccount from './components/editAccount.jsx';
 import UserAccount from './components/userAccount';
 import Gallery1 from './components/gallery.jsx';
+import UserGallery from './components/userGallery.jsx';
 import './assets/featUsers.css';
 
 import React, { useState, useContext } from 'react';
@@ -130,6 +131,12 @@ function Router() {
           <Route path= {"/gallery"} element={
             <div className="App-body">
               <Gallery1 />
+            </div>
+          }/>
+
+          <Route path= {"/gallery/:userid"} element={
+            <div className="App-body">
+              <UserGallery/>
             </div>
           }/>
         
