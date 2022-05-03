@@ -34,11 +34,11 @@ const ImageSimilarity = () => {
         <div className="imageSimilarity">
             <div className="imageSimilarityContainer">
                 <div className="image1">
-                    <img src={imageOne} alt="imageOne" />
+                    <img1 src={imageOne} alt="imageOne" />
                     <input type="file" onChange={handleImageOne} />
                 </div>
                 <div className="image2">
-                    <img src={imageTwo} alt="imageTwo" />
+                    <img1 src={imageTwo} alt="imageTwo" />
                     <input type="file" onChange={handleImageTwo} />
                 </div>
             </div>
