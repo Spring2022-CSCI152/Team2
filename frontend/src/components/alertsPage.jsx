@@ -103,6 +103,7 @@ async getData(){
             Full_Name: { item.width }, 
             User_Email: { item.height }  */}
             <div className = "alertImgContainer"><img src = {item.alertedURL}></img></div>
+            <div className = "alertImgContainer"><img src = {item.thiefURL}></img></div>
             <Card className = "alertCard">
                 <CardContent>
                 
@@ -124,7 +125,7 @@ async getData(){
                 </div>
             </Card>
             <div className = "alertLinks">
-                <RenderLinks theifURL = {item.theifURL} propsLinks = {1}/>
+                <RenderLinks thiefURL = {item.thiefURL} propsLinks = {1}/>
                 
             </div>
         
