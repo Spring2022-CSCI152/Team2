@@ -36,15 +36,15 @@
   /*Completely optional styling that has nothing to do with the lightbox*/
   button1 {
     color: white;
-    border: 2px solid #a167da;
-    background-color: #a167da;
+    border: 2px solid rgb(85, 172, 201);
+    background-color: rgb(85, 172, 201);
     font-size: 1.2rem;
   }
   
   
   
   h3 {
-    color: #7a4baa;
+    color:rgb(85, 172, 201) ;
   }
   
   p {
@@ -57,13 +57,13 @@
   }
   
   body {
-    background-color: rgba(196, 155, 237, 0.45);
+    background-color: rgb(85, 172, 201);
   }
   
   .p5{
     border: 3px solid white;
     border-radius:10px;
-    background-color: black;
+    background-color: rgb(85, 172, 201);
   }
 
   #des{
