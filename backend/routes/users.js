@@ -364,10 +364,10 @@ router.get("/gallery", requireLogin, async (req, res) => {
 });
 
 // Gallery (other user) image url retrieval
-router.get("/galleryOther", requireLogin, async (req, res) => {
-    console.log(req.query.id);
+router.get("/gallery/:id", requireLogin, async (req, res) => {
+    console.log(req.params.id);
     // convert id to object id
-    const id = mongoose.Types.ObjectId(req.query.id);
+    const id = mongoose.Types.ObjectId(req.params.id);
     User.findOne({_id: id}).select("collectionArray").then( result =>{
         // send list of the image urls
         res.send(result.collectionArray.map(x => x.imgURL));
