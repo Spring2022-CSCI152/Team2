@@ -378,7 +378,7 @@ router.get("/gallery", requireLogin, async (req, res) => {
 });
 
 // Gallery (other user) image url retrieval
-router.get("/gallery/:id", requireLogin, async (req, res) => {
+router.get("/gallery/:id", async (req, res) => {
     console.log(req.params.id);
     // convert id to object id
     const id = mongoose.Types.ObjectId(req.params.id);
@@ -404,7 +404,7 @@ router.get("/galleryNames", requireLogin, async (req, res) => {
 });
 
 // Gallery Image Name retrieval (other user)
-router.get("/galleryNames/:id", requireLogin, async (req, res) => {
+router.get("/galleryNames/:id", async (req, res) => {
     console.log(req.params.id);
     // convert id to object id
     const id = mongoose.Types.ObjectId(req.params.id);
