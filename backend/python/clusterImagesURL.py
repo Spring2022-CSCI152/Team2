@@ -95,8 +95,8 @@ if __name__ == '__main__':
 
     # this is just incase you want to see which value for k might be the best 
     sse = []
-    start = 2
-    list_k = list(range(start, start+10))
+    start = 10
+    list_k = list(range(start, start + 1))
 
     for k in list_k:
         km = KMeans(n_clusters=k, random_state=22, n_jobs=-1)
