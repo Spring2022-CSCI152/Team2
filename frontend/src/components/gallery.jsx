@@ -63,14 +63,22 @@ useEffect(() => {
 //this is where all of our logic will live
 function ImageGallery() {
   const [imageToShow, setImageToShow] = useState("");
+  const [imageToShowName, setImageToShowName] = useState("");
   const [lightboxDisplay, setLightBoxDisplay] = useState(false);
   const [urls, setUrls] = useState([]);
+  const [imageNames, setImageNames] = useState([]);
 
   useEffect(() => {
     // axios request to get images
     axios.get("http://localhost:5000/gallery").then((res) => {
       //console.log(res.data);
       setUrls(res.data);
+    });
+
+    // axios request to get image names
+    axios.get("http://localhost:5000/galleryNames").then((res) => {
+      //console.log(res.data);
+      setImageNames(res.data);
     });
   }, []);
 
@@ -84,6 +92,7 @@ function ImageGallery() {
   //function to show a specific image in the lightbox, amd make lightbox visible
   const showImage = (image) => {
     setImageToShow(image);
+    setImageToShowName(imageNames[urls.indexOf(image)]);
     setLightBoxDisplay(true);
   };
 
@@ -126,7 +135,7 @@ function ImageGallery() {
           <button1 onClick={showPrev}>⭠</button1>
           <div id = "des"> 
           <img id="lightbox-img" src={imageToShow}></img>
-          <p5 className = "p5"> NFT</p5></div>
+          <p5 className = "p5"> {imageToShowName}</p5></div>
           <button1 onClick={showNext}>⭢</button1>
         </div>
        : ""
