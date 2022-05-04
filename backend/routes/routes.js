@@ -170,6 +170,7 @@ router.get('/computeSimilarity', (req, res) => {
 });
 
 router.get('/clusterImages', (req, res) => {
+    console.log("Starting clusterImages");
     const spawn = require("child_process").spawn;
     const pythonProcess = spawn('python', ["./python/clusterImages.py"]);//, req.query.imageFiles]);
     pythonProcess.stdout.on('data', (data) => {
@@ -180,6 +181,7 @@ router.get('/clusterImages', (req, res) => {
 });
 
 router.get('/clusterImagesURL', (req, res) => {
+    console.log("Starting clusterImages");
     const spawn = require("child_process").spawn;
     const pythonProcess = spawn('python', ["./python/clusterImagesURL.py", req.query.imageFiles]);
     pythonProcess.stdout.on('data', (data) => {
