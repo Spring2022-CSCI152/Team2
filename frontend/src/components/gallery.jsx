@@ -5,7 +5,7 @@ import '../assets/gallery.css';
 import Navbar from './Navbar.jsx';
 
 
-    const { useState } = React;
+const { useState } = React;
 
   
 const images=[];
