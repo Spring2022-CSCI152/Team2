@@ -125,7 +125,8 @@ function ImageGallery() {
            <div></div>
           <div id = "des"> 
           <img id="lightbox-img" src={imageToShow}></img>
-          <p5 className = "p5"> {imageToShowName}</p5></div>
+          <p5 className = "p5"> {imageToShowName}</p5>
+          </div>
           <div></div>
         </div>
        : ""

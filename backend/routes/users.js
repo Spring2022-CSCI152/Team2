@@ -559,57 +559,18 @@ router.post("/updateAlerts", requireLogin, async (req, res) => {
     res.send("Alerts Updated");
 });
 
-// get user of other url
-                // // if user emails are the same, don't add alert
-                // User.findOne({collectionArray: {$elemMatch: {imgURL: otherURLs[k]}}}).then( otherUser =>{
-                //     // find user of current url
-                //     User.findOne({collectionArray: {$elemMatch: {imgURL: clusterURLs[j]}}}).then( currentUser =>{
-                //         if (currentUser && otherUser && otherUser.email != currentUser.email) {
-                //             currentUser.alerts.push({
-                //                 alertedEmail: currentUser.email,
-                //                 alertedURL: clusterURLs[j],
-                //                 thiefEmail: otherUser.email,
-                //                 thiefURL: otherURLs[k]
-                //             });
-                //             currentUser.save();
-                //         }
-                //     });
-                // });
+// delete image from db
+router.post("/deleteImage", requireLogin, async (req, res) => {
+    // get image url
+    const imgURL = req.body.imgURL;
+    console.log("Deleting image: " + imgURL);
 
-                // console.log("Adding alert to " + user1.email);
-                // user1.alerts.push({
-                //     alertedEmail: user1.email,
-                //     alertedURL: currentURL,
-                //     thiefEmail: user2.email,
-                //     thiefURL: otherURL
-
-
-
-
-
-
-
-
-
-
-                // let x = await User.findOne({collectionArray: {$elemMatch: {imgURL: currentURL}}}).then( user1 =>{
-                //     // get other user based off other url
-                //     let y = User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}).then( user2 =>{
-                //         if (user1.email != user2.email) {
-                //             // add alert to user1
-                //             console.log("Adding alert to " + user1.email);
-                //             console.log("Other user: " + user2.email);
-                //             console.log("Current URL: " + currentURL);
-                //             console.log("Other URL: " + otherURL);
-                //             user1.alerts.push({
-                //                 alertedEmail: user1.email,
-                //                 alertedURL: currentURL,
-                //                 thiefEmail: user2.email,
-                //                 thiefURL: otherURL
-                //             });
-                //             user1.save().then(user1 => {
-                //                 console.log("Alert added to " + user1.email);
-                //             });
-                //         }
-                //     })
-                // })
+    // delete image from db
+    User.updateMany({}, {$pull: {collectionArray: {imgURL: imgURL}}}, {multi: true}).then( result =>{
+        res.send(result);
+    }
+    ).catch((err) =>{
+        console.log(err);
+    }
+    )
+});

@@ -70,7 +70,14 @@ function ImageGallery() {
     <img className="image-card" key={"image" + index} src={image} alt="image" onClick={() => showImage(image)}  />
   ));
 
-  
+  // delete image from db
+  const deleteImage = (image) => {
+    const imageURL = image;
+    axios.post("http://localhost:5000/deleteImage", { imgURL: imageURL }).then(() => {
+      console.log("image deleted");
+      setUrls(urls.filter((url) => url !== image));
+    });
+  }
 
   //lightbox
   const showImage = (image) => {
@@ -119,6 +126,7 @@ function ImageGallery() {
           <div id = "des"> 
             <img id="lightbox-img" src={imageToShow}></img>
             <p5 className = "p5"> {imageToShowName}</p5>
+            <button className = "deleteImageButton" onClick={() => deleteImage(imageToShow)}>Delete Image</button>
           </div>
           <div></div>
         </div>
