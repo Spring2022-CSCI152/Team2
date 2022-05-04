@@ -33,11 +33,16 @@ async getData(){
    axios.post('/getAlerts' , {userId: userInfo}  )
     .then(res =>  this.setState( {items : res.data, DataisLoaded: true}))
     .catch(err => console.log(err));
-    console.log(this.state.items);
+   
+
+}
+
+  async  resolveAlert(alertId){
+    await axios.post('/resolveAlert', {alertId: alertId , userId: this.state.uId})
+    .then(this.getData())
+    .catch(err => console.log(err));
+
   }
-
-  
-
 
   componentDidMount(){
     
@@ -49,7 +54,15 @@ async getData(){
   render(){
     const{DataisLoaded,items} = this.state;
   
-    
+    const handleResolve = (x) => {
+      axios.post('/resolveAlert' , {alertId : x , userId: this.state.uId})
+      .then((res)=> {
+          
+         
+      });
+      this.getData();
+      console.log(x)
+  }
      {/* Different alerts can be used for different messages
           https://mui.com/components/alert/#api
           Use "Severity" to change type of alert
@@ -71,7 +84,7 @@ async getData(){
      return(
       <Alert  severity="warning"> 
       <AlertTitle>Re-upload(s) Detected!</AlertTitle>
-      You have {props.nAlerts} new alert(s)! Check it our <strong>below!</strong>
+      You have {props.nAlerts} new alert(s)! Check it out <strong>below!</strong>
       </Alert>);
     }
     function RenderLinks(propsL){
@@ -84,6 +97,7 @@ async getData(){
       }
      return e;
     }
+
     function AlertBox(props){
       const nAlerts = props.numAlert;
       if(nAlerts == 0){
@@ -94,6 +108,7 @@ async getData(){
     }
     function Alerts(props){
       return(items.map((item) => ( 
+  
         <>
         <article className = "singleAlert" key = { item._id } >
           
@@ -118,9 +133,9 @@ async getData(){
                 <div className = "cardButtons">
                 
                  
-                    <Button size="small">Rescan</Button>
+                    <Button size="small" >Rescan</Button>
                     <hr/>
-                    <Button size="small">Resolved</Button>
+                    <Button size="small" onClick = {() => handleResolve(item._id)}>Resolved</Button>
                 </div>
             </Card>
             <div className = "alertLinks">
