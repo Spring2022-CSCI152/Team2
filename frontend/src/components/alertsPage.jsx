@@ -33,16 +33,15 @@ async getData(){
    axios.post('/getAlerts' , {userId: userInfo}  )
     .then(res =>  this.setState( {items : res.data, DataisLoaded: true}))
     .catch(err => console.log(err));
-    console.log(this.state.items);
-  }
+   
 
-
+}
 
   async  resolveAlert(alertId){
     await axios.post('/resolveAlert', {alertId: alertId , userId: this.state.uId})
     .then(this.getData())
     .catch(err => console.log(err));
-    console.log(alertId);
+
   }
 
   componentDidMount(){
@@ -56,11 +55,12 @@ async getData(){
     const{DataisLoaded,items} = this.state;
   
     const handleResolve = (x) => {
-      axios.post('/resolveAlert')
+      axios.post('/resolveAlert' , {alertId : x , userId: this.state.uId})
       .then((res)=> {
-          this.getData();
+          
          
       });
+      this.getData();
       console.log(x)
   }
      {/* Different alerts can be used for different messages
@@ -84,7 +84,7 @@ async getData(){
      return(
       <Alert  severity="warning"> 
       <AlertTitle>Re-upload(s) Detected!</AlertTitle>
-      You have {props.nAlerts} new alert(s)! Check it our <strong>below!</strong>
+      You have {props.nAlerts} new alert(s)! Check it out <strong>below!</strong>
       </Alert>);
     }
     function RenderLinks(propsL){

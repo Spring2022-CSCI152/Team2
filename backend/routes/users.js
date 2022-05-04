@@ -237,7 +237,19 @@ router.post('/alertsPage', requireLogin, async (req, res) => {
     console.log("We're in");
 });
 router.post('/resolveAlert', requireLogin, async (req, res) => {
-    
+    const userId = req.body.userId;
+    const alertId = req.body.alertId;
+ 
+    const query = {
+        $pull : {
+            'alerts' : {_id : alertId}
+        }
+        
+
+    }
+    User.updateOne( {_id : userId},query ).catch(err => {
+        return res.status(404).json({err: "Alert not found."});
+    });
 });
 router.post('/getAlerts', requireLogin, async (req, res) => {
     //console.log("hi");
