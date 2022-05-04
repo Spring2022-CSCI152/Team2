@@ -7,6 +7,8 @@ import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Link } from "react-router-dom";
 import cuid from "cuid";
 import axios from 'axios';
+import { DndProvider } from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 
 function Account() {
     const [images, setImages] = useState([]);

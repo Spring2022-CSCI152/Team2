@@ -1,7 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState,useContext } from 'react';
+import AuthContext from '../context/authContext';
 import '../assets/registration.css';
 import axios from 'axios';
 import {Link, useNavigate} from 'react-router-dom'
+import GoogleLogin from 'react-google-login';
 
 
 
@@ -11,8 +13,21 @@ const Registration = () =>{
     const [password, setPassword] = useState("");
     const [confPassword, checkPassword] = useState("");
     const [email, setEmail] = useState("");
+    const { getLoggedIn } = useContext(AuthContext);
     
+    const responseGoogle = async (res) => {
+        console.log(res);
+        await axios.post('http://localhost:5000/googlelogin', {tokenId: res.tokenId})
+            .then(res => console.log("Google login success", res))
+            .catch(err => console.log(err));
+            console.log("logging in");
+            await getLoggedIn();
+            navigate("/");
+      }
 
+    const responseErrorGoogle = (res) => {
+        console.log(res);
+    }
     const handleSubmit = (event) =>{
         event.preventDefault();
         const data = {
@@ -45,13 +60,20 @@ const Registration = () =>{
                     </p>
 
                     <div className="placement">
-                        <button className='option1' type='button'>
-                            Login with Twitter
-                        </button>
-                        <button className='option1' type ='button'>
-                            Login with Gmail
+                        
+                        
+                        <GoogleLogin
+                    clientId="155459917287-hgt37hna82ei0h2hasqdljs003biladv.apps.googleusercontent.com"
+                    buttonText="Login"
+                    render={renderProps => (
+                        <input type = "button7" onClick={renderProps.onClick} value ="Login with Gmail"></input>
+                    )}
+                    onSuccess={responseGoogle}
+                    onFailure={responseErrorGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />
 
-                        </button>
+                        
                     </div>
                 </div>
                 <form method = "post" className='form1' onSubmit={handleSubmit}>
