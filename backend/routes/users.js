@@ -236,7 +236,9 @@ router.get('/alertsPage', requireLogin, async (req, res) => {
 router.post('/alertsPage', requireLogin, async (req, res) => {
     console.log("We're in");
 });
-
+router.post('/resolveAlert', requireLogin, async (req, res) => {
+    
+});
 router.post('/getAlerts', requireLogin, async (req, res) => {
     //console.log("hi");
      const userId = req.body.userId;
