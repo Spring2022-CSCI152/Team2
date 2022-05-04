@@ -75,6 +75,7 @@ background: linear-gradient(0deg, rgba(1,4,1,1) 0%, rgba(10,21,23,0.482697302553
 .featUsersLabel {
 float:left;
 width:80%;
+color:white;
 }
 h2.featUsersLabel {
     font-weight:400;
