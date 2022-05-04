@@ -117,8 +117,10 @@ function ImageGallery() {
         <div id="lightbox" onClick={hideLightBox}>
           <div></div>
           <div id = "des"> 
-          <img id="lightbox-img" src={imageToShow}></img>
-          <p5 className = "p5"> {imageToShowName}</p5></div>
+            <img id="lightbox-img" src={imageToShow}></img>
+            <p5 className = "p5"> {imageToShowName}</p5>
+          </div>
+          <div></div>
         </div>
        : ""
       }
