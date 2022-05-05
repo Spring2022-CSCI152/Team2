@@ -26,8 +26,8 @@ class AlertsPage extends React.Component{
     };
 }
 async getData(){
-  const setUser =  await axios.get('http://localhost:5000/setuser');
-  const userInfo = setUser.data;
+  const setUser =  await axios.get('http://localhost:5000/loggedIn');
+  const userInfo = setUser.data.uid;
   this.setState({uId: userInfo});
   
    axios.post('/getAlerts' , {userId: userInfo}  )
