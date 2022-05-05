@@ -18,6 +18,12 @@ def test_grab_image_with_invalid_path():
     with pytest.raises(SystemExit):
         grab_image(image)
 
+def test_grab_image_with_wrong_file_type():
+    image = 'test_images/wrong_type.txt'
+
+    with pytest.raises(SystemExit):
+        grab_image(image)
+
 def test_greyscale_image():
     image1 = 'test_images/patrick.jpg'
     img1 = grab_image(image1)

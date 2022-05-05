@@ -18,6 +18,12 @@ def grab_image(path):
     if not os.path.isfile(path):
         print("Error: image does not exist")
         sys.exit(1)
+
+    # check that the file is an image
+    if not path.endswith(".jpg") and not path.endswith(".png"):
+        print("Error: image is not a jpg or png")
+        sys.exit(1)
+        
     return cv2.imread(path)
 
 def convert_greyscale(image):
