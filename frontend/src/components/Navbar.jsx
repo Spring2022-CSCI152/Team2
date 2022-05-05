@@ -24,7 +24,7 @@ const Navbar = () => {
             <div className="leftSide">
                 <div className="logoContainer">
                     <Link to="/" className="homeButton">
-                        <img src="/logo192.png" alt="logo" className="logo"/>
+                        <img src="/NFTlogo3.png" alt="logo" className="logo"/>
                     </Link>
                 </div>
                 <div className="searchBar">
