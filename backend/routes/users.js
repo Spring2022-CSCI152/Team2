@@ -169,13 +169,13 @@ router.get("/logout", requireLogin, (req, res) =>{
 });
 
 // Logged in route to avoid javascript injection. Might use this who knows
-router.get('/loggedIn', (req,res) =>{
+router.get('/loggedIn', async (req,res) =>{
     const token = req.cookies.jwt;
     if(token){
         jwt.verify(token, process.env.secretKey, async (err, decodedToken) => {
             if (err){
                 console.log(err.message);
-                res.send(false);
+                res.json({loggedIn: false});
             } else {
                 console.log(decodedToken.id);
                 res.json({uid: decodedToken.id, loggedIn: true});
@@ -183,7 +183,7 @@ router.get('/loggedIn', (req,res) =>{
             }
         })
     } else {
-        res.send(false);
+        res.json({loggedIn: false});
     }
 });
 
