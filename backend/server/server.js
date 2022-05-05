@@ -8,8 +8,10 @@ const funcTest = require('../routes/routetest');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 
+
 const cors = require('cors');
 const checkUser = require('../middleware/checkUser');
+const { modelName } = require('../models/user');
 
 const port = process.env.PORT || 5000;
 
@@ -23,6 +25,8 @@ mongoose.connect(process.env.DB, {
     }).on('error', function(error){
         console.log('Error is: ', error);
     });
+
+
 
 // middlewares
 app.use(express.json());

@@ -26,10 +26,9 @@ function UserAccount() {
         // Get loggedin data
         // First find a logged in user
         const loggedInRes = await axios.get("http://localhost:5000/loggedIn");
-        const loggedIn = loggedInRes.data;
+        const loggedIn = loggedInRes.data.loggedIn;
         // Assign loggedin user's info. Should be undefined if not user found.
-        const setUser = await axios.get('http://localhost:5000/setuser');
-        const loggedUser = setUser.data;
+        const loggedUser = loggedInRes.data.uid;
 
         // If logged in and the user id is the same as the param id. Send to own account page.
         if(loggedIn === true && userid === loggedUser){
