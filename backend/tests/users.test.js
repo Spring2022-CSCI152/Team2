@@ -20,6 +20,15 @@ describe('Users', () => {
         jest.clearAllMocks();
     })
 
+    // Clear Alerts
+    it('should clear alerts', async () => {
+        const mock = jest.spyOn(User, 'updateMany');
+        mock.mockImplementation(() => { return { cleared: true }; });
+        const res = await request(app).post('/clearAlerts');
+        expect(res.statusCode).toBe(200);
+        expect(res.body.cleared).toBe(true);
+    });
+
     // test 'test' route
     it('Should return a test message', async () => {
         const mock = jest.spyOn(User, 'findOne');

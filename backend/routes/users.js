@@ -241,9 +241,7 @@ router.post('/getAlerts', auth.requireLogin, async (req, res) => {
 
 // clear alerts arrays for all users
 router.post("/clearAlerts", auth.requireLogin, async (req, res) => {
-    User.updateMany({}, {$set: {alerts: []}}).then( result =>{
-        res.send(result);
-    });
+    res.send(await User.updateMany({}, {$set: {alerts: []}}));
 });
 
 // update alerts
