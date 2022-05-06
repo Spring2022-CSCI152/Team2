@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const requireLogin = require('../middleware/requireLogin');
+const auth = require('../middleware/requireLogin');
 const multer = require('multer');
 const path = require('path');
 const s3 = require('../middleware/s3')
@@ -157,7 +157,7 @@ router.post('/googlelogin', async (req, res) => {
 });
 
 // Logout endpoint
-router.get("/logout", requireLogin, (req, res) =>{
+router.get("/logout", auth.requireLogin, (req, res) =>{
     res.cookie('jwt', "", {
         httpOnly: true,
         expires: new Date(0),
@@ -206,7 +206,7 @@ router.get('/account/:id', async (req, res) => {
 
 
 // Alerts
-router.post('/resolveAlert', requireLogin, async (req, res) => {
+router.post('/resolveAlert', auth.requireLogin, async (req, res) => {
     const userId = req.body.userId;
     const alertId = req.body.alertId;
  
@@ -222,7 +222,7 @@ router.post('/resolveAlert', requireLogin, async (req, res) => {
     });
 });
 
-router.post('/getAlerts', requireLogin, async (req, res) => {
+router.post('/getAlerts', auth.requireLogin, async (req, res) => {
     //console.log("hi");
      const userId = req.body.userId;
     // console.log(userId);
@@ -240,14 +240,14 @@ router.post('/getAlerts', requireLogin, async (req, res) => {
 });
 
 // clear alerts arrays for all users
-router.post("/clearAlerts", requireLogin, async (req, res) => {
+router.post("/clearAlerts", auth.requireLogin, async (req, res) => {
     User.updateMany({}, {$set: {alerts: []}}).then( result =>{
         res.send(result);
     });
 });
 
 // update alerts
-router.post("/updateAlerts", requireLogin, async (req, res) => {
+router.post("/updateAlerts", auth.requireLogin, async (req, res) => {
     clusters = JSON.parse(req.body.imageClusters);
     // for each cluster, for each image url in that cluster, add alert to user with that url
     for (let i = 0; i < clusters.length; i++) { // clusters.length
@@ -349,7 +349,7 @@ const upload = multer({
 } });
 
 
-router.post("/collections", requireLogin, upload.single("myImage"), async (req, res) => {
+router.post("/collections", auth.requireLogin, upload.single("myImage"), async (req, res) => {
     const file = req.file
 
     //AWS image upload here commented out to prevent duplicate sends
@@ -385,7 +385,7 @@ router.post("/collections", requireLogin, upload.single("myImage"), async (req, 
 
 */
 
-router.post("/retrievImageJSON", requireLogin, async (req, res) => { 
+router.post("/retrievImageJSON", auth.requireLogin, async (req, res) => { 
     User.findOne({_id: req.user}).select("collectionArray").then( result =>{
         res.send(result)
         
@@ -397,7 +397,7 @@ router.post("/retrievImageJSON", requireLogin, async (req, res) => {
     
 });
 
-router.post("/AWSRetrieval",requireLogin, async(req, res) =>{
+router.post("/AWSRetrieval", auth.requireLogin, async(req, res) =>{
         const key = req.params.key
         const readStream = s3.getFileStream(key)
         readStream.pipe(res)
@@ -410,7 +410,7 @@ router.post("/AWSRetrieval",requireLogin, async(req, res) =>{
 module.exports = router;
 
 // Gallery image url retrieval
-router.get("/gallery", requireLogin, async (req, res) => {
+router.get("/gallery", auth.requireLogin, async (req, res) => {
     User.findOne({_id: req.user}).select("collectionArray").then( result =>{
         // send list of the image urls
         res.send(result.collectionArray.map(x => x.imgURL));
@@ -435,7 +435,7 @@ router.get("/gallery/:id", async (req, res) => {
 });
 
 // Gallery Image Name retrieval
-router.get("/galleryNames", requireLogin, async (req, res) => {
+router.get("/galleryNames", auth.requireLogin, async (req, res) => {
     User.findOne({_id: req.user}).select("collectionArray").then( result =>{
         // send list of the image urls
         res.send(result.collectionArray.map(x => x.imgName));
@@ -462,16 +462,16 @@ router.get("/galleryNames/:id", async (req, res) => {
 });
 
 // user data
-router.get("/profileData", async (req, res) => {
+router.get("/profileData", auth.requireLogin, async (req, res) => {
     let id = req.user;
-    let result = await User.findOne({_id: id}).select("-password").then( result =>{
+    await User.findOne({_id: id}).select("-password").then( result =>{
         //console.log(result);
         res.send(result);
     }
     ).catch((err) =>{
         console.log(err);
     })
-    res.send(result);
+    //res.send(result);
 });
 
 // user data
@@ -480,8 +480,15 @@ router.get("/test", async (req, res) => {
     res.send(result);
 });
 
+// test with Login Requirement
+router.get("/testLR", auth.requireLogin, async (req, res) => {
+    console.log("Passed Login Requirement");
+    let result = await User.findOne({ name: "cheeseman" }).select("-password");
+    res.send(result);
+});
+
 // update user data in db
-router.post("/updateProfileData", requireLogin, async (req, res) => {
+router.post("/updateProfileData", auth.requireLogin, async (req, res) => {
     User.findOne({_id: req.user}).then( result =>{
         if (req.body.profileImg !== ''){ result.profileimg = req.body.profileImg; }
         if (req.body.name !== ''){ result.name = req.body.name; }
@@ -512,7 +519,7 @@ router.post("/uploadSingle", upload.single("myImage"), async (req, res) => {
 });
 
 // upload profile image
-router.post("/uploadProfileImg", requireLogin, upload.single("myImage"), async (req, res) => {
+router.post("/uploadProfileImg", auth.requireLogin, upload.single("myImage"), async (req, res) => {
     const file = req.file
 
     //AWS image upload here commented out to prevent duplicate sends
@@ -529,7 +536,7 @@ router.post("/uploadProfileImg", requireLogin, upload.single("myImage"), async (
 });
 
 // get all image urls from db (from every user)
-router.get("/getAllImageURLs", requireLogin, async (req, res) => {
+router.get("/getAllImageURLs", auth.requireLogin, async (req, res) => {
     // find users with collectionArray field and get all image urls
     User.find({}, 'collectionArray').then( result =>{
         // send list of the image urls that aren't empty
@@ -544,7 +551,7 @@ router.get("/getAllImageURLs", requireLogin, async (req, res) => {
 });
 
 // delete image from db
-router.post("/deleteImage", requireLogin, async (req, res) => {
+router.post("/deleteImage", auth.requireLogin, async (req, res) => {
     // get image url
     const imgURL = req.body.imgURL;
     console.log("Deleting image: " + imgURL);
