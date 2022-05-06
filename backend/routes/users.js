@@ -464,14 +464,13 @@ router.get("/galleryNames/:id", async (req, res) => {
 // user data
 router.get("/profileData", auth.requireLogin, async (req, res) => {
     let id = req.user;
-    await User.findOne({_id: id}).select("-password").then( result =>{
+    let result = await User.findOne({_id: id}).select("-password").then( result =>{
         //console.log(result);
         res.send(result);
     }
     ).catch((err) =>{
         console.log(err);
     })
-    //res.send(result);
 });
 
 // user data
