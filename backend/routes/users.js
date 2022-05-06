@@ -19,7 +19,6 @@ const validateLoginInput = require('../validation/login');
 
 // Load User model
 const User = require('../models/user');
-const checkUser = require('../middleware/checkUser');
 
 // Google client
 const googleClient = new OAuth2Client(process.env.clientId);

@@ -46,7 +46,7 @@ describe('logout', () => {
 
         // Call the get request on logout
         // Replicate application storage by setting the Cookie with token as "jwt=token", set Content-Type and application/json, send()
-        const res = await request(app).get('/logout').set('Cookie', `jwt=${jwt};`)
+        const res = await request(app).get('/logout').set('Cookies', `jwt=${jwt};`)
                     .set('Content-Type','application/json').send();
                     
         expect(res.statusCode).toBe(401);
