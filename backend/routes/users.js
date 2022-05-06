@@ -19,7 +19,6 @@ const validateLoginInput = require('../validation/login');
 
 // Load User model
 const User = require('../models/user');
-const checkUser = require('../middleware/checkUser');
 
 // Google client
 const googleClient = new OAuth2Client(process.env.clientId);
@@ -463,14 +462,22 @@ router.get("/galleryNames/:id", async (req, res) => {
 });
 
 // user data
-router.get("/profileData", requireLogin, async (req, res) => {
-    User.findOne({_id: req.user}).select("-password").then( result =>{
+router.get("/profileData", async (req, res) => {
+    let id = req.user;
+    let result = await User.findOne({_id: id}).select("-password").then( result =>{
         //console.log(result);
         res.send(result);
     }
     ).catch((err) =>{
         console.log(err);
     })
+    res.send(result);
+});
+
+// user data
+router.get("/test", async (req, res) => {
+    let result = await User.findOne({ name: "cheeseman" }).select("-password");
+    res.send(result);
 });
 
 // update user data in db
@@ -489,15 +496,19 @@ router.post("/updateProfileData", requireLogin, async (req, res) => {
 });
 
 // upload single image to aws and send back url
-router.post("/uploadSingle", requireLogin, upload.single("myImage"), async (req, res) => {
+router.post("/uploadSingle", upload.single("myImage"), async (req, res) => {
     const file = req.file
+    if (!file) {
+        res.status(400).send({ error: "Please upload a file" });
+    }
+    else {
+        //AWS image upload here commented out to prevent duplicate sends
+        const result = await s3.uploadFile(file).then(result => res.status(200).json(result.Location));
 
-    //AWS image upload here commented out to prevent duplicate sends
-    const result = await s3.uploadFile(file)
+        //res.status(200).json(result.Location);
 
-    res.json(result.Location);
-
-    await fs.unlinkSync(file.path)
+        await fs.unlinkSync(file.path)
+    }
 });
 
 // upload profile image
