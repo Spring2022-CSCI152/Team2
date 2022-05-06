@@ -28,10 +28,6 @@ const googleClient = new OAuth2Client(process.env.clientId);
 const maxAge = 3 * 24 * 60 * 60;
 
 // Register Route
-router.get('/register', (req, res) => {
-    res.render('register');
-});
-
 router.post('/register', (req, res) => {
     // Form Validation
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -67,10 +63,6 @@ router.post('/register', (req, res) => {
 });
 
 // Login Route
-router.get('/login', (req, res) => {
-    res.render('login');
-});
-
 router.post('/login', (req, res) => {
     // Form Validation
     const { errors, isValid } = validateLoginInput(req.body);
@@ -177,35 +169,21 @@ router.get("/logout", requireLogin, (req, res) =>{
 });
 
 // Logged in route to avoid javascript injection. Might use this who knows
-router.get('/loggedIn', (req,res) =>{
-    try{
-        const token = req.cookies.jwt;
-
-        if(!token) return res.json(false);
-
-        jwt.verify(token, process.env.secretKey);
-
-        res.send(true);
-    } catch (err){
-        res.res.json(false);
-    }
-});
-
-// set user for account comparison
-router.get('/setuser', (req, res) => {
+router.get('/loggedIn', async (req,res) =>{
     const token = req.cookies.jwt;
     if(token){
         jwt.verify(token, process.env.secretKey, async (err, decodedToken) => {
             if (err){
                 console.log(err.message);
-                res.send(false);
+                res.json({loggedIn: false});
             } else {
                 console.log(decodedToken.id);
-                res.json(decodedToken.id);
+                res.json({uid: decodedToken.id, loggedIn: true});
+                //res.json(decodedToken.id);
             }
         })
     } else {
-        res.send(false);
+        res.json({loggedIn: false});
     }
 });
 
@@ -228,14 +206,7 @@ router.get('/account/:id', async (req, res) => {
 });
 
 
-// Alerts route for the python script
-router.get('/alertsPage', requireLogin, async (req, res) => {
-    console.log("We're in");
-});
-
-router.post('/alertsPage', requireLogin, async (req, res) => {
-    console.log("We're in");
-});
+// Alerts
 router.post('/resolveAlert', requireLogin, async (req, res) => {
     const userId = req.body.userId;
     const alertId = req.body.alertId;
@@ -251,6 +222,7 @@ router.post('/resolveAlert', requireLogin, async (req, res) => {
         return res.status(404).json({err: "Alert not found."});
     });
 });
+
 router.post('/getAlerts', requireLogin, async (req, res) => {
     //console.log("hi");
      const userId = req.body.userId;
@@ -267,6 +239,78 @@ router.post('/getAlerts', requireLogin, async (req, res) => {
  
 
 });
+
+// clear alerts arrays for all users
+router.post("/clearAlerts", requireLogin, async (req, res) => {
+    User.updateMany({}, {$set: {alerts: []}}).then( result =>{
+        res.send(result);
+    });
+});
+
+// update alerts
+router.post("/updateAlerts", requireLogin, async (req, res) => {
+    clusters = JSON.parse(req.body.imageClusters);
+    // for each cluster, for each image url in that cluster, add alert to user with that url
+    for (let i = 0; i < clusters.length; i++) { // clusters.length
+        clusterId = clusters[i][0];
+        clusterURLs = clusters[i][1];
+        // for each url in cluster, add alert to user for every other url in that cluster
+        for (let j = 0; j < clusterURLs.length; j++) { // clusterURLs.length
+            // current url
+            currentURL = clusterURLs[j];
+            otherURLS = clusterURLs.filter(x => x !== currentURL);
+            // console.log(otherURLS);
+            // for each other url, add alert to user
+            for (let k = 0; k < otherURLS.length; k++) {
+                otherURL = otherURLS[k];
+                // console.log("Verify: " + otherURL);
+                // get current user based off current url
+                const asyncQuery = async (url) => {
+                    // console.log("Async Query: " + url);
+                    return await User.findOne({collectionArray: {$elemMatch: {imgURL: url}}}, 'email').then(result => {
+                        // console.log("Async Query Result: " + result.email);
+                        return result.email;
+                    });
+                }
+                const currentUser = await asyncQuery(currentURL);
+                // console.log("Current user: " + currentUser);
+                // get other user based off other url
+                const asyncQuery2 = async () => {
+                    return await User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}, 'email').then(result => {
+                        // console.log("Async Query Result222: " + result.email);
+                        return result.email;
+                    });
+                }
+                const otherUser = await asyncQuery2();
+                // console.log("Other user: " + otherUser);
+                // add alert to current user
+                const asyncQuery3 = async () => {
+                    return await User.findOne({email: currentUser}).then(result => {
+                            if (currentUser != otherUser) {
+                                // add alert to user1
+                                // console.log("Adding alert to " + currentUser);
+                                // console.log("Other user: " + otherUser);
+                                // console.log("Current URL: " + currentURL);
+                                // console.log("Other URL: " + otherURL);
+                                result.alerts.push({
+                                    alertedEmail: currentUser,
+                                    alertedURL: currentURL,
+                                    thiefEmail: otherUser,
+                                    thiefURL: otherURL
+                                });
+                                result.save().then(currentUser => {
+                                    console.log("Alert added to " + currentUser.email);
+                                });
+                            }
+                        });
+                }
+                await asyncQuery3();
+            }
+        }
+    }
+    res.send("Alerts Updated");
+});
+
 /*
 ***********************************************************************************************************************************
 ***********************************************************************************************************************************
@@ -378,7 +422,7 @@ router.get("/gallery", requireLogin, async (req, res) => {
 });
 
 // Gallery (other user) image url retrieval
-router.get("/gallery/:id", requireLogin, async (req, res) => {
+router.get("/gallery/:id", async (req, res) => {
     console.log(req.params.id);
     // convert id to object id
     const id = mongoose.Types.ObjectId(req.params.id);
@@ -389,6 +433,33 @@ router.get("/gallery/:id", requireLogin, async (req, res) => {
     ).catch((err) =>{
         console.log(err);
     })
+});
+
+// Gallery Image Name retrieval
+router.get("/galleryNames", requireLogin, async (req, res) => {
+    User.findOne({_id: req.user}).select("collectionArray").then( result =>{
+        // send list of the image urls
+        res.send(result.collectionArray.map(x => x.imgName));
+    }
+    ).catch((err) =>{
+        console.log(err);
+    }
+    )
+});
+
+// Gallery Image Name retrieval (other user)
+router.get("/galleryNames/:id", async (req, res) => {
+    console.log(req.params.id);
+    // convert id to object id
+    const id = mongoose.Types.ObjectId(req.params.id);
+    User.findOne({_id: id}).select("collectionArray").then( result =>{
+        // send list of the image names
+        res.send(result.collectionArray.map(x => x.imgName));
+    }
+    ).catch((err) =>{
+        console.log(err);
+    }
+    )
 });
 
 // user data
@@ -461,128 +532,18 @@ router.get("/getAllImageURLs", requireLogin, async (req, res) => {
     })
 });
 
-// clear alerts arrays for all users
-router.post("/clearAlerts", requireLogin, async (req, res) => {
-    User.updateMany({}, {$set: {alerts: []}}).then( result =>{
+// delete image from db
+router.post("/deleteImage", requireLogin, async (req, res) => {
+    // get image url
+    const imgURL = req.body.imgURL;
+    console.log("Deleting image: " + imgURL);
+
+    // delete image from db
+    User.updateMany({}, {$pull: {collectionArray: {imgURL: imgURL}}}, {multi: true}).then( result =>{
         res.send(result);
-    });
-});
-
-// update alerts
-router.post("/updateAlerts", requireLogin, async (req, res) => {
-    clusters = JSON.parse(req.body.imageClusters);
-    // for each cluster, for each image url in that cluster, add alert to user with that url
-    for (let i = 0; i < clusters.length; i++) { // clusters.length
-        clusterId = clusters[i][0];
-        clusterURLs = clusters[i][1];
-        // for each url in cluster, add alert to user for every other url in that cluster
-        for (let j = 0; j < clusterURLs.length; j++) { // clusterURLs.length
-            // current url
-            currentURL = clusterURLs[j];
-            otherURLS = clusterURLs.filter(x => x !== currentURL);
-            // console.log(otherURLS);
-            // for each other url, add alert to user
-            for (let k = 0; k < otherURLS.length; k++) {
-                otherURL = otherURLS[k];
-                // console.log("Verify: " + otherURL);
-                // get current user based off current url
-                const asyncQuery = async (url) => {
-                    // console.log("Async Query: " + url);
-                    return await User.findOne({collectionArray: {$elemMatch: {imgURL: url}}}, 'email').then(result => {
-                        // console.log("Async Query Result: " + result.email);
-                        return result.email;
-                    });
-                }
-                const currentUser = await asyncQuery(currentURL);
-                // console.log("Current user: " + currentUser);
-                // get other user based off other url
-                const asyncQuery2 = async () => {
-                    return await User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}, 'email').then(result => {
-                        // console.log("Async Query Result222: " + result.email);
-                        return result.email;
-                    });
-                }
-                const otherUser = await asyncQuery2();
-                // console.log("Other user: " + otherUser);
-                // add alert to current user
-                const asyncQuery3 = async () => {
-                    return await User.findOne({email: currentUser}).then(result => {
-                            if (currentUser != otherUser) {
-                                // add alert to user1
-                                // console.log("Adding alert to " + currentUser);
-                                // console.log("Other user: " + otherUser);
-                                // console.log("Current URL: " + currentURL);
-                                // console.log("Other URL: " + otherURL);
-                                result.alerts.push({
-                                    alertedEmail: currentUser,
-                                    alertedURL: currentURL,
-                                    thiefEmail: otherUser,
-                                    thiefURL: otherURL
-                                });
-                                result.save().then(currentUser => {
-                                    console.log("Alert added to " + currentUser.email);
-                                });
-                            }
-                        });
-                }
-                await asyncQuery3();
-            }
-        }
     }
-    res.send("Alerts Updated");
+    ).catch((err) =>{
+        console.log(err);
+    }
+    )
 });
-
-// get user of other url
-                // // if user emails are the same, don't add alert
-                // User.findOne({collectionArray: {$elemMatch: {imgURL: otherURLs[k]}}}).then( otherUser =>{
-                //     // find user of current url
-                //     User.findOne({collectionArray: {$elemMatch: {imgURL: clusterURLs[j]}}}).then( currentUser =>{
-                //         if (currentUser && otherUser && otherUser.email != currentUser.email) {
-                //             currentUser.alerts.push({
-                //                 alertedEmail: currentUser.email,
-                //                 alertedURL: clusterURLs[j],
-                //                 thiefEmail: otherUser.email,
-                //                 thiefURL: otherURLs[k]
-                //             });
-                //             currentUser.save();
-                //         }
-                //     });
-                // });
-
-                // console.log("Adding alert to " + user1.email);
-                // user1.alerts.push({
-                //     alertedEmail: user1.email,
-                //     alertedURL: currentURL,
-                //     thiefEmail: user2.email,
-                //     thiefURL: otherURL
-
-
-
-
-
-
-
-
-
-
-                // let x = await User.findOne({collectionArray: {$elemMatch: {imgURL: currentURL}}}).then( user1 =>{
-                //     // get other user based off other url
-                //     let y = User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}).then( user2 =>{
-                //         if (user1.email != user2.email) {
-                //             // add alert to user1
-                //             console.log("Adding alert to " + user1.email);
-                //             console.log("Other user: " + user2.email);
-                //             console.log("Current URL: " + currentURL);
-                //             console.log("Other URL: " + otherURL);
-                //             user1.alerts.push({
-                //                 alertedEmail: user1.email,
-                //                 alertedURL: currentURL,
-                //                 thiefEmail: user2.email,
-                //                 thiefURL: otherURL
-                //             });
-                //             user1.save().then(user1 => {
-                //                 console.log("Alert added to " + user1.email);
-                //             });
-                //         }
-                //     })
-                // })

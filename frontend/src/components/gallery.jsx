@@ -46,14 +46,22 @@ useEffect(() => {
 
 function ImageGallery() {
   const [imageToShow, setImageToShow] = useState("");
+  const [imageToShowName, setImageToShowName] = useState("");
   const [lightboxDisplay, setLightBoxDisplay] = useState(false);
   const [urls, setUrls] = useState([]);
+  const [imageNames, setImageNames] = useState([]);
 
   useEffect(() => {
     // axios request to get images
     axios.get("http://localhost:5000/gallery").then((res) => {
       //console.log(res.data);
       setUrls(res.data);
+    });
+
+    // axios request to get image names
+    axios.get("http://localhost:5000/galleryNames").then((res) => {
+      //console.log(res.data);
+      setImageNames(res.data);
     });
   }, []);
 
@@ -62,11 +70,19 @@ function ImageGallery() {
     <img className="image-card" key={"image" + index} src={image} alt="image" onClick={() => showImage(image)}  />
   ));
 
-  
+  // delete image from db
+  const deleteImage = (image) => {
+    const imageURL = image;
+    axios.post("http://localhost:5000/deleteImage", { imgURL: imageURL }).then(() => {
+      console.log("image deleted");
+      setUrls(urls.filter((url) => url !== image));
+    });
+  }
 
   //lightbox
   const showImage = (image) => {
     setImageToShow(image);
+    setImageToShowName(imageNames[urls.indexOf(image)]);
     setLightBoxDisplay(true);
   };
 
@@ -108,8 +124,10 @@ function ImageGallery() {
         <div id="lightbox" onClick={hideLightBox}>
           <div></div>
           <div id = "des"> 
-          <img id="lightbox-img" src={imageToShow}></img>
-          <p5 className = "p5"> NFT</p5></div>
+            <img id="lightbox-img" src={imageToShow}></img>
+            <p5 className = "p5"> {imageToShowName}</p5>
+            <button className = "deleteImageButton" onClick={() => deleteImage(imageToShow)}>Delete Image</button>
+          </div>
           <div></div>
         </div>
        : ""

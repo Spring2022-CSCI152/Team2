@@ -1,7 +1,7 @@
 .App-body-about{
     margin: 0;
     padding: 0;
-    background: linear-gradient(120deg, black, rgb(41, 156, 194));
+    background: #282c34;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -10,9 +10,9 @@
 
 .header{
     width: 50%;
-    color: white;
+    color:rgb(85, 172, 201);
     font-size: larger;
-    font-family:'Courier New', Courier, monospace;
+    font-family:Courier, monospace;
     padding-bottom:50px;
 }
   
@@ -27,6 +27,7 @@
     padding: 10px;
     background: lightgrey;
     border-radius: 10px;
+    border: 3px solid black;
     padding-bottom: 10px;
 
 }

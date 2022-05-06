@@ -53,8 +53,10 @@ useEffect(() => {
 
 function ImageGallery() {
   const [imageToShow, setImageToShow] = useState("");
+  const [imageToShowName, setImageToShowName] = useState("");
   const [lightboxDisplay, setLightBoxDisplay] = useState(false);
   const [urls, setUrls] = useState([]);
+  const [imageNames, setImageNames] = useState([]);
   // get userid from link
   const { userid } = useParams();
 
@@ -63,6 +65,12 @@ function ImageGallery() {
     axios.get(`http://localhost:5000/gallery/${userid}`).then((res) => {
       //console.log(res.data);
       setUrls(res.data);
+    });
+
+    // axios request to get image names
+    axios.get(`http://localhost:5000/galleryNames/${userid}`).then((res) => {
+      //console.log(res.data);
+      setImageNames(res.data);
     });
   }, []);
   
@@ -74,6 +82,7 @@ function ImageGallery() {
   //lightbox
   const showImage = (image) => {
     setImageToShow(image);
+    setImageToShowName(imageNames[urls.indexOf(image)]);
     setLightBoxDisplay(true);
   };
 
@@ -116,7 +125,8 @@ function ImageGallery() {
            <div></div>
           <div id = "des"> 
           <img id="lightbox-img" src={imageToShow}></img>
-          <p5 className = "p5"> NFT</p5></div>
+          <p5 className = "p5"> {imageToShowName}</p5>
+          </div>
           <div></div>
         </div>
        : ""
