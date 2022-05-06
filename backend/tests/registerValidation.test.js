@@ -44,6 +44,13 @@ describe('Registration validation', () => {
         expect(res.body.email).toBe('Email field is required');
     });
 
+    // Invalid email
+    it('Should return an error if the email is invalid', async () => {
+        data.email = 'TestEmail';
+        const res = await request(app).post('/register').send(data);
+        expect(res.status).toBe(400);
+        expect(res.body.email).toBe('Email is invalid');
+    });
 
     // Password Tests (Equivalence Partitioning & Boundary Value Analysis)
     // Empty Password field
@@ -66,7 +73,6 @@ describe('Registration validation', () => {
     // Password length of 1
     it('Should return an error if the password is 1 character', async () => {
         data.password = '1';
-        console.log(data);
         const res = await request(app).post('/register').send(data);
         expect(res.status).toBe(400);
         expect(res.body.password).toBe('Password must be at least 6 characters');
@@ -86,6 +92,14 @@ describe('Registration validation', () => {
         data.password2 = '1234567';
         const res = await validateRegisterInput(data);
         expect(res.isValid).toBe(true);
+    });
+
+    // Empty Password2 field
+    it('Should return an error if the password2 is empty', async () => {
+        data.password2 = '';
+        const res = await request(app).post('/register').send(data);
+        expect(res.status).toBe(400);
+        expect(res.body.password2).toBe('Passwords must match');
     });
 
     // Password1 and Password2 do not match

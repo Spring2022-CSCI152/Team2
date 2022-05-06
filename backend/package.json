@@ -53,6 +53,7 @@
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
-    ]
+    ],
+    "collectCoverage": true
   }
 }
