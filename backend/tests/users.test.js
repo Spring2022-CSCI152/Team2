@@ -27,6 +27,7 @@ describe('Users', () => {
     // test 'profileData' route
     it('Should return a user profile', async () => {
         const mock = jest.spyOn(User, 'findOne');
+        
         mock.mockImplementation(() => { 
             return { select: () => { 
                 return { then: () => {

@@ -54,13 +54,10 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
-<<<<<<< HEAD
     "moduleNameMapper": {
       "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
       "\\.(css|less)$": "<rootDir>/mocks/fileMock.js"
-    }
-=======
+    },
     "collectCoverage": true
->>>>>>> 81a80b9383a58867111eb7c59b22630b831d3fa3
   }
 }

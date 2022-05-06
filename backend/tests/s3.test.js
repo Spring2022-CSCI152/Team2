@@ -1,10 +1,15 @@
 require('dotenv').config
 const express = require('express')
 const request = require('supertest');
-const s3 = require('../middleware/s3')
-const fs = require('fs')
-const S3 = require('aws-sdk/clients/s3')
+const s3 = require('../middleware/s3');
+const fs = require('fs');
+const S3 = require('aws-sdk/clients/s3');
 
+const path = require('path');
+
+
+var imgfile = fs.readFileSync('./tests/testImages/crystal.png');
+console.log(imgfile)
 // Testing the s3 middleware
 describe('s3', () => {
     let app
@@ -14,7 +19,11 @@ describe('s3', () => {
         app.use(require('../routes/users'));
     })
     beforeEach (() => {
+        
+
         jest.clearAllMocks()
+        
+          
     })
 
     // Testing uploadSingle route
@@ -24,6 +33,11 @@ describe('s3', () => {
         const res = await request(app).post('/uploadSingle');
         expect(res.status).toBe(400);
         expect(res.body.error).toBe('Please upload a file');
+    })
+
+    it('should return a 400 for bad file', async () => {
+        const res = await request(app).post('/uploadSingle').send(imgfile)
+        expect(res.status).toBe(400)
     })
 
 })

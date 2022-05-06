@@ -49,6 +49,9 @@ describe("POST /collections", () => {
         expect(true).toBe(true)
       })
     })
+
+    //test isn't working
+    
     /*
     test('undefined data should respond with 401 code', async()=> //passes but it needs the jwt signature
     {
