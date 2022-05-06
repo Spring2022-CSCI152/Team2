@@ -43,11 +43,7 @@ describe('Users', () => {
         const mock = jest.spyOn(User, 'findOne');
         mock.mockImplementation(() => { 
             return { select: () => { 
-                return { then: () => {
-                    return { catch: () => {
-                        return { name: 'test', email:'test@gmail.com' }
-                    } }
-                } }
+                return { name: 'test', email: 'test@gmail.com' }
             } }
         });
         const res = await request(app).get('/profileData');

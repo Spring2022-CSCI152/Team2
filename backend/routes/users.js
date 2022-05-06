@@ -463,14 +463,8 @@ router.get("/galleryNames/:id", async (req, res) => {
 
 // user data
 router.get("/profileData", auth.requireLogin, async (req, res) => {
-    let id = req.user;
-    let result = await User.findOne({_id: id}).select("-password").then( result =>{
-        //console.log(result);
-        res.send(result);
-    }
-    ).catch((err) =>{
-        console.log(err);
-    })
+    let x = await User.findOne({_id: req.user}).select("-password");
+    res.send(x);
 });
 
 // user data
@@ -481,7 +475,6 @@ router.get("/test", async (req, res) => {
 
 // test with Login Requirement
 router.get("/testLR", auth.requireLogin, async (req, res) => {
-    console.log("Passed Login Requirement");
     let result = await User.findOne({ name: "cheeseman" }).select("-password");
     res.send(result);
 });
