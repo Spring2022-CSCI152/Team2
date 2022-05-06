@@ -350,7 +350,7 @@ const upload = multer({
 } });
 
 
-router.post("/collections", requireLogin, upload.single("myImage"), async (req, res) => {
+router.post("/collections",  upload.single("myImage"), async (req, res) => {
     const file = req.file
 
     //AWS image upload here commented out to prevent duplicate sends

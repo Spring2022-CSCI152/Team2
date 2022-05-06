@@ -37,6 +37,10 @@ app.use(cors({
 //app.use(passport.initialize());
 app.use(cookieParser());
 
+app.get('/test', async (req, res) => {
+  res.json({message: 'pass!'})
+})
+
 // passport config
 require('../config/passport')(passport);
 
