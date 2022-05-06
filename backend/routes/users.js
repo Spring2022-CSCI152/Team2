@@ -188,20 +188,8 @@ router.get('/loggedIn', async (req,res) =>{
 
 // Return user profile for browsing other profiles
 router.get('/account/:id', async (req, res) => {
-    // Find the user based on the params attached to the link
-    User.findOne({_id:req.params.id})
-    //User.findOne({name: req.params.id})
-    // Do not include password for the user
-    .select("-password")
-    // send back a response with the found user data
-    .then(user => {
-        //console.log(user);
-        res.json({user});
-    })
-    // Otherwise catch an error that the user has not been found in the database
-    .catch(err => {
-        return res.status(404).json({err: "User not found."});
-    })
+    let result = await User.findOne({_id:req.params.id}).select("-password");
+    res.json({user: result});
 });
 
 
