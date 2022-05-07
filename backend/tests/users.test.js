@@ -175,13 +175,12 @@ describe('Users', () => {
         const mock = jest.spyOn(User, 'findOne');
         mock.mockImplementation(() => { 
             return { select: () => { 
-                return { profileImg: 'test', name: 'test', bio: 'test', instagram: 'test', twitter: 'test' }
+                return { profileImg: 'test', name: 'test', bio: 'test', socials: { instagram: 'test', twitter: 'test' } }
             } }
         });
-        const res = await request(app).post('/updateProfileData').send({name: 'test1'});
+        const res = await request(app).post('/updateProfileData').send({ profileImg: 'test', name: 'test', bio: 'test', socials: { instagram: 'test', twitter: 'test' } });
         expect(res.status).toBe(200);
         expect(res.body.name).toBe('test1');
     });
-
 
 })
