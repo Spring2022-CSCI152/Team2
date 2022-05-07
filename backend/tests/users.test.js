@@ -170,17 +170,29 @@ describe('Users', () => {
         expect(res.body.email).toBe('test@gmail.com');
     });
 
+    // test 'updateProfileData' route failure
+    it('Should fail on updating user profile', async () => {
+        const mock = jest.spyOn(User, 'findOne');
+        mock.mockImplementation(() => { return false });
+        const res = await request(app).post('/updateProfileData');
+        expect(res.status).toBe(400);
+        expect(res.body.email).toBe("User does not exists");
+    });
+
     // test 'updateProfileData' route
     it('Should update a user profile', async () => {
         const mock = jest.spyOn(User, 'findOne');
+        const user = UserModel({id: '1', profileImg: 'test', name: 'test', email:'testing@gmail.com', password:'test123', bio: 'test', socials: { instagram: 'test', twitter: 'test' }});
         mock.mockImplementation(() => { 
-            return { select: () => { 
-                return { profileImg: 'test', name: 'test', bio: 'test', socials: { instagram: 'test', twitter: 'test' } }
-            } }
+            return {  
+                id: '1', profileImg: 'test', name: 'test', email:'testing@gmail.com', password:'test123', bio: 'test', socials: { instagram: 'test', twitter: 'test' }
+            } 
         });
-        const res = await request(app).post('/updateProfileData').send({ profileImg: 'test', name: 'test', bio: 'test', socials: { instagram: 'test', twitter: 'test' } });
+        const res = await request(app).post('/updateProfileData').send({ profileImg: 'test1', name: 'test1', bio: 'test1', socials: { instagram: 'test1', twitter: 'test1' } });
         expect(res.status).toBe(200);
         expect(res.body.name).toBe('test1');
     });
+
+    
 
 })
