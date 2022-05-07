@@ -25,7 +25,7 @@ router.post('/alerts', (req, res) => {
     
 });
 
-router.post('/account', requireLogin, (req, res) => {
+router.post('/account', (req, res) => {
     res.redirect('/login');
 });
 

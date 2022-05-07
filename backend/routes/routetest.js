@@ -19,7 +19,7 @@ router.get('/dbtest', function(req,res){
 // add a new item to the db
 // POST http://localhost:[PORT]/api/dbtest
 // should return type POST
-router.post('/dbtest', requireLogin, function(req, res){
+router.post('/dbtest', function(req, res){
     res.send({type: 'POST'});
 });
 
