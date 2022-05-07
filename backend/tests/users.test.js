@@ -101,9 +101,9 @@ describe('Users', () => {
     it('Should update a user profile', async () => {
         const mock = jest.spyOn(User, 'findOne');
         mock.mockImplementation(() => { 
-            return { select: () => { 
-                return { profileImg: 'test', name: 'test', bio: 'test', socials: { instagram: 'test', twitter: 'test' } }
-            } }
+            return {  
+                profileImg: 'test', name: 'test', bio: 'test', socials: { instagram: 'test', twitter: 'test' } 
+            } 
         });
         const res = await request(app).post('/updateProfileData').send({ profileImg: 'test', name: 'test', bio: 'test', socials: { instagram: 'test', twitter: 'test' } });
         expect(res.status).toBe(200);
