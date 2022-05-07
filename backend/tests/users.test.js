@@ -3,6 +3,7 @@ const express = require('express');
 const request = require('supertest');
 const sinon = require('sinon');
 const bcrypt = require('bcryptjs');
+const UserModel = require('../models/user');
 
 jest.mock('bcryptjs');
 
@@ -133,15 +134,28 @@ describe('Users', () => {
 
     // updateAlerts (success)
     it('should update alerts', async () => {
-        const clusters = [[1, 'test1'], [2, 'test2'], [3, 'test3']];
+        const clusters = [[1, ['test1', 'a']], [2, ['test2', 'd']]];
         const mock = jest.spyOn(User, 'findOne');
         mock.mockImplementationOnce(() => { return { email: 'currentUser' } } );
         mock.mockImplementationOnce(() => { return { email: 'otherUser' } } );
+        mock.mockImplementationOnce(() => { return UserModel({ name: 'a', email: 'test@gmail.com', password: 'dwdwwddw',alerts: [] }) } );
         mock.mockImplementationOnce(() => { return { email: 'currentUser' } } );
-        const res = await request(app).post('/updateAlerts').send({ imageClusters: clusters});
+        mock.mockImplementationOnce(() => { return { email: 'otherUser' } } );
+        mock.mockImplementationOnce(() => { return UserModel({ name: 'a', email: 'test@gmail.com', password: 'dwdwwddw',alerts: [] }) } );
+        mock.mockImplementationOnce(() => { return { email: 'currentUser' } } );
+        mock.mockImplementationOnce(() => { return { email: 'currentUser' } } );
+        mock.mockImplementationOnce(() => { return UserModel({ name: 'a', email: 'test@gmail.com', password: 'dwdwwddw',alerts: [] }) } );
+        mock.mockImplementationOnce(() => { return { email: 'currentUser' } } );
+        mock.mockImplementationOnce(() => { return { email: 'otherUser' } } );
+        mock.mockImplementationOnce(() => { return UserModel({ name: 'a', email: 'test@gmail.com', password: 'dwdwwddw',alerts: [] }) } );
+        // mock save
+        //const save = jest.spyOn(User, 'save');
+        //save.mockImplementation(() => { return true } );
+        const res = await request(app).post('/updateAlerts').send({ imageClusters: JSON.stringify(clusters)});
         expect(res.statusCode).toBe(200);
-        expect(res.body.text).toBe("Alerts Updated");
-
+        expect(res.text).toBe("Alerts Updated");
+    });
+        
     // test 'profileData' route
     it('Should return a user profile', async () => {
         const mock = jest.spyOn(User, 'findOne');
