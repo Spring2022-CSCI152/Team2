@@ -318,7 +318,7 @@ router.post("/updateAlerts", auth.requireLogin, async (req, res) => {
             }
         }
     }
-    res.send("Alerts Updated");
+    res.status(200).send("Alerts Updated");
 });
 
 /*

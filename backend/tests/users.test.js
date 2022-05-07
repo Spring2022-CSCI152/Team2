@@ -131,6 +131,17 @@ describe('Users', () => {
         expect(res.body.err).toBe("User not found.");
     });
 
+    // updateAlerts (success)
+    it('should update alerts', async () => {
+        const clusters = [[1, 'test1'], [2, 'test2'], [3, 'test3']];
+        const mock = jest.spyOn(User, 'findOne');
+        mock.mockImplementationOnce(() => { return { email: 'currentUser' } } );
+        mock.mockImplementationOnce(() => { return { email: 'otherUser' } } );
+        mock.mockImplementationOnce(() => { return { email: 'currentUser' } } );
+        const res = await request(app).post('/updateAlerts').send({ imageClusters: clusters});
+        expect(res.statusCode).toBe(200);
+        expect(res.body.text).toBe("Alerts Updated");
+
     // test 'profileData' route
     it('Should return a user profile', async () => {
         const mock = jest.spyOn(User, 'findOne');
