@@ -496,17 +496,21 @@ router.get("/testLR", auth.requireLogin, async (req, res) => {
 
 // update user data in db
 router.post("/updateProfileData", auth.requireLogin, async (req, res) => {
-    User.findOne({_id: req.user}).then( result =>{
-        if (req.body.profileImg !== ''){ result.profileimg = req.body.profileImg; }
-        if (req.body.name !== ''){ result.name = req.body.name; }
-        if (req.body.bio !== ''){ result.userbio = req.body.bio; }
-        if (req.body.instagram !== ''){ result.socials.instagram = req.body.instagram; }
-        if (req.body.twitter !== ''){ result.socials.twitter = req.body.twitter; }
-        result.save().then(result => res.send(result));
+
+    let user = await User.findOne({_id: req.user});
+    if (!user){
+        console.log('User does not exists')
+        return res.status(400).json({ email: "User does not exists" });
+    } else {
+        if (req.body.profileImg !== ''){ user.profileimg = req.body.profileImg; }
+        if (req.body.name !== ''){ user.name = req.body.name; }
+        if (req.body.bio !== ''){ user.userbio = req.body.bio; }
+        if (req.body.instagram !== ''){ user.socials.instagram = req.body.instagram; }
+        if (req.body.twitter !== ''){ user.socials.twitter = req.body.twitter; }
+        user.save();
+        return res.status(200).json(user);
     }
-    ).catch((err) =>{
-        console.log(err);
-    })
+
 });
 
 // upload single image to aws and send back url
