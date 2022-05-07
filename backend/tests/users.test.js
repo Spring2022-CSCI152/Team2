@@ -109,11 +109,15 @@ describe('Users', () => {
 
     // test 'updateProfileData' route
     it('Should update a user profile', async () => {
+        // Set mock spy on User.findOne
         const mock = jest.spyOn(User, 'findOne');
+        // Implement Mock return that returns a UserModel
         mock.mockImplementation(() => { 
             return UserModel({profileImg: 'test', name: 'test', email:'testing@gmail.com', password:'test123', bio: 'test', socials: { instagram: 'test', twitter: 'test' }})
         });
+        // Send post request to /updateProfileData 
         const res = await request(app).post('/updateProfileData').send({ profileImg: 'test1', name: 'test1', bio: 'test1', socials: { instagram: 'test1', twitter: 'test1' } });
+        // Asserts
         expect(res.status).toBe(200);
         expect(res.body.name).toBe('test1');
     });   
