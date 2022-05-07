@@ -69,7 +69,7 @@ async getData(){
        */}
     function ZeroAlerts(){
      return(
-      <Alert severity="success"> 
+      <Alert severity="success" data-testid = "zeroAlertBox"> 
       <AlertTitle> No Re-uploads Detected!</AlertTitle>
      <p>You have 0 new alerts!</p> 
       </Alert> )
@@ -77,12 +77,12 @@ async getData(){
     }
     function ZeroAlertContent(){
       return(
-        <article className = "no-content"> <p >Congrats! No re-uploads detected!</p> </article>
+        <article data-testid = "zeroAlertContent" className = "no-content"> <p >Congrats! No re-uploads detected!</p> </article>
       );
     }
     function NumAlerts(props){
      return(
-      <Alert  severity="warning"> 
+      <Alert  severity="warning" data-testid = "alertsNumAlerts"> 
       <AlertTitle>Re-upload(s) Detected!</AlertTitle>
       You have {props.nAlerts} new alert(s)! Check it out <strong>below!</strong>
       </Alert>);
@@ -92,7 +92,7 @@ async getData(){
       let i = 0;
       let e = [];
       while(i < x){
-       e.push( <a class="indivLink" href={propsL.thiefURL}>Link</a>);
+       e.push( <a class="indivLink"  href={propsL.thiefURL}>Link</a>);
         i++;
       }
      return e;
@@ -101,7 +101,7 @@ async getData(){
     function AlertBox(props){
       const nAlerts = props.numAlert;
       if(nAlerts == 0){
-        return <ZeroAlerts/>;
+        return <ZeroAlerts />;
       }else{
         return <NumAlerts nAlerts = {nAlerts}/>;
       }
@@ -110,14 +110,14 @@ async getData(){
       return(items.map((item) => ( 
   
         <>
-        <article className = "singleAlert" key = { item._id } >
+        <article data-testid = "alertContent" className = "singleAlert" key = { item._id } >
           
           {/*   User_Name: { item.author }, 
             Full_Name: { item.width }, 
             User_Email: { item.height }  */}
             <div className = "alertImgContainer"><img src = {item.alertedURL}></img></div>
             <div className = "alertImgContainer"><img src = {item.thiefURL}></img></div>
-            <Card className = "alertCard">
+            <Card  className = "alertCard">
                 <CardContent>
                 
                 
@@ -183,3 +183,4 @@ async getData(){
 }
 
 export default AlertsPage;
+
