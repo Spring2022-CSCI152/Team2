@@ -324,6 +324,7 @@ router.post("/updateAlerts", auth.requireLogin, async (req, res) => {
                 }
                 await asyncQuery3();
             }
+
         }
         console.log("Cluster " + i + " done.");
     }
@@ -486,25 +487,6 @@ router.get("/galleryNames/:id", async (req, res) => {
 router.get("/profileData", auth.requireLogin, async (req, res) => {
     let x = await User.findOne({_id: req.user}).select("-password");
     res.send(x);
-});
-
-// user data
-router.get("/test", async (req, res) => {
-    let result = await User.findOne({ name: "cheeseman" }).select("-password");
-    res.send(result);
-});
-
-// user data (bad one)
-router.get("/test2", async (req, res) => {
-    await User.findOne({ name: "cheeseman" }).select("-password").then( result =>{
-        res.send(result);
-    });
-});
-
-// test with Login Requirement
-router.get("/testLR", auth.requireLogin, async (req, res) => {
-    let result = await User.findOne({ name: "cheeseman" }).select("-password");
-    res.send(result);
 });
 
 // update user data in db
