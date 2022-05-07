@@ -27,7 +27,7 @@ const googleClient = new OAuth2Client(process.env.clientId);
 const maxAge = 3 * 24 * 60 * 60;
 
 // Register Route
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     // Form Validation
     const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -37,32 +37,52 @@ router.post('/register', (req, res) => {
     }
 
     // Check if Register already exists
-    User.findOne({ email: req.body.email }).then( user => {
-        if (user){
-            return res.status(400).json({ email: "Email already exists" });
-        } else {
-            const newUser = new User({
-                name: req.body.name,
-                username: req.body.name,
-                email: req.body.email,
-                password: req.body.password
-            });
+    // User.findOne({ email: req.body.email }).then( user => {
+    //     if (user){
+    //         return res.status(400).json({ email: "Email already exists" });
+    //     } else {
+    //         const newUser = new User({
+    //             name: req.body.name,
+    //             username: req.body.name,
+    //             email: req.body.email,
+    //             password: req.body.password
+    //         });
+    //         // Hash and salt password before saving
+    //         bcrypt.genSalt(10, (err, salt) => {
+    //             bcrypt.hash(newUser.password, salt, (err, hash) => {
+    //                 if (err) throw err;
+    //                 newUser.password = hash;
+    //                 newUser.save().then(user => res.json(user)).catch(err => console.log(err));
+    //             });
+    //         });
+    //     }
+    // });
 
-            // Hash and salt password before saving
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
-                    if (err) throw err;
-                    newUser.password = hash;
-                    newUser.save().then(user => res.json(user)).catch(err => console.log(err));
-                });
+    let user = await User.findOne({ email: req.body.email })
+    if (user){
+        console.log('User already exists')
+        return res.status(400).json({ email: "Email already exists" });
+    } 
+    else {
+        const newUser = new User({
+            name: req.body.name,
+            username: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+        });
+        // Hash and salt password before saving
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+                newUser.password = hash;
+                newUser.save()
             });
-
-        }
-    });
+        });
+        return res.status(200).json(newUser);
+    }
 });
 
 // Login Route
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     // Form Validation
     const { errors, isValid } = validateLoginInput(req.body);
 
@@ -76,32 +96,34 @@ router.post('/login', (req, res) => {
     const password = req.body.password;
 
     // Find user by email
-    User.findOne({ email }).then(user => {
-        // Check if the user exist
-        if(!user){
-            return res.status(404).json({ emailnotfound: "Email not found" });
-        }
+    let user = await User.findOne({ email })
+    console.log(user);
+    // Check if the user exist
+    if(!user){
+        return res.status(404).json({ emailnotfound: "Email not found" });
+    }
+    else {
         // Check passord (bcrypt.compare can compare a hashed password with a non hashed here)
-        bcrypt.compare(password, user.password).then(isMatch => {
-            if (isMatch){
-                // Create JWT Payload for matched user
-                const payload = {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name
-                };
+        let isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch){
+            // Create JWT Payload for matched user
+            const payload = {
+                id: user.id,
+                email: user.email,
+                name: user.name
+            };
 
-                // Sign the token
-                const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
-                res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-                const result = res.status(200).json({ user: user._id });
-
-                
-            } else {
-                return res.status(400).json({ passwordincorrect: "Incorrect password" });
-            }
-        });
-    });
+            // Sign the token
+            const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
+            res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+            console.log('token', token);
+            console.log('user', user.id);
+            return res.status(200).json({ user: user.id });
+        } 
+        else {
+            return res.status(400).json({ passwordincorrect: "Incorrect password" });
+        }
+    }
 });
 
 // Google Login Route
@@ -457,6 +479,13 @@ router.get("/profileData", auth.requireLogin, async (req, res) => {
 router.get("/test", async (req, res) => {
     let result = await User.findOne({ name: "cheeseman" }).select("-password");
     res.send(result);
+});
+
+// user data (bad one)
+router.get("/test2", async (req, res) => {
+    await User.findOne({ name: "cheeseman" }).select("-password").then( result =>{
+        res.send(result);
+    });
 });
 
 // test with Login Requirement
