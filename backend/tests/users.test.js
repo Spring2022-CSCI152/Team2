@@ -83,6 +83,54 @@ describe('Users', () => {
         expect(res.body.passwordincorrect).toBe("Incorrect password");
     });
 
+    // Account
+    it('should get account', async () => {
+        const mock = jest.spyOn(User, 'findOne');
+        mock.mockImplementation(() => { return { select: () => { return { name: 'test', email: 'test@gmail.com', password: 'test123' } } } } );
+        const res = await request(app).get('/account/testId');
+        expect(res.statusCode).toBe(200);
+        expect(res.body.user.name).toBe('test');
+        expect(res.body.user.email).toBe('test@gmail.com');
+        expect(res.body.user.password).toBe('test123');
+    });
+
+    // Resolve Alert (success)
+    it('should resolve alert', async () => {
+        const mock = jest.spyOn(User, 'updateOne');
+        mock.mockImplementation(() => { return true } );
+        const res = await request(app).post('/resolveAlert').send({ userId: '1', alertId: 'testAlert' });
+        expect(res.statusCode).toBe(200);
+        expect(res.body.msg).toBe("Alert resolved.");
+    });
+
+    // Resolve Alert (failure - alert not found)
+    it('should not resolve alert', async () => {
+        const mock = jest.spyOn(User, 'updateOne');
+        mock.mockImplementation(() => { return false } );
+        const res = await request(app).post('/resolveAlert').send({ userId: '1', alertId: 'testAlert' });
+        expect(res.statusCode).toBe(404);
+        expect(res.body.err).toBe("Alert not found.");
+    });
+
+    // getAlerts (success)
+    it('should get alerts', async () => {
+        const mock = jest.spyOn(User, 'findOne');
+        mock.mockImplementation(() => { return { alerts: [{ id: '1', name: 'test', email: 'test@gmail.com', password: 'test123' }] } } );
+        const res = await request(app).post('/getAlerts').send({ userId: '1' });
+        expect(res.statusCode).toBe(200);
+        // check that response is stringified JSON
+        expect(res.text).toBe('[{"id":"1","name":"test","email":"test@gmail.com","password":"test123"}]');
+    });
+
+    // getAlerts (failure - user not found)
+    it('should not get alerts', async () => {
+        const mock = jest.spyOn(User, 'findOne');
+        mock.mockImplementation(() => { return null } );
+        const res = await request(app).post('/getAlerts').send({ userId: '1' });
+        expect(res.statusCode).toBe(404);
+        expect(res.body.err).toBe("User not found.");
+    });
+
     // test 'profileData' route
     it('Should return a user profile', async () => {
         const mock = jest.spyOn(User, 'findOne');

@@ -60,7 +60,6 @@ router.post('/register', async (req, res) => {
 
     let user = await User.findOne({ email: req.body.email })
     if (user){
-        console.log('User already exists')
         return res.status(400).json({ email: "Email already exists" });
     } 
     else {
@@ -97,7 +96,6 @@ router.post('/login', async (req, res) => {
 
     // Find user by email
     let user = await User.findOne({ email })
-    console.log(user);
     // Check if the user exist
     if(!user){
         return res.status(404).json({ emailnotfound: "Email not found" });
@@ -116,8 +114,6 @@ router.post('/login', async (req, res) => {
             // Sign the token
             const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
             res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-            console.log('token', token);
-            console.log('user', user.id);
             return res.status(200).json({ user: user.id });
         } 
         else {
@@ -211,9 +207,8 @@ router.get('/loggedIn', async (req,res) =>{
 // Return user profile for browsing other profiles
 router.get('/account/:id', async (req, res) => {
     let result = await User.findOne({_id:req.params.id}).select("-password");
-    res.json({user: result});
+    res.status(200).json({user: result});
 });
-
 
 // Alerts
 router.post('/resolveAlert', auth.requireLogin, async (req, res) => {
@@ -227,26 +222,34 @@ router.post('/resolveAlert', auth.requireLogin, async (req, res) => {
         
 
     }
-    User.updateOne( {_id : userId},query ).catch(err => {
+    let result = User.updateOne( {_id : userId},query );
+    if (!result){
         return res.status(404).json({err: "Alert not found."});
-    });
+    }
+    else {
+        return res.status(200).json({msg: "Alert resolved."});
+    }
 });
 
 router.post('/getAlerts', auth.requireLogin, async (req, res) => {
-    //console.log("hi");
-     const userId = req.body.userId;
-    // console.log(userId);
-     const query = { _id: userId };
-     const searchScope = {
+    const userId = req.body.userId;
+    const query = { _id: userId };
+    const searchScope = {
         alerts:1
     };
-   User.findOne(query,searchScope).then(function (records) {
-       //console.log(JSON.stringify(records.alerts));
-     res.send(JSON.stringify(records.alerts));
-   });
- 
- 
-
+    // User.findOne(query,searchScope).then(function (records) {
+    //    //console.log(JSON.stringify(records.alerts));
+    //  res.send(JSON.stringify(records.alerts));
+    let records = await User.findOne(query,searchScope);
+    console.log(records)
+    if (!records){
+        return res.status(404).json({err: "User not found."});
+    }
+    else {
+        console.log(records.alerts);
+        console.log(JSON.stringify(records.alerts));
+        return res.status(200).send(JSON.stringify(records.alerts));
+    }
 });
 
 // clear alerts arrays for all users
