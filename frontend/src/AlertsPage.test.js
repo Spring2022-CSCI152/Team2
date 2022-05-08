@@ -5,10 +5,9 @@ import {render} from "@testing-library/react";
 import AlertsPage from "./components/alertsPage";
 import AlertBox from"./components/alertsPage";
 import AlertContent from"./components/alertsPage";
-import NumAlerts from"./components/alertsPage";
-import Alerts from"./components/alertsPage";
+
 const ShallowRenderer = require( 'react-shallow-renderer');
-describe("AlertsPage 10 alerts", () => {
+
        
    
     // test("10 alert box", () => {
@@ -22,7 +21,6 @@ describe("AlertsPage 10 alerts", () => {
     //  } );
 
 
-});
 describe("AlertsPage zero alerts", () => {
     test("zero alert box", () => {
         const{getByTestId} = render(<AlertBox numAlert = {0}></AlertBox>);
