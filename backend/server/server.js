@@ -10,7 +10,6 @@ const cookieParser = require('cookie-parser');
 
 
 const cors = require('cors');
-const checkUser = require('../middleware/checkUser');
 const { modelName } = require('../models/user');
 
 const port = process.env.PORT || 5000;
@@ -42,7 +41,6 @@ require('../config/passport')(passport);
 
 // www.blahblahblah/app/signup routes
 app.use('/app', routesUrls);
-app.get('*', checkUser);
 app.use('/', userApi);
 app.use('/api', funcTest);
 

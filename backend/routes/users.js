@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const requireLogin = require('../middleware/requireLogin');
+const auth = require('../middleware/requireLogin');
 const multer = require('multer');
 const path = require('path');
 const s3 = require('../middleware/s3')
@@ -19,7 +19,6 @@ const validateLoginInput = require('../validation/login');
 
 // Load User model
 const User = require('../models/user');
-const checkUser = require('../middleware/checkUser');
 
 // Google client
 const googleClient = new OAuth2Client(process.env.clientId);
@@ -28,7 +27,7 @@ const googleClient = new OAuth2Client(process.env.clientId);
 const maxAge = 3 * 24 * 60 * 60;
 
 // Register Route
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     // Form Validation
     const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -38,32 +37,51 @@ router.post('/register', (req, res) => {
     }
 
     // Check if Register already exists
-    User.findOne({ email: req.body.email }).then( user => {
-        if (user){
-            return res.status(400).json({ email: "Email already exists" });
-        } else {
-            const newUser = new User({
-                name: req.body.name,
-                username: req.body.name,
-                email: req.body.email,
-                password: req.body.password
-            });
+    // User.findOne({ email: req.body.email }).then( user => {
+    //     if (user){
+    //         return res.status(400).json({ email: "Email already exists" });
+    //     } else {
+    //         const newUser = new User({
+    //             name: req.body.name,
+    //             username: req.body.name,
+    //             email: req.body.email,
+    //             password: req.body.password
+    //         });
+    //         // Hash and salt password before saving
+    //         bcrypt.genSalt(10, (err, salt) => {
+    //             bcrypt.hash(newUser.password, salt, (err, hash) => {
+    //                 if (err) throw err;
+    //                 newUser.password = hash;
+    //                 newUser.save().then(user => res.json(user)).catch(err => console.log(err));
+    //             });
+    //         });
+    //     }
+    // });
 
-            // Hash and salt password before saving
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
-                    if (err) throw err;
-                    newUser.password = hash;
-                    newUser.save().then(user => res.json(user)).catch(err => console.log(err));
-                });
+    let user = await User.findOne({ email: req.body.email })
+    if (user){
+        return res.status(400).json({ email: "Email already exists" });
+    } 
+    else {
+        const newUser = new User({
+            name: req.body.name,
+            username: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+        });
+        // Hash and salt password before saving
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+                newUser.password = hash;
+                newUser.save()
             });
-
-        }
-    });
+        });
+        return res.status(200).json(newUser);
+    }
 });
 
 // Login Route
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     // Form Validation
     const { errors, isValid } = validateLoginInput(req.body);
 
@@ -77,32 +95,31 @@ router.post('/login', (req, res) => {
     const password = req.body.password;
 
     // Find user by email
-    User.findOne({ email }).then(user => {
-        // Check if the user exist
-        if(!user){
-            return res.status(404).json({ emailnotfound: "Email not found" });
-        }
+    let user = await User.findOne({ email })
+    // Check if the user exist
+    if(!user){
+        return res.status(404).json({ emailnotfound: "Email not found" });
+    }
+    else {
         // Check passord (bcrypt.compare can compare a hashed password with a non hashed here)
-        bcrypt.compare(password, user.password).then(isMatch => {
-            if (isMatch){
-                // Create JWT Payload for matched user
-                const payload = {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name
-                };
+        let isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch){
+            // Create JWT Payload for matched user
+            const payload = {
+                id: user.id,
+                email: user.email,
+                name: user.name
+            };
 
-                // Sign the token
-                const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
-                res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-                const result = res.status(200).json({ user: user._id });
-
-                
-            } else {
-                return res.status(400).json({ passwordincorrect: "Incorrect password" });
-            }
-        });
-    });
+            // Sign the token
+            const token = jwt.sign(payload, process.env.secretKey, { expiresIn: maxAge });
+            res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+            return res.status(200).json({ user: user.id });
+        } 
+        else {
+            return res.status(400).json({ passwordincorrect: "Incorrect password" });
+        }
+    }
 });
 
 // Google Login Route
@@ -158,7 +175,7 @@ router.post('/googlelogin', async (req, res) => {
 });
 
 // Logout endpoint
-router.get("/logout", requireLogin, (req, res) =>{
+router.get("/logout", auth.requireLogin, (req, res) =>{
     res.cookie('jwt', "", {
         httpOnly: true,
         expires: new Date(0),
@@ -189,25 +206,12 @@ router.get('/loggedIn', async (req,res) =>{
 
 // Return user profile for browsing other profiles
 router.get('/account/:id', async (req, res) => {
-    // Find the user based on the params attached to the link
-    User.findOne({_id:req.params.id})
-    //User.findOne({name: req.params.id})
-    // Do not include password for the user
-    .select("-password")
-    // send back a response with the found user data
-    .then(user => {
-        //console.log(user);
-        res.json({user});
-    })
-    // Otherwise catch an error that the user has not been found in the database
-    .catch(err => {
-        return res.status(404).json({err: "User not found."});
-    })
+    let result = await User.findOne({_id:req.params.id}).select("-password");
+    res.status(200).json({user: result});
 });
 
-
 // Alerts
-router.post('/resolveAlert', requireLogin, async (req, res) => {
+router.post('/resolveAlert', auth.requireLogin, async (req, res) => {
     const userId = req.body.userId;
     const alertId = req.body.alertId;
  
@@ -218,37 +222,43 @@ router.post('/resolveAlert', requireLogin, async (req, res) => {
         
 
     }
-    User.updateOne( {_id : userId},query ).catch(err => {
+    let result = User.updateOne( {_id : userId},query );
+    if (!result){
         return res.status(404).json({err: "Alert not found."});
-    });
+    }
+    else {
+        return res.status(200).json({msg: "Alert resolved."});
+    }
 });
 
-router.post('/getAlerts', requireLogin, async (req, res) => {
-    //console.log("hi");
-     const userId = req.body.userId;
-    // console.log(userId);
-     const query = { _id: userId };
-     const searchScope = {
+router.post('/getAlerts', auth.requireLogin, async (req, res) => {
+    const userId = req.body.userId;
+    const query = { _id: userId };
+    const searchScope = {
         alerts:1
     };
-   User.findOne(query,searchScope).then(function (records) {
-       //console.log(JSON.stringify(records.alerts));
-     res.send(JSON.stringify(records.alerts));
-   });
- 
- 
-
+    // User.findOne(query,searchScope).then(function (records) {
+    //    //console.log(JSON.stringify(records.alerts));
+    //  res.send(JSON.stringify(records.alerts));
+    let records = await User.findOne(query,searchScope);
+    console.log(records)
+    if (!records){
+        return res.status(404).json({err: "User not found."});
+    }
+    else {
+        console.log(records.alerts);
+        console.log(JSON.stringify(records.alerts));
+        return res.status(200).send(JSON.stringify(records.alerts));
+    }
 });
 
 // clear alerts arrays for all users
-router.post("/clearAlerts", requireLogin, async (req, res) => {
-    User.updateMany({}, {$set: {alerts: []}}).then( result =>{
-        res.send(result);
-    });
+router.post("/clearAlerts", auth.requireLogin, async (req, res) => {
+    res.send(await User.updateMany({}, {$set: {alerts: []}}));
 });
 
 // update alerts
-router.post("/updateAlerts", requireLogin, async (req, res) => {
+router.post("/updateAlerts", auth.requireLogin, async (req, res) => {
     clusters = JSON.parse(req.body.imageClusters);
     // for each cluster, for each image url in that cluster, add alert to user with that url
     for (let i = 0; i < clusters.length; i++) { // clusters.length
@@ -267,48 +277,59 @@ router.post("/updateAlerts", requireLogin, async (req, res) => {
                 // get current user based off current url
                 const asyncQuery = async (url) => {
                     // console.log("Async Query: " + url);
-                    return await User.findOne({collectionArray: {$elemMatch: {imgURL: url}}}, 'email').then(result => {
-                        // console.log("Async Query Result: " + result.email);
-                        return result.email;
-                    });
+                    // return await User.findOne({collectionArray: {$elemMatch: {imgURL: url}}}, 'email').then(result => {
+                    //     // console.log("Async Query Result: " + result.email);
+                    //     return result.email;
+                    let result = await User.findOne({collectionArray: {$elemMatch: {imgURL: url}}}, 'email');
+                    return result.email;
                 }
                 const currentUser = await asyncQuery(currentURL);
                 // console.log("Current user: " + currentUser);
                 // get other user based off other url
                 const asyncQuery2 = async () => {
-                    return await User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}, 'email').then(result => {
-                        // console.log("Async Query Result222: " + result.email);
-                        return result.email;
-                    });
+                    // return await User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}, 'email').then(result => {
+                    //     // console.log("Async Query Result222: " + result.email);
+                    //     return result.email;
+                    // });
+                    let result = await User.findOne({collectionArray: {$elemMatch: {imgURL: otherURL}}}, 'email');
+                    return result.email;
                 }
                 const otherUser = await asyncQuery2();
                 // console.log("Other user: " + otherUser);
                 // add alert to current user
                 const asyncQuery3 = async () => {
-                    return await User.findOne({email: currentUser}).then(result => {
-                            if (currentUser != otherUser) {
-                                // add alert to user1
-                                // console.log("Adding alert to " + currentUser);
-                                // console.log("Other user: " + otherUser);
-                                // console.log("Current URL: " + currentURL);
-                                // console.log("Other URL: " + otherURL);
-                                result.alerts.push({
-                                    alertedEmail: currentUser,
-                                    alertedURL: currentURL,
-                                    thiefEmail: otherUser,
-                                    thiefURL: otherURL
-                                });
-                                result.save().then(currentUser => {
-                                    console.log("Alert added to " + currentUser.email);
-                                });
-                            }
+                    // return await User.findOne({email: currentUser}).then(result => {
+                    //         if (currentUser != otherUser) {
+                    //             result.alerts.push({
+                    //                 alertedEmail: currentUser,
+                    //                 alertedURL: currentURL,
+                    //                 thiefEmail: otherUser,
+                    //                 thiefURL: otherURL
+                    //             });
+                    //             result.save().then(currentUser => {
+                    //                 console.log("Alert added to " + currentUser.email);
+                    //             });
+                    //         }
+                    //     });
+                    let result = await User.findOne({email: currentUser});
+                    if (currentUser != otherUser) {
+                        result.alerts.push({
+                            alertedEmail: currentUser,
+                            alertedURL: currentURL,
+                            thiefEmail: otherUser,
+                            thiefURL: otherURL
                         });
+                        result.save()
+                    }
                 }
                 await asyncQuery3();
             }
+
         }
+        console.log("Cluster " + i + " done.");
     }
-    res.send("Alerts Updated");
+    res.status(200).send("Alerts Updated");
+    console.log("Alerts Updated");
 });
 
 /*
@@ -350,7 +371,7 @@ const upload = multer({
 } });
 
 
-router.post("/collections", requireLogin, upload.single("myImage"), async (req, res) => {
+router.post("/collections", auth.requireLogin, upload.single("myImage"), async (req, res) => {
     const file = req.file
 
     //AWS image upload here commented out to prevent duplicate sends
@@ -386,7 +407,7 @@ router.post("/collections", requireLogin, upload.single("myImage"), async (req, 
 
 */
 
-router.post("/retrievImageJSON", requireLogin, async (req, res) => { 
+router.post("/retrievImageJSON", auth.requireLogin, async (req, res) => { 
     User.findOne({_id: req.user}).select("collectionArray").then( result =>{
         res.send(result)
         
@@ -398,7 +419,7 @@ router.post("/retrievImageJSON", requireLogin, async (req, res) => {
     
 });
 
-router.post("/AWSRetrieval",requireLogin, async(req, res) =>{
+router.post("/AWSRetrieval", auth.requireLogin, async(req, res) =>{
         const key = req.params.key
         const readStream = s3.getFileStream(key)
         readStream.pipe(res)
@@ -411,7 +432,7 @@ router.post("/AWSRetrieval",requireLogin, async(req, res) =>{
 module.exports = router;
 
 // Gallery image url retrieval
-router.get("/gallery", requireLogin, async (req, res) => {
+router.get("/gallery", auth.requireLogin, async (req, res) => {
     User.findOne({_id: req.user}).select("collectionArray").then( result =>{
         // send list of the image urls
         res.send(result.collectionArray.map(x => x.imgURL));
@@ -436,7 +457,7 @@ router.get("/gallery/:id", async (req, res) => {
 });
 
 // Gallery Image Name retrieval
-router.get("/galleryNames", requireLogin, async (req, res) => {
+router.get("/galleryNames", auth.requireLogin, async (req, res) => {
     User.findOne({_id: req.user}).select("collectionArray").then( result =>{
         // send list of the image urls
         res.send(result.collectionArray.map(x => x.imgName));
@@ -463,45 +484,48 @@ router.get("/galleryNames/:id", async (req, res) => {
 });
 
 // user data
-router.get("/profileData", requireLogin, async (req, res) => {
-    User.findOne({_id: req.user}).select("-password").then( result =>{
-        //console.log(result);
-        res.send(result);
-    }
-    ).catch((err) =>{
-        console.log(err);
-    })
+router.get("/profileData", auth.requireLogin, async (req, res) => {
+    let x = await User.findOne({_id: req.user}).select("-password");
+    res.send(x);
 });
 
 // update user data in db
-router.post("/updateProfileData", requireLogin, async (req, res) => {
-    User.findOne({_id: req.user}).then( result =>{
-        if (req.body.profileImg !== ''){ result.profileimg = req.body.profileImg; }
-        if (req.body.name !== ''){ result.name = req.body.name; }
-        if (req.body.bio !== ''){ result.userbio = req.body.bio; }
-        if (req.body.instagram !== ''){ result.socials.instagram = req.body.instagram; }
-        if (req.body.twitter !== ''){ result.socials.twitter = req.body.twitter; }
-        result.save().then(result => res.send(result));
+router.post("/updateProfileData", auth.requireLogin, async (req, res) => {
+
+    let user = await User.findOne({_id: req.user});
+    if (!user){
+        console.log('User does not exists')
+        return res.status(400).json({ email: "User does not exists" });
+    } else {
+        if (req.body.profileImg !== ''){ user.profileimg = req.body.profileImg; }
+        if (req.body.name !== ''){ user.name = req.body.name; }
+        if (req.body.bio !== ''){ user.userbio = req.body.bio; }
+        if (req.body.instagram !== ''){ user.socials.instagram = req.body.instagram; }
+        if (req.body.twitter !== ''){ user.socials.twitter = req.body.twitter; }
+        user.save();
+        return res.status(200).json(user);
     }
-    ).catch((err) =>{
-        console.log(err);
-    })
+
 });
 
 // upload single image to aws and send back url
-router.post("/uploadSingle", requireLogin, upload.single("myImage"), async (req, res) => {
+router.post("/uploadSingle", upload.single("myImage"), async (req, res) => {
     const file = req.file
+    if (!file) {
+        res.status(400).send({ error: "Please upload a file" });
+    }
+    else {
+        //AWS image upload here commented out to prevent duplicate sends
+        const result = await s3.uploadFile(file).then(result => res.status(200).json(result.Location));
 
-    //AWS image upload here commented out to prevent duplicate sends
-    const result = await s3.uploadFile(file)
+        //res.status(200).json(result.Location);
 
-    res.json(result.Location);
-
-    await fs.unlinkSync(file.path)
+        await fs.unlinkSync(file.path)
+    }
 });
 
 // upload profile image
-router.post("/uploadProfileImg", requireLogin, upload.single("myImage"), async (req, res) => {
+router.post("/uploadProfileImg", auth.requireLogin, upload.single("myImage"), async (req, res) => {
     const file = req.file
 
     //AWS image upload here commented out to prevent duplicate sends
@@ -518,7 +542,7 @@ router.post("/uploadProfileImg", requireLogin, upload.single("myImage"), async (
 });
 
 // get all image urls from db (from every user)
-router.get("/getAllImageURLs", requireLogin, async (req, res) => {
+router.get("/getAllImageURLs", auth.requireLogin, async (req, res) => {
     // find users with collectionArray field and get all image urls
     User.find({}, 'collectionArray').then( result =>{
         // send list of the image urls that aren't empty
@@ -533,7 +557,7 @@ router.get("/getAllImageURLs", requireLogin, async (req, res) => {
 });
 
 // delete image from db
-router.post("/deleteImage", requireLogin, async (req, res) => {
+router.post("/deleteImage", auth.requireLogin, async (req, res) => {
     // get image url
     const imgURL = req.body.imgURL;
     console.log("Deleting image: " + imgURL);

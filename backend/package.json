@@ -21,6 +21,7 @@
   "dependencies": {
     "aws-sdk": "^2.1116.0",
     "axios": "^0.25.0",
+    "babel-jest": "^28.0.3",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
@@ -38,21 +39,27 @@
     "node-localstorage": "^2.2.1",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
+    "sinon": "^13.0.2",
     "start": "^5.1.0",
     "uuid": "^8.3.2",
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "babel-core": "^7.0.0-bridge.0",
     "concurrently": "^7.0.0",
     "jest": "^28.0.3",
     "nodemon": "^2.0.15",
     "supertest": "^6.2.3"
   },
-
   "jest": {
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
-    ]
+    ],
+    "collectCoverage": true,
+    "moduleNameMapper": {
+      "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/mocks/fileMock.js"
+    }
   }
 }

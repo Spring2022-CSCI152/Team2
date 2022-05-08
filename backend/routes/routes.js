@@ -25,7 +25,7 @@ router.post('/alerts', (req, res) => {
     
 });
 
-router.post('/account', requireLogin, (req, res) => {
+router.post('/account', (req, res) => {
     res.redirect('/login');
 });
 
@@ -126,20 +126,38 @@ router.get('/featUsers', (req, res) => {
                 $exists: true
             }
         }
-    }, 
-    {$project: {_id: 1, profileimg:1 , userbio: 1, username: 1, name: 1}}
-]);
+    },
+    { $project: { _id: 1, profileimg: 1, userbio: 1, username: 1, name: 1 } }
+    ]);
+    query.then(function (records) {
+        res.send(JSON.stringify(records))
+    });
+});
 
-
-
-
-query.then(function (records) {
-    res.send(JSON.stringify(records))
+// Carousel Route (for the home page)
+// Gets 7 random users and return 1 random image from their collections for each user
+router.get('/carousel', (req, res) => {
+    const query = User.aggregate([{
+        $sample: {
+            size: 7
+        }
+    }, {
+        $match: {
+            collectionArray: {
+                $exists: true,
+                $ne: []
+            }
+        }
+    },
+    // return 1 random image from each user's collection
+    { $project: { _id: 1, name: 1, profileimg: 1, collectionArray: 1 } },
+    ]);
+    query.then(function (records) {
+        res.send(JSON.stringify(records))
+    });
 });
 
 
-
-});
 router.post('/collections', (req, res) => {
     // Some code
 });

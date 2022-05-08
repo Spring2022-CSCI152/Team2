@@ -57,6 +57,7 @@ function Account() {
 
     useEffect(() => {
         axios.get("http://localhost:5000/profileData").then((res) => {
+            console.log(res);
             const data = {
                 profileimg: res.data.profileimg,
                 name: res.data.name,
