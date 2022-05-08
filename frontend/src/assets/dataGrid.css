@@ -72,7 +72,8 @@ ul.css-dvamat-MuiImageList-root{
 
 
 }
-a.profileLink div{
+a.profileLink div:not(.collectionNameBar){
+
     color:black; 
 }
 .noResults{
@@ -82,6 +83,7 @@ a.profileLink div{
 
    div.collectionNameBar{
     width:100%;
+    color:white;
     background-color: black;
 }
 .css-rvv586-MuiImageList-root{
